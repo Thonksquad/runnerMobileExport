@@ -9,6 +9,7 @@ public class MainMenu : MonoBehaviour, IPointerDownHandler
 {
 
     private Player player;
+    LeaderboardClass leaderboards = new LeaderboardClass();
 
     private void Start()
     {
@@ -17,6 +18,7 @@ public class MainMenu : MonoBehaviour, IPointerDownHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        leaderboards.AddScore(GameManager.distance);
         ActionSystem.onPlayerRevive();
         SceneManager.LoadSceneAsync("Main Menu", LoadSceneMode.Single);
         player.gameOver = false;

@@ -19,6 +19,8 @@ public class DBSubmit : SingletonPersistent<DBSubmit>
     private static readonly byte[] key = Encoding.UTF8.GetBytes("NewPassword12311NewPassword12311");
     private static readonly byte[] iv = Encoding.UTF8.GetBytes("Tsalt1wtQt9kHuHg");
 
+    LeaderboardClass leaderboards = new LeaderboardClass();
+
     private void OnEnable()
     {
         ActionSystem.onPlayerDeath += sendToDatabase;
@@ -176,6 +178,8 @@ public class DBSubmit : SingletonPersistent<DBSubmit>
         data.discord_id = DBGrabUser.discordId.ToString();
         data.game_id = 6;
         data.score = scoreEnc;
+
+        //leaderboards.AddScore(scoreRoll);
 
         // Serialize the data to JSON format
         string jsonData = JsonUtility.ToJson(data);
