@@ -1,14 +1,19 @@
-using System.Collections;
+using Newtonsoft.Json;
 using System.Collections.Generic;
+using TMPro;
+using Unity.Services.Leaderboards;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
+
 
 public class Leaderboard : MonoBehaviour, IPointerDownHandler
 {
 
-    LeaderboardClass leaderboards = new LeaderboardClass();
-    public Text highScores;
+    const string leaderboardId = "leaderboard";
+
+    public TextMeshProUGUI[] topTxt;
+    public TextMeshProUGUI[] aroundTxt;
+
 
 
     private void OnEnable()
@@ -19,13 +24,57 @@ public class Leaderboard : MonoBehaviour, IPointerDownHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        Application.OpenURL("http://leaderboard.dashbored.xyz/");
+        //Application.OpenURL("http://leaderboard.dashbored.xyz/");
     }
 
     public async void showLeaderBoard()
     {
-        highScores.text = await leaderboards.GetScores();
+        var scoresResponse1t5 = await LeaderboardsService.Instance
+            .GetScoresAsync(leaderboardId,
+        new GetScoresOptions { Limit = 5 });
+        
+        var rangeLimit = 2;
+        var scoresResponse6t10 = await LeaderboardsService.Instance
+            .GetPlayerRangeAsync(leaderboardId,
+        new GetPlayerRangeOptions { RangeLimit = rangeLimit });
+
+        
+        string top5 = JsonConvert.SerializeObject(scoresResponse1t5);
+        string around5 = JsonConvert.SerializeObject(scoresResponse6t10);
+
+        Root first5 = JsonConvert.DeserializeObject<Root>(top5);
+        Root second5 = JsonConvert.DeserializeObject<Root>(around5);
+
+        int i = 0;
+
+        foreach (Result res in first5.results)
+        {
+            topTxt[i].text = " " + ((int)res.rank + 1).ToString() + " - " + res.playerName + " - " + res.score;
+        }
+        Debug.Log("leaderboard  =============== ");
+        foreach (Result res in second5.results)
+        {
+            aroundTxt[i].text = " " + ((int)res.rank + 1).ToString() + " - " + res.playerName + " - " + res.score;
+        }
+
+
     }
 
-
 }
+
+
+public class Result
+{
+    public string playerId { get; set; }
+    public string playerName { get; set; }
+    public int rank { get; set; }
+    public double score { get; set; }
+}
+
+public class Root
+{
+    public int limit { get; set; }
+    public int total { get; set; }
+    public List<Result> results { get; set; }
+}
+

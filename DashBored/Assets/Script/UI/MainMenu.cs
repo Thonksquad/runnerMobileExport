@@ -1,15 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Unity.Services.Leaderboards;
+using Newtonsoft.Json;
+using System.Collections.Generic;
 
 public class MainMenu : MonoBehaviour, IPointerDownHandler
 {
 
     private Player player;
-    LeaderboardClass leaderboards = new LeaderboardClass();
+    const string leaderboardId = "leaderboard";
+
 
     private void Start()
     {
@@ -18,11 +19,28 @@ public class MainMenu : MonoBehaviour, IPointerDownHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        leaderboards.AddScore(GameManager.distance);
+        addScore();
         ActionSystem.onPlayerRevive();
         SceneManager.LoadSceneAsync("Main Menu", LoadSceneMode.Single);
         player.gameOver = false;
         Time.timeScale = 1;
         AudioListener.pause = false;
     }
+
+
+    public async void addScore()
+    {
+        var metadata = new Dictionary<string, string>() {
+            { "gameLength", GameManager.gameLength.ToString() } ,
+            { "enemiesKilled", GameManager.enemiesKilled.ToString() },
+            { "speed", "?" }
+        };
+        var playerEntry = await LeaderboardsService.Instance
+            .AddPlayerScoreAsync(leaderboardId, GameManager.distance,
+            new AddPlayerScoreOptions { Metadata = metadata }
+            );
+        Debug.Log(JsonConvert.SerializeObject(playerEntry));
+    }
+
+
 }

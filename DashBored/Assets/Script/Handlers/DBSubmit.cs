@@ -19,7 +19,7 @@ public class DBSubmit : SingletonPersistent<DBSubmit>
     private static readonly byte[] key = Encoding.UTF8.GetBytes("NewPassword12311NewPassword12311");
     private static readonly byte[] iv = Encoding.UTF8.GetBytes("Tsalt1wtQt9kHuHg");
 
-    LeaderboardClass leaderboards = new LeaderboardClass();
+
 
     private void OnEnable()
     {
@@ -33,9 +33,9 @@ public class DBSubmit : SingletonPersistent<DBSubmit>
 
     public void sendToDatabase()
     {
-        StartCoroutine(SendCoin());
-        StartCoroutine(SendScore());
-        StartCoroutine(SendAdditionalData());
+        //StartCoroutine(SendCoin());
+        //StartCoroutine(SendScore());
+        //StartCoroutine(SendAdditionalData());
     }
 
     private void Start()
