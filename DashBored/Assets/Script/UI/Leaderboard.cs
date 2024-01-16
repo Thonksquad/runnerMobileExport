@@ -11,8 +11,12 @@ public class Leaderboard : MonoBehaviour, IPointerDownHandler
 
     const string leaderboardId = "leaderboard";
 
-    public TextMeshProUGUI[] topTxt;
-    public TextMeshProUGUI[] aroundTxt;
+    public TextMeshProUGUI[] topTxtRanks;
+    public TextMeshProUGUI[] topTxtNames;
+    public TextMeshProUGUI[] topTxtScores;
+    public TextMeshProUGUI[] aroundTxtRanks;
+    public TextMeshProUGUI[] aroundTxtNames;
+    public TextMeshProUGUI[] aroundTxtScores;
 
 
 
@@ -49,12 +53,21 @@ public class Leaderboard : MonoBehaviour, IPointerDownHandler
 
         foreach (Result res in first5.results)
         {
-            topTxt[i].text = " " + ((int)res.rank + 1).ToString() + " - " + res.playerName + " - " + res.score;
+            topTxtRanks[i].text = (res.rank + 1).ToString();
+            topTxtNames[i].text = res.playerName;
+            topTxtScores[i].text = res.score.ToString();
+            //Debug.Log("" + (res.rank + 1).ToString() + " -- " + res.playerName + " -- " + res.score.ToString());
+            i++;
         }
-        Debug.Log("leaderboard  =============== ");
+
+        i = 0;
         foreach (Result res in second5.results)
         {
-            aroundTxt[i].text = " " + ((int)res.rank + 1).ToString() + " - " + res.playerName + " - " + res.score;
+            aroundTxtRanks[i].text = (res.rank + 1).ToString();
+            aroundTxtNames[i].text = res.playerName;
+            aroundTxtScores[i].text = res.score.ToString();
+            //Debug.Log("" + (res.rank + 1).ToString() + " -- " + res.playerName + " -- " + res.score.ToString());
+            i++;
         }
 
 

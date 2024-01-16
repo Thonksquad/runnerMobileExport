@@ -33,7 +33,7 @@ public class MainMenu : MonoBehaviour, IPointerDownHandler
         var metadata = new Dictionary<string, string>() {
             { "gameLength", GameManager.gameLength.ToString() } ,
             { "enemiesKilled", GameManager.enemiesKilled.ToString() },
-            { "speed", "?" }
+            { "speed", CameraManager.Instance.CamSpeed.ToString() }
         };
         var playerEntry = await LeaderboardsService.Instance
             .AddPlayerScoreAsync(leaderboardId, GameManager.distance,
