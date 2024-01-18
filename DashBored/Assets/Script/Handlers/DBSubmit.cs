@@ -11,6 +11,8 @@ using UnityEngine.UI;
 
 public class DBSubmit : SingletonPersistent<DBSubmit>
 {
+
+    /*
     public static string baseURL = "https://ecmgqf1op7.execute-api.us-east-1.amazonaws.com/";
     public static string token2 = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJnYW1lIiwiZXhwIjoxNjkzOTg2MjI1fQ.crB0vdpfT8LJNXBk432ilXDZi9fTP0MnPhM4eW4KLtA";
     public static int counterSendScoreOneTime = 0; //Counter increases when score is sent
@@ -229,15 +231,15 @@ public class DBSubmit : SingletonPersistent<DBSubmit>
         // Set the request headers
         request.SetRequestHeader("Content-Type", "application/json");
         request.SetRequestHeader("Authorization", "Bearer " + token2);
-
-        /**
+    
+        
         string jsonPayload = "{\n" +
             "\"distance_travelled\": " + scoreEnc + "," +
             "\"game_length\": " + timeEnc + "," +
             "\"enemies_killed\": " + enemiesEnc + "," +
             "\"player_speed_at_death\": " + speedEnc +
             "}";
-        **/
+        
 
         // double {{ is how you "escape" the string interpolation to print out a single "{"
         string jsonPayload = $"{{\n\"distance_travelled\": \"{scoreEnc}\",\n" +
@@ -265,5 +267,5 @@ public class DBSubmit : SingletonPersistent<DBSubmit>
 
         request.Dispose();
      }
-    
+    */
 }

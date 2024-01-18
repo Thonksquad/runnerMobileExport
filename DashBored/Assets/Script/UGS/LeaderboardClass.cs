@@ -7,6 +7,7 @@ using UnityEngine;
 public class LeaderboardClass : MonoBehaviour
 {
 
+    
 
     async void Awake()
     {
@@ -33,6 +34,7 @@ public class LeaderboardClass : MonoBehaviour
         AuthenticationService.Instance.SignedIn += () =>
         {
             Debug.Log("Signed in as: " + AuthenticationService.Instance.PlayerId);
+            PlayerPrefs.SetString("ugsPlayerIds", AuthenticationService.Instance.PlayerId);
         };
         AuthenticationService.Instance.SignInFailed += s =>
         {

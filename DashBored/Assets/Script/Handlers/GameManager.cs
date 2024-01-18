@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
     private int hounds = 1;
     private Coroutine coUpdateTimer;
 
+
     private void Awake()
     {
         Instance = this;
@@ -50,7 +51,7 @@ public class GameManager : MonoBehaviour
         ChangeState(GameState.ArcadeMode);
     }
 
-        public void IncreaseCoin(int amt)
+    public void IncreaseCoin(int amt)
     {
         coins += amt;
         coinUI.text = coins.ToString();
@@ -95,17 +96,24 @@ public class GameManager : MonoBehaviour
 
     public void playerDeath()
     {
-        if (newHighScore())
+        if( adsManager.Instance.hasVideoChance)
         {
-           DBGrabUser.highScore = (int)Mathf.Round(distance);
+            adsManager.Instance.showVideo();
         }
-        Time.timeScale = 0;
-        SoundManager.Instance.PlaySound(_deathSound);
-        gameOverScreen.SetActive(true);
-        SoundManager.Instance.ToggleMusic();
-        EnddistanceUI.text = Mathf.Round(distance).ToString();
-        BestdistanceUI.text = DBGrabUser.highScore.ToString();
-        EndcoinsUI.text = coins.ToString();
+        else
+        {
+            if (newHighScore())
+            {
+                DBGrabUser.highScore = (int)Mathf.Round(distance);
+            }
+            Time.timeScale = 0;
+            SoundManager.Instance.PlaySound(_deathSound);
+            gameOverScreen.SetActive(true);
+            SoundManager.Instance.ToggleMusic();
+            EnddistanceUI.text = Mathf.Round(distance).ToString();
+            BestdistanceUI.text = DBGrabUser.highScore.ToString();
+            EndcoinsUI.text = coins.ToString();
+        }
     }
 
     private IEnumerator UpdateTimer()
@@ -129,7 +137,7 @@ public class GameManager : MonoBehaviour
 }
 
 
-    public enum GameState
+public enum GameState
 {
     StartScreen = 0,
     ArcadeMode = 1,

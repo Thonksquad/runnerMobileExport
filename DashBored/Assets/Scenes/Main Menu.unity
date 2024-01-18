@@ -9715,6 +9715,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a62f88b7b784c0499e8adb73622ec97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerColor: {r: 1, g: 0.7052167, b: 0, a: 1}
   topTxtRanks:
   - {fileID: 1471792959}
   - {fileID: 374061304}

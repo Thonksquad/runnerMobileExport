@@ -11,6 +11,8 @@ public class Leaderboard : MonoBehaviour, IPointerDownHandler
 
     const string leaderboardId = "leaderboard";
 
+    public Color playerColor;
+
     public TextMeshProUGUI[] topTxtRanks;
     public TextMeshProUGUI[] topTxtNames;
     public TextMeshProUGUI[] topTxtScores;
@@ -56,6 +58,12 @@ public class Leaderboard : MonoBehaviour, IPointerDownHandler
             topTxtRanks[i].text = (res.rank + 1).ToString();
             topTxtNames[i].text = res.playerName;
             topTxtScores[i].text = res.score.ToString();
+            if (res.playerId == PlayerPrefs.GetString("ugsPlayerIds"))
+            {
+                aroundTxtRanks[i].color = playerColor;
+                aroundTxtNames[i].color = playerColor;
+                aroundTxtScores[i].color = playerColor;
+            }
             //Debug.Log("" + (res.rank + 1).ToString() + " -- " + res.playerName + " -- " + res.score.ToString());
             i++;
         }
@@ -66,6 +74,12 @@ public class Leaderboard : MonoBehaviour, IPointerDownHandler
             aroundTxtRanks[i].text = (res.rank + 1).ToString();
             aroundTxtNames[i].text = res.playerName;
             aroundTxtScores[i].text = res.score.ToString();
+            if (res.playerId == PlayerPrefs.GetString("ugsPlayerIds"))
+            {
+                aroundTxtRanks[i].color = playerColor;
+                aroundTxtNames[i].color = playerColor;
+                aroundTxtScores[i].color = playerColor;
+            }
             //Debug.Log("" + (res.rank + 1).ToString() + " -- " + res.playerName + " -- " + res.score.ToString());
             i++;
         }
