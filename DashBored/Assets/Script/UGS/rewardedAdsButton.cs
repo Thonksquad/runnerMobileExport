@@ -6,9 +6,12 @@ public class rewardedAdsButton : MonoBehaviour, IUnityAdsLoadListener, IUnityAds
 {
 
     [SerializeField] Button _showAdButton;
-    [SerializeField] string _androidAdUnitId = "5530169";
-    [SerializeField] string _iOSAdUnitId = "5530168";
+    [SerializeField] string _androidAdUnitId = "Rewarded_Android";
+    [SerializeField] string _iOSAdUnitId = "Rewarded_iOS";
     string _adUnitId = null; // This will remain null for unsupported platforms
+    [SerializeField] bool _testMode = true;
+
+
     public static rewardedAdsButton Instance;
 
     void Awake()
@@ -18,11 +21,19 @@ public class rewardedAdsButton : MonoBehaviour, IUnityAdsLoadListener, IUnityAds
         _adUnitId = _iOSAdUnitId;
 #elif UNITY_ANDROID
         _adUnitId = _androidAdUnitId;
+#elif UNITY_EDITOR
+        _adUnitId = _androidAdUnitId; //Only for testing the functionality in the Editor
 #endif
 
+        Debug.Log(" id = " + _adUnitId);
         // Disable the button until the ad is ready to show:
         _showAdButton.interactable = false;
-        Instance = this;
+        
+        if( Instance == null )
+        {
+            Instance = this;
+        }
+
     }
 
     // Call this public method when you want to get an ad ready to show.
@@ -31,7 +42,7 @@ public class rewardedAdsButton : MonoBehaviour, IUnityAdsLoadListener, IUnityAds
         // IMPORTANT! Only load content AFTER initialization (in this example, initialization is handled in a different script).
         Debug.Log("Loading Ad: " + _adUnitId);
         Advertisement.Load(_adUnitId, this);
-        OnUnityAdsAdLoaded(_adUnitId);
+        //OnUnityAdsAdLoaded(_adUnitId);
     }
 
     // If the ad successfully loads, add a listener to the button and enable it:
@@ -92,5 +103,7 @@ public class rewardedAdsButton : MonoBehaviour, IUnityAdsLoadListener, IUnityAds
         // Clean up the button listeners:
         _showAdButton.onClick.RemoveAllListeners();
     }
+
+
 
 }

@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using TMPro;
+using Newtonsoft.Json;
+using Unity.Services.Leaderboards;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class GameManager : MonoBehaviour
 {
@@ -24,6 +27,9 @@ public class GameManager : MonoBehaviour
     public static int coins = 0;
     private int hounds = 1;
     private Coroutine coUpdateTimer;
+
+
+    const string leaderboardId = "leaderboard";
 
 
     private void Awake()
@@ -96,7 +102,15 @@ public class GameManager : MonoBehaviour
 
     public void playerDeath()
     {
-        if( adsManager.Instance.hasVideoChance)
+        Time.timeScale = 0;
+        SoundManager.Instance.PlaySound(_deathSound);
+        SoundManager.Instance.ToggleMusic();
+        EnddistanceUI.text = Mathf.Round(distance).ToString();
+        BestdistanceUI.text = DBGrabUser.highScore.ToString();
+        EndcoinsUI.text = coins.ToString();
+        addScore();
+
+        if ( adsManager.Instance.hasVideoChance)
         {
             adsManager.Instance.showVideo();
         }
@@ -106,15 +120,24 @@ public class GameManager : MonoBehaviour
             {
                 DBGrabUser.highScore = (int)Mathf.Round(distance);
             }
-            Time.timeScale = 0;
-            SoundManager.Instance.PlaySound(_deathSound);
             gameOverScreen.SetActive(true);
-            SoundManager.Instance.ToggleMusic();
-            EnddistanceUI.text = Mathf.Round(distance).ToString();
-            BestdistanceUI.text = DBGrabUser.highScore.ToString();
-            EndcoinsUI.text = coins.ToString();
         }
     }
+
+    public async void addScore()
+    {
+        var metadata = new Dictionary<string, string>() {
+            { "gameLength", GameManager.gameLength.ToString() } ,
+            { "enemiesKilled", GameManager.enemiesKilled.ToString() },
+            { "speed", CameraManager.Instance.CamSpeed.ToString() }
+        };
+        var playerEntry = await LeaderboardsService.Instance
+            .AddPlayerScoreAsync(leaderboardId, GameManager.distance,
+            new AddPlayerScoreOptions { Metadata = metadata }
+            );
+        Debug.Log(JsonConvert.SerializeObject(playerEntry));
+    }
+
 
     private IEnumerator UpdateTimer()
     {
