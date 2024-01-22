@@ -66,7 +66,7 @@ public class LeaderboardClass : MonoBehaviour
         {
         
             LoginToApple();
-            SignInWithAppleAsync(Token);
+            await SignInWithAppleAsync(Token);
         }
         catch (Exception e)
         {
