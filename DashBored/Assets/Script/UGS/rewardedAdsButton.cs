@@ -56,7 +56,7 @@ public class rewardedAdsButton : MonoBehaviour, IUnityAdsLoadListener, IUnityAds
             _showAdButton.onClick.AddListener(ShowAd);
             // Enable the button for users to click:
             _showAdButton.interactable = true;
-            adsManager.Instance.activateAds();
+            //adsManager.Instance.activateAds();
         }
     }
 
@@ -65,6 +65,7 @@ public class rewardedAdsButton : MonoBehaviour, IUnityAdsLoadListener, IUnityAds
     {
         // Disable the button:
         _showAdButton.interactable = false;
+        adsManager.Instance.activateAds();
         // Then show the ad:
         Advertisement.Show(_adUnitId, this);
     }

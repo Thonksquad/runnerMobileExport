@@ -7,6 +7,7 @@ public class adsManager : MonoBehaviour
 {
     public static adsManager Instance;
     [SerializeField] private GameObject videoChanceScreen;
+    [SerializeField] private GameObject vcCloseBtn;
     public bool hasVideoChance = true;
     public TextMeshProUGUI vcTxt;
     public Color vcMainColor;
@@ -44,14 +45,17 @@ public class adsManager : MonoBehaviour
 
         videoChanceScreen.SetActive(true);
 
+#if UNITY_ANDROID
+        vcCloseBtn.transform.position = new Vector3 ( 300f, -50f, 0);
+#endif
 
-        /*
+
         vcTxt.text = timeToChoose.ToString();
         vcTxt.color = vcMainColor;
         vcTxt.fontSize = vcMainFontSize;
         vcTxtOnMainState = true;
         StartCoroutine(videoChanceTimer());
-        */
+        
 
     }
 
@@ -68,17 +72,21 @@ public class adsManager : MonoBehaviour
     private IEnumerator videoChanceTimer()
     {
         float vcTimer = timeToChoose;
-        while (vcTimer >= 0f)
+        while (vcTimer > 0f)
         {
-            yield return new WaitForSeconds(0.5f);
             vcTimer -= 0.5f;
             changeVCtext(vcTimer);
+            yield return new WaitForSecondsRealtime(0.5f);
         }
 
 
         if (!clickedWatchBtn)
         {
             cancelVideoAds();
+        }
+        else
+        {
+            Debug.Log("show video");
         }
         clickedWatchBtn = false;
     }
@@ -92,7 +100,6 @@ public class adsManager : MonoBehaviour
         videoChanceScreen.SetActive(false);
         vcTxt.color = vcMainColor;
         vcTxt.fontSize = vcMainFontSize;
-        hasVideoChance = true;
     }
 
     private void changeVCtext(float t)

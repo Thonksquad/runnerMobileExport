@@ -2544,7 +2544,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 500, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 800, y: 700}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &577172372
@@ -3366,7 +3366,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fbb66bb6da94a342b87a87946cef212, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _showAdButton: {fileID: 147796639}
+  _showAdButton: {fileID: 613754794}
   _androidAdUnitId: Rewarded_Android
   _iOSAdUnitId: Rewarded_iOS
   _testMode: 1
@@ -3382,7 +3382,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b281feca2cc30ae409d5f834540c2d5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  videoChanceScreen: {fileID: 203177216}
+  videoChanceScreen: {fileID: 380558559}
+  vcCloseBtn: {fileID: 1186105084}
   hasVideoChance: 1
   vcTxt: {fileID: 930114261}
   vcMainColor: {r: 1, g: 1, b: 1, a: 1}
@@ -4550,11 +4551,11 @@ RectTransform:
   m_Father: {fileID: 577172371}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 50, y: -50}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: -300, y: -50}
   m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0, y: 1}
+  m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1186105086
 MonoBehaviour:
   m_ObjectHideFlags: 0
