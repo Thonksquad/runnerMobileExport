@@ -7,7 +7,7 @@ using UnityEngine;
 
 // External dependencies
 
-#if UNITY_IPHONE
+#if UNITY_IOS
 
 using AppleAuth;
 using AppleAuth.Enums;
@@ -21,7 +21,7 @@ public class LeaderboardClass : MonoBehaviour
 {
 
 
-#if UNITY_IPHONE
+#if UNITY_IOS
 
     IAppleAuthManager m_AppleAuthManager;
     public string Token { get; private set; }
@@ -60,7 +60,7 @@ public class LeaderboardClass : MonoBehaviour
     public async void signInWithID()
     {
 
-#if UNITY_IPHONE
+#if UNITY_IOS
 
         try
         {
@@ -196,7 +196,7 @@ public class LeaderboardClass : MonoBehaviour
 
 
 
-#if UNITY_IPHONE
+#if UNITY_IOS
     public void Initialize()
     {
         var deserializer = new PayloadDeserializer();
