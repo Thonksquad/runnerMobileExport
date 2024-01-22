@@ -63,7 +63,7 @@ public class adsManager : MonoBehaviour
 
     public void playerWatchedAds()
     {
-        ActionSystem.onPlayerRevive();
+        ActionSystem.onAdRevive();
         Time.timeScale = 1;
         videoChanceScreen.SetActive(false);
         AudioListener.pause = false;

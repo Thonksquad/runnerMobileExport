@@ -30,7 +30,6 @@ public class GameManager : MonoBehaviour
     private int hounds = 1;
     private Coroutine coUpdateTimer;
 
-
     const string leaderboardId = "leaderboard";
 
 
@@ -52,7 +51,7 @@ public class GameManager : MonoBehaviour
     private void OnEnable()
     {
         ActionSystem.onPlayerHit += playerHit;
-        ActionSystem.onPlayerRecover += playerRecover;
+        ActionSystem.onPlayerRestart += playerRestart;
         ActionSystem.onEnemyDeath += enemyKilled;
 
     }
@@ -60,7 +59,7 @@ public class GameManager : MonoBehaviour
     private void OnDisable()
     {
         ActionSystem.onPlayerHit -= playerHit;
-        ActionSystem.onPlayerRecover -= playerRecover;
+        ActionSystem.onPlayerRestart -= playerRestart;
         ActionSystem.onEnemyDeath -= enemyKilled;
     }
 
@@ -84,6 +83,11 @@ public class GameManager : MonoBehaviour
             case GameState.StartScreen:
                 break;
             case GameState.ArcadeMode:
+                gameLength = 0;
+                enemiesKilled = 0;
+                distance = 0;
+                coins = 0;
+                hounds = 1;
                 coUpdateTimer = StartCoroutine(UpdateTimer());
                 break;
             case GameState.GamePause:
@@ -101,7 +105,7 @@ public class GameManager : MonoBehaviour
         enemiesKilled++;
     }
 
-    public void playerRecover()
+    public void playerRestart()
     {
         enemiesKilled = 0;
         gameLength = 0;
@@ -172,7 +176,6 @@ public class GameManager : MonoBehaviour
         }
     }
 }
-
 
 public enum GameState
 {

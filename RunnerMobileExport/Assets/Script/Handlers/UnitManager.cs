@@ -45,6 +45,30 @@ public class UnitManager : MonoBehaviour
         Instance = this;
     }
 
+    private void OnEnable()
+    {
+        ActionSystem.onAdRevive += PauseSpawns;
+    }
+
+    private void OnDisable()
+    {
+        ActionSystem.onAdRevive -= PauseSpawns;
+    }
+
+
+    private void PauseSpawns()
+    {
+        StopAllCoroutines();
+        Invoke(nameof(ResumeSpawns), 2f);
+    }
+
+    private void ResumeSpawns()
+    {
+        StartCoroutine(SpawnEnemyTimer(mobspawnInterval));
+        StartCoroutine(SpawnObstacleTimer(mobspawnInterval));
+        StartCoroutine(SpawnCoinTimer(coinspawnInterval));
+    }
+
     private void Start()
     {
         player = FindObjectOfType<Player>();

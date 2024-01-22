@@ -17,7 +17,6 @@ public class MainMenu : MonoBehaviour, IPointerDownHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        ActionSystem.onPlayerRevive();
         SceneManager.LoadSceneAsync("Main Menu", LoadSceneMode.Single);
         player.gameOver = false;
         Time.timeScale = 1;

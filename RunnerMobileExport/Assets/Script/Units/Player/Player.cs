@@ -63,7 +63,8 @@ public class Player : MonoBehaviour
 
     private void OnEnable()
     {
-        ActionSystem.onPlayerRevive += TurnCollisionOn;
+        ActionSystem.onAdRevive += AdRevive;
+        ActionSystem.onPlayerRecover += TurnCollisionOn;
         fly = playerControls.Player.Fly;
         fly.Enable();
         fire = playerControls.Player.Fire;
@@ -73,7 +74,8 @@ public class Player : MonoBehaviour
 
     private void OnDisable()
     {
-        ActionSystem.onPlayerRevive -= TurnCollisionOn;
+        ActionSystem.onAdRevive -= AdRevive;
+        ActionSystem.onPlayerRecover -= TurnCollisionOn;
         fly.Disable();
         fire.Disable();
         fire.performed -= OnFire;
@@ -184,6 +186,16 @@ public class Player : MonoBehaviour
     {
         isInvulnerable = false;
         Physics2D.IgnoreLayerCollision(6, 8, false);
+    }
+
+    private void AdRevive()
+    {
+        gameOver = false;
+        gameOverCounter = 0;
+        Physics2D.IgnoreLayerCollision(6, 8);
+        isInvulnerable = true;
+        gameTrackerScreen.SetActive(true);
+        Invoke(nameof(TurnCollisionOn), 2);
     }
 
     public void TakeDamage(int amount)
