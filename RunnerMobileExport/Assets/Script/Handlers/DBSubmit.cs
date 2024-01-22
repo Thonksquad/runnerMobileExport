@@ -21,12 +21,12 @@ public class DBSubmit : SingletonPersistent<DBSubmit>
 
     private void OnEnable()
     {
-        ActionSystem.onPlayerDeath += sendToDatabase;
+        ActionSystem.onPlayerHit += sendToDatabase;
     }
 
     private void OnDisable()
     {
-        ActionSystem.onPlayerDeath -= sendToDatabase;
+        ActionSystem.onPlayerHit -= sendToDatabase;
     }
 
     public void sendToDatabase()

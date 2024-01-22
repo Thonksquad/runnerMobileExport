@@ -139,7 +139,7 @@ public class Player : MonoBehaviour
         {
             gameOverCounter++;
             gameTrackerScreen.SetActive(false);
-            ActionSystem.onPlayerDeath();
+            ActionSystem.onPlayerHit();
             return;
         }
 
