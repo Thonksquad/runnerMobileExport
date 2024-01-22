@@ -5,7 +5,7 @@ using System;
 using TMPro;
 using Newtonsoft.Json;
 using Unity.Services.Leaderboards;
-using UnityEngine.SocialPlatforms.Impl;
+
 
 public class GameManager : MonoBehaviour
 {
@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI coinUI;
 
     // Refactor this so that it grabs from UGS's DB
-    private bool newHighScore() => distance > DBGrabUser.highScore;
+    //private bool newHighScore() => distance > DBGrabUser.highScore;
     public static float gameLength;
     public static float enemiesKilled;
     public static float distance;
@@ -36,7 +36,17 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        Instance = this;
+        if(Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            if(Instance != this)
+            {
+                Destroy(this);
+            }
+        }
     }
 
     private void OnEnable()
@@ -118,10 +128,12 @@ public class GameManager : MonoBehaviour
         }
         else
         {
+            /*
             if (newHighScore())
             {
                 DBGrabUser.highScore = (int)Mathf.Round(distance);
             }
+            */
             gameOverScreen.SetActive(true);
         }
     }
