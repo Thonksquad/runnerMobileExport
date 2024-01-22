@@ -1,0 +1,443 @@
+fileFormatVersion: 2
+guid: 00ec2c012de2ba440a5cc365110492cf
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 12
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: fire obstacle rotating_0
+      rect:
+        serializedVersion: 2
+        x: 28
+        y: 30
+        width: 168
+        height: 486
+      alignment: 9
+      pivot: {x: 0.4683322, y: 0.8393528}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3472d0bd1824ff047b0fdb716fb1c451
+      internalID: -1018627917
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fire obstacle rotating_1
+      rect:
+        serializedVersion: 2
+        x: 230
+        y: 34
+        width: 162
+        height: 482
+      alignment: 9
+      pivot: {x: 0.52189374, y: 0.83848983}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e0dd02a7537fbeb4c956eb425bcf851a
+      internalID: -1277686198
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fire obstacle rotating_2
+      rect:
+        serializedVersion: 2
+        x: 427
+        y: 35
+        width: 168
+        height: 485
+      alignment: 9
+      pivot: {x: 0.46833238, y: 0.8327396}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 928d2ee9379fda543932edebd62b845e
+      internalID: -1798557196
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fire obstacle rotating_3
+      rect:
+        serializedVersion: 2
+        x: 631
+        y: 32
+        width: 162
+        height: 485
+      alignment: 9
+      pivot: {x: 0.48905322, y: 0.8327396}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 86d967876b8e09c4c9c33932c18d07cd
+      internalID: -1190086610
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fire obstacle rotating_4
+      rect:
+        serializedVersion: 2
+        x: 828
+        y: 26
+        width: 165
+        height: 494
+      alignment: 9
+      pivot: {x: 0.51074773, y: 0.8410369}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3bc8af28868e0cf438fe377490a1c919
+      internalID: -648413895
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fire obstacle rotating_5
+      rect:
+        serializedVersion: 2
+        x: 1027
+        y: 40
+        width: 169
+        height: 478
+      alignment: 9
+      pivot: {x: 0.48950702, y: 0.8450324}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1db4ed8d689d1704d8eb5ee1e120b3fb
+      internalID: -1743199308
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fire obstacle rotating_6
+      rect:
+        serializedVersion: 2
+        x: 1105
+        y: 27
+        width: 22
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: abe7b4ab13fb0964da2ca0195b8e731f
+      internalID: -72302473
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fire obstacle rotating_7
+      rect:
+        serializedVersion: 2
+        x: 1230
+        y: 36
+        width: 167
+        height: 481
+      alignment: 9
+      pivot: {x: 0.5106194, y: 0.82444596}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 029f217b99965ea4a9e28714406225c6
+      internalID: -19936649
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fire obstacle rotating_8
+      rect:
+        serializedVersion: 2
+        x: 1433
+        y: 34
+        width: 160
+        height: 486
+      alignment: 9
+      pivot: {x: 0.5000008, y: 0.8320549}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b79c750d1d45a164eaa2347147014ee6
+      internalID: 1021348268
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fire obstacle rotating_9
+      rect:
+        serializedVersion: 2
+        x: 1627
+        y: 32
+        width: 170
+        height: 487
+      alignment: 9
+      pivot: {x: 0.52086395, y: 0.83137304}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cd3c289daf440e341a4063003307aeea
+      internalID: 1122799552
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fire obstacle rotating_10
+      rect:
+        serializedVersion: 2
+        x: 1833
+        y: 30
+        width: 162
+        height: 491
+      alignment: 9
+      pivot: {x: 0.5218943, y: 0.8286734}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a1350abf2484c01409b85116b4a3a08f
+      internalID: -1496862453
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fire obstacle rotating_11
+      rect:
+        serializedVersion: 2
+        x: 2030
+        y: 27
+        width: 165
+        height: 484
+      alignment: 9
+      pivot: {x: 0.48925337, y: 0.84075505}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1b1be3a002b19ff4db24bc4cc2c20d1a
+      internalID: -1033959784
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fire obstacle rotating_12
+      rect:
+        serializedVersion: 2
+        x: 2229
+        y: 30
+        width: 168
+        height: 492
+      alignment: 9
+      pivot: {x: 0.55278087, y: 0.82800543}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ee4409998bc420c48893073bc8983ca6
+      internalID: -254871222
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fire obstacle rotating_13
+      rect:
+        serializedVersion: 2
+        x: 696
+        y: 27
+        width: 12
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dd98e95b07f5ce84c9885f48bf10eb53
+      internalID: -839035026
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      fire obstacle rotating_8: 1021348268
+      fire obstacle rotating_0: -1018627917
+      fire obstacle rotating_13: -839035026
+      fire obstacle rotating_2: -1798557196
+      fire obstacle rotating_9: 1122799552
+      fire obstacle rotating_11: -1033959784
+      fire obstacle rotating_10: -1496862453
+      fire obstacle rotating_5: -1743199308
+      fire obstacle rotating_6: -72302473
+      fire obstacle rotating_4: -648413895
+      fire obstacle rotating_3: -1190086610
+      fire obstacle rotating_12: -254871222
+      fire obstacle rotating_7: -19936649
+      fire obstacle rotating_1: -1277686198
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
