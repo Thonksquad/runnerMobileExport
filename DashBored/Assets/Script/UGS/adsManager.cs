@@ -1,6 +1,7 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class adsManager : MonoBehaviour
 {
@@ -15,8 +16,6 @@ public class adsManager : MonoBehaviour
     public int vcSecondFontSize = 120;
     private bool vcTxtOnMainState = true;
     private bool clickedWatchBtn = false;
-
-
 
     private void Awake()
     {
@@ -59,6 +58,7 @@ public class adsManager : MonoBehaviour
 
     public void playerWatchedAds()
     {
+        ActionSystem.onPlayerRevive();
         Time.timeScale = 1;
         videoChanceScreen.SetActive(false);
         AudioListener.pause = false;
@@ -87,7 +87,7 @@ public class adsManager : MonoBehaviour
 
     public void cancelVideoAds()
     {
-        GameManager.Instance.playerDeath();
+        GameManager.Instance.playerHit();
         clickedWatchBtn = false;
         videoChanceScreen.SetActive(false);
         vcTxt.color = vcMainColor;

@@ -20,6 +20,8 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI EndcoinsUI;
     public TextMeshProUGUI distanceUI;
     public TextMeshProUGUI coinUI;
+
+    // Refactor this so that it grabs from UGS's DB
     private bool newHighScore() => distance > DBGrabUser.highScore;
     public static float gameLength;
     public static float enemiesKilled;
@@ -39,16 +41,16 @@ public class GameManager : MonoBehaviour
 
     private void OnEnable()
     {
-        ActionSystem.onPlayerDeath += playerDeath;
-        ActionSystem.onPlayerRevive += playerRevive;
+        ActionSystem.onPlayerHit += playerHit;
+        ActionSystem.onPlayerRecover += playerRecover;
         ActionSystem.onEnemyDeath += enemyKilled;
 
     }
 
     private void OnDisable()
     {
-        ActionSystem.onPlayerDeath -= playerDeath;
-        ActionSystem.onPlayerRevive -= playerRevive;
+        ActionSystem.onPlayerHit -= playerHit;
+        ActionSystem.onPlayerRecover -= playerRecover;
         ActionSystem.onEnemyDeath -= enemyKilled;
     }
 
@@ -89,7 +91,7 @@ public class GameManager : MonoBehaviour
         enemiesKilled++;
     }
 
-    public void playerRevive()
+    public void playerRecover()
     {
         enemiesKilled = 0;
         gameLength = 0;
@@ -100,7 +102,7 @@ public class GameManager : MonoBehaviour
         SoundManager.Instance.TurnMusicOn();
     }
 
-    public void playerDeath()
+    public void playerHit()
     {
         Time.timeScale = 0;
         SoundManager.Instance.PlaySound(_deathSound);
