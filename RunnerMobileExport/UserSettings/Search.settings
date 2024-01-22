@@ -1,4 +1,5 @@
 trackSelection = true
+refreshSearchWindowsInPlayMode = false
 fetchPreview = true
 defaultFlags = 0
 keepOpen = false
@@ -15,6 +16,16 @@ providers = {
 	adb = {
 		active = false
 		priority = 2500
+}
+providers = {
+	log = {
+		active = false
+		priority = 210
+		defaultAction = null
+	}
+	performance = {
+		active = false
+		priority = 100
 		defaultAction = null
 	}
 	asset = {
@@ -24,6 +35,13 @@ providers = {
 	}
 	store = {
 		active = true
+	packages = {
+		active = true
+		priority = 90
+		defaultAction = null
+	}
+	profilermarkers = {
+		active = false
 		priority = 100
 		defaultAction = null
 	}
@@ -52,6 +70,16 @@ providers = {
 		priority = 50
 		defaultAction = null
 	}
+	store = {
+		active = true
+		priority = 100
+		defaultAction = null
+	}
+	adb = {
+		active = false
+		priority = 2500
+		defaultAction = null
+	}
 }
 objectSelectors = {
 }
@@ -62,9 +90,14 @@ searchItemFavorites = [
 ]
 savedSearchesSortOrder = 0
 showSavedSearchPanel = false
+hideTabs = false
 expandedQueries = [
 ]
 queryBuilder = false
 ignoredProperties = "id;name;classname;imagecontentshash"
 helperWidgetCurrentArea = "all"
-disabledIndexers = ""
+<<<<<<< Updated upstream
+=======
+minIndexVariations = 2
+findProviderIndexHelper = true
+>>>>>>> Stashed changes
