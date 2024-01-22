@@ -31,11 +31,14 @@ UnityConnectSettings:
     m_IosGameId: 
     m_AndroidGameId: 
     m_GameIds:
+<<<<<<< Updated upstream
       AndroidPlayer: 5530169
       iPhonePlayer: 5530168
     m_GameId: 
+=======
       AndroidPlayer: 5534549
       iPhonePlayer: 5534548
     m_GameId: 5534549
+>>>>>>> Stashed changes
   PerformanceReportingSettings:
     m_Enabled: 0
