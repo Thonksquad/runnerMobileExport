@@ -17,11 +17,6 @@ public class Bullet : MonoBehaviour
         Vector3 bulletDirection = mousepos - transform.position;
         Vector3 bulletRotation = transform.position - mousepos;
         rb.velocity = new Vector3(90, 0).normalized * (force + CameraManager.Instance.CamSpeed);
-
-        //Omnidirection
-        //rb.velocity = new Vector3(bulletDirection.x, bulletDirection.y).normalized * force;
-        //float rot = Mathf.Atan2(bulletRotation.y, bulletRotation.x) * Mathf.Rad2Deg;
-        //transform.rotation = Quaternion.Euler(0, 0, rot+90);
     }
 
     void OnBecameInvisible()

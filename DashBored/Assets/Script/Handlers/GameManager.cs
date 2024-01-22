@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using TMPro;
+using Newtonsoft.Json;
+using Unity.Services.Leaderboards;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class GameManager : MonoBehaviour
 {
@@ -17,6 +20,8 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI EndcoinsUI;
     public TextMeshProUGUI distanceUI;
     public TextMeshProUGUI coinUI;
+
+    // Refactor this so that it grabs from UGS's DB
     private bool newHighScore() => distance > DBGrabUser.highScore;
     public static float gameLength;
     public static float enemiesKilled;
@@ -25,6 +30,10 @@ public class GameManager : MonoBehaviour
     private int hounds = 1;
     private Coroutine coUpdateTimer;
 
+
+    const string leaderboardId = "leaderboard";
+
+
     private void Awake()
     {
         Instance = this;
@@ -32,16 +41,16 @@ public class GameManager : MonoBehaviour
 
     private void OnEnable()
     {
-        ActionSystem.onPlayerDeath += playerDeath;
-        ActionSystem.onPlayerRevive += playerRevive;
+        ActionSystem.onPlayerHit += playerHit;
+        ActionSystem.onPlayerRecover += playerRecover;
         ActionSystem.onEnemyDeath += enemyKilled;
 
     }
 
     private void OnDisable()
     {
-        ActionSystem.onPlayerDeath -= playerDeath;
-        ActionSystem.onPlayerRevive -= playerRevive;
+        ActionSystem.onPlayerHit -= playerHit;
+        ActionSystem.onPlayerRecover -= playerRecover;
         ActionSystem.onEnemyDeath -= enemyKilled;
     }
 
@@ -50,7 +59,7 @@ public class GameManager : MonoBehaviour
         ChangeState(GameState.ArcadeMode);
     }
 
-        public void IncreaseCoin(int amt)
+    public void IncreaseCoin(int amt)
     {
         coins += amt;
         coinUI.text = coins.ToString();
@@ -82,7 +91,7 @@ public class GameManager : MonoBehaviour
         enemiesKilled++;
     }
 
-    public void playerRevive()
+    public void playerRecover()
     {
         enemiesKilled = 0;
         gameLength = 0;
@@ -93,20 +102,44 @@ public class GameManager : MonoBehaviour
         SoundManager.Instance.TurnMusicOn();
     }
 
-    public void playerDeath()
+    public void playerHit()
     {
-        if (newHighScore())
-        {
-           DBGrabUser.highScore = (int)Mathf.Round(distance);
-        }
         Time.timeScale = 0;
         SoundManager.Instance.PlaySound(_deathSound);
-        gameOverScreen.SetActive(true);
         SoundManager.Instance.ToggleMusic();
         EnddistanceUI.text = Mathf.Round(distance).ToString();
         BestdistanceUI.text = DBGrabUser.highScore.ToString();
         EndcoinsUI.text = coins.ToString();
+        addScore();
+
+        if ( adsManager.Instance.hasVideoChance)
+        {
+            adsManager.Instance.showVideo();
+        }
+        else
+        {
+            if (newHighScore())
+            {
+                DBGrabUser.highScore = (int)Mathf.Round(distance);
+            }
+            gameOverScreen.SetActive(true);
+        }
     }
+
+    public async void addScore()
+    {
+        var metadata = new Dictionary<string, string>() {
+            { "gameLength", GameManager.gameLength.ToString() } ,
+            { "enemiesKilled", GameManager.enemiesKilled.ToString() },
+            { "speed", CameraManager.Instance.CamSpeed.ToString() }
+        };
+        var playerEntry = await LeaderboardsService.Instance
+            .AddPlayerScoreAsync(leaderboardId, GameManager.distance,
+            new AddPlayerScoreOptions { Metadata = metadata }
+            );
+        Debug.Log(JsonConvert.SerializeObject(playerEntry));
+    }
+
 
     private IEnumerator UpdateTimer()
     {
@@ -129,7 +162,7 @@ public class GameManager : MonoBehaviour
 }
 
 
-    public enum GameState
+public enum GameState
 {
     StartScreen = 0,
     ArcadeMode = 1,

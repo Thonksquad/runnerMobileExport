@@ -63,7 +63,8 @@ public class Player : MonoBehaviour
 
     private void OnEnable()
     {
-        ActionSystem.onPlayerRevive += TurnCollisionOn;
+        ActionSystem.onPlayerRecover += TurnCollisionOn;
+        ActionSystem.onPlayerRevive += Revive;
         fly = playerControls.Player.Fly;
         fly.Enable();
         fire = playerControls.Player.Fire;
@@ -73,7 +74,8 @@ public class Player : MonoBehaviour
 
     private void OnDisable()
     {
-        ActionSystem.onPlayerRevive -= TurnCollisionOn;
+        ActionSystem.onPlayerRecover -= TurnCollisionOn;
+        ActionSystem.onPlayerRevive -= Revive;
         fly.Disable();
         fire.Disable();
         fire.performed -= OnFire;
@@ -139,7 +141,7 @@ public class Player : MonoBehaviour
         {
             gameOverCounter++;
             gameTrackerScreen.SetActive(false);
-            ActionSystem.onPlayerDeath();
+            ActionSystem.onPlayerHit();
             return;
         }
 
@@ -160,16 +162,6 @@ public class Player : MonoBehaviour
 
             flyVelocity = (float)(8f + (CameraManager.Instance.CamSpeed * 0.15));
             body.velocity = new Vector3(0, flyVelocity, 0);
-            // jump logic
-            /**
-            if (AnimationHandler.IsGrounded())
-            {
-                body.velocity = new Vector3(0, 32f, 0);
-            } else
-            {
-                body.velocity = new Vector3(0, 8f, 0);
-            }
-            **/
         }
         else if (fly.WasReleasedThisFrame())
         {
@@ -204,4 +196,13 @@ public class Player : MonoBehaviour
             gameOver = true;
         }
     }
+
+    public void Revive()
+    {
+        gameTrackerScreen.SetActive(true);
+        TurnCollisionOn();
+        gameOver = false;
+        gameOverCounter = 0;
+    }
+
 }
