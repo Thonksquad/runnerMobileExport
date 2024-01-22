@@ -8,6 +8,7 @@ public class adsManager : MonoBehaviour
     public static adsManager Instance;
     [SerializeField] private GameObject videoChanceScreen;
     [SerializeField] private GameObject vcCloseBtn;
+    [SerializeField] private GameObject vcCloseAndroidPos;
     public bool hasVideoChance = true;
     public TextMeshProUGUI vcTxt;
     public Color vcMainColor;
@@ -46,7 +47,7 @@ public class adsManager : MonoBehaviour
         videoChanceScreen.SetActive(true);
 
 #if UNITY_ANDROID
-        vcCloseBtn.transform.position = new Vector3 ( 300f, -50f, 0);
+        vcCloseBtn.transform.position = vcCloseAndroidPos.transform.position;
 #endif
 
 
