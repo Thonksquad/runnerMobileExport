@@ -83,7 +83,7 @@ public class LeaderboardClass : MonoBehaviour
             InitializePlayGamesLogin();
             LoginGoogle();
 
-            string id = (PlayGamesLocalUser)Social.localUser).GetIdToken();
+            string id = ((PlayGamesLocalUser)Social.localUser).GetIdToken();
             await SignInWithGoogleAsync( id );
         }
         catch (Exception e)
