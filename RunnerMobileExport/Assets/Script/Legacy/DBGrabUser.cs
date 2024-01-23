@@ -10,6 +10,7 @@ using System.IO;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+/**
 public class DBGrabUser : SingletonPersistent<DBGrabUser>
 {
     public static int coinAllColected; // Obtained from API for total coins player has
@@ -187,17 +188,6 @@ public class DBGrabUser : SingletonPersistent<DBGrabUser>
                 discordNameLeader = playerData.discord_username;
             }
 
-            /**
-            //discord username lenght
-            if (playerData.discord_username.Length >= 10)
-            {
-                discordName.text = playerData.discord_username.Substring(0, 10);
-            }
-            else
-            {
-                discordName.text = playerData.discord_username;
-            }
-            **/
             usernameText.ChangeUsername();
             imageLink = playerData.discord_avatar_url;
             StartCoroutine(GrabWebImage());
@@ -250,3 +240,4 @@ public class DBGrabUser : SingletonPersistent<DBGrabUser>
         pfpImage.ChangeImage();
     }
 }
+**/

@@ -14,6 +14,6 @@ public class ReloadPfp : MonoBehaviour
 
     public void ChangeImage()
     {
-        ProfileImage.sprite = DBGrabUser.StoredSprite;
+        //ProfileImage.sprite = DBGrabUser.StoredSprite;
     }
 }

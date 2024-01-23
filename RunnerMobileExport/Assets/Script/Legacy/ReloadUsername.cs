@@ -15,6 +15,6 @@ public class ReloadUsername : MonoBehaviour
 
     public void ChangeUsername()
     {
-        discordName.text = DBGrabUser.discordNameLeader;
+        //discordName.text = DBGrabUser.discordNameLeader;
     }
 }
