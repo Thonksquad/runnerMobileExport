@@ -2211,6 +2211,7 @@ GameObject:
   - component: {fileID: 341879686}
   - component: {fileID: 341879687}
   - component: {fileID: 341879688}
+  - component: {fileID: 341879689}
   m_Layer: 0
   m_Name: DatabaseHandler
   m_TagString: Untagged
@@ -2260,6 +2261,20 @@ MonoBehaviour:
   _androidGameId: 5534549
   _iOSGameId: 5534548
   _testMode: 1
+--- !u!114 &341879689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 341879684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eee2f9da70865de4093baf644b9525e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _username: {fileID: 0}
+  _userPFP: {fileID: 1494804038}
 --- !u!1 &362184977
 GameObject:
   m_ObjectHideFlags: 0
