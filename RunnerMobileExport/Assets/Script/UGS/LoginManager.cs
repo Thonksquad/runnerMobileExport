@@ -1,5 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
+using System.Threading.Tasks;
+using Unity.Services.Authentication;
+using Unity.Services.Core;
 using UnityEngine;
 using GooglePlayGames;
 using GooglePlayGames.BasicApi;
@@ -11,26 +13,48 @@ public class LoginManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _username;
     [SerializeField] private Image _userPFP;
 
-    // Start is called before the first frame update
-    void Start()
+    public GameObject loginPnl;
+
+    private async void Awake()
     {
-        SignIn();
+        loginPnl.SetActive(false);
+        try
+        {
+            await UnityServices.InitializeAsync();
+        }
+        catch (Exception e)
+        {
+            Debug.LogException(e);
+        }
     }
 
-    public void SignIn()
+    public void showOptions()
     {
+        loginPnl.SetActive(true);
+    }
+
+
+
+
+    public void googlePlaySignIn()
+    {
+
         PlayGamesPlatform.Instance.Authenticate(ProcessAuthentication);
+        loginPnl.SetActive(false);
+
     }
 
     internal void ProcessAuthentication(SignInStatus status)
     {
         if (status == SignInStatus.Success)
         {
+
             // Continue with Play Games Services
             string name = PlayGamesPlatform.Instance.GetUserDisplayName();
             string image = PlayGamesPlatform.Instance.GetUserImageUrl();
 
             _username.text = name;
+
         }
         else
         {
@@ -40,5 +64,50 @@ public class LoginManager : MonoBehaviour
 
             _username.text = "Guest " + UnityEngine.Random.Range(100, 5000);
         }
+    }
+
+
+    public async void guestSignIn()
+    {
+        try
+        {
+            await SignInAnonymously();
+        }
+        catch (Exception e)
+        {
+            Debug.Log(e);
+        }
+        loginPnl.SetActive(false);
+    }
+
+    async Task SignInAnonymously()
+    {
+        AuthenticationService.Instance.SignedIn += () =>
+        {
+            Debug.Log("Signed in as: " + AuthenticationService.Instance.PlayerId);
+            PlayerPrefs.SetString("ugsPlayerIds", AuthenticationService.Instance.PlayerId);
+        };
+        AuthenticationService.Instance.SignInFailed += s =>
+        {
+            // Take some action here...
+            Debug.Log(s);
+        };
+
+        await AuthenticationService.Instance.SignInAnonymouslyAsync();
+    }
+
+
+    // max characters = 50
+    public void setPlayerName(string playerName)
+    {
+        try
+        {
+            AuthenticationService.Instance.UpdatePlayerNameAsync(playerName);
+        }
+        catch (Exception e)
+        {
+            Debug.LogException(e);
+        }
+
     }
 }
