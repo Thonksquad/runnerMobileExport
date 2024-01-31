@@ -26,6 +26,9 @@ public class LoginManager : MonoBehaviour
         {
             Debug.LogException(e);
         }
+
+
+        
     }
 
     public void showOptions()

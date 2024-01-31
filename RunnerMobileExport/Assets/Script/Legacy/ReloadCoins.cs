@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
@@ -10,10 +8,12 @@ public class ReloadCoins : MonoBehaviour
     private void Awake()
     {
         TryGetComponent(out coinsText);
+        ChangeCoins();
     }
 
-    public void ChangeCoins()
+    public async void ChangeCoins()
     {
         //coinsText.text = DBGrabUser.coinAllColected.ToString();
+        coinsText.text = await UgsDb.Instance.getCoins();
     }
 }
