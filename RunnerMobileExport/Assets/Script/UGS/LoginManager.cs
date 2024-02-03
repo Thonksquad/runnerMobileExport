@@ -12,63 +12,63 @@ public class LoginManager : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _username;
     [SerializeField] private Image _userPFP;
-
-    public GameObject loginPnl;
+    [SerializeField] private GameObject ManualLogin;
+    public string GooglePlayToken;
+    public string GooglePlayError;
 
     private async void Awake()
     {
-        loginPnl.SetActive(false);
-        try
-        {
-            await UnityServices.InitializeAsync();
-        }
-        catch (Exception e)
-        {
-            Debug.LogException(e);
-        }
-
-
-        
+        ManualLogin.SetActive(false);
     }
 
     public void showOptions()
     {
-        loginPnl.SetActive(true);
+        ManualLogin.SetActive(true);
     }
 
-
-
-
-    public void googlePlaySignIn()
+    public async Task Authenticate()
     {
+        PlayGamesPlatform.Activate();
+        await UnityServices.InitializeAsync();
 
-        PlayGamesPlatform.Instance.Authenticate(ProcessAuthentication);
-        loginPnl.SetActive(false);
+        PlayGamesPlatform.Instance.Authenticate((success) =>
+        {
+            if (success == SignInStatus.Success)
+            {
+                Debug.Log("Login with Google Play");
+                PlayGamesPlatform.Instance.RequestServerSideAccess(true, code =>
+                {
+                    Debug.Log($"Auth code is {code}");
+                    GooglePlayToken = code;
+                });
+            } else
+            {
+                GooglePlayError = "Failed to retrieve Google Play auth code";
+                Debug.LogError("Login unsuccessful");
 
+            }
+        });
+
+        await AuthenticateWithUnity();
     }
 
-    internal void ProcessAuthentication(SignInStatus status)
+    private async Task AuthenticateWithUnity()
     {
-        if (status == SignInStatus.Success)
+        try
         {
-
-            // Continue with Play Games Services
-            string name = PlayGamesPlatform.Instance.GetUserDisplayName();
-            string image = PlayGamesPlatform.Instance.GetUserImageUrl();
-
-            _username.text = name;
-
+            await AuthenticationService.Instance.SignInWithGoogleAsync(GooglePlayToken);
         }
-        else
+        catch (AuthenticationException ex)
         {
-            // Disable your integration with Play Games Services or show a login button
-            // to ask users to sign-in. Clicking it should call
-            // PlayGamesPlatform.Instance.ManuallyAuthenticate(ProcessAuthentication).
-
-            _username.text = "Guest " + UnityEngine.Random.Range(100, 5000);
+            Debug.LogException(ex);
+            throw;
+        }
+        catch (RequestFailedException ex)
+        {
+            Debug.LogException(ex);
+            throw;
         }
     }
-
 
     public async void guestSignIn()
     {
@@ -80,7 +80,7 @@ public class LoginManager : MonoBehaviour
         {
             Debug.Log(e);
         }
-        loginPnl.SetActive(false);
+        ManualLogin.SetActive(false);
     }
 
     async Task SignInAnonymously()
