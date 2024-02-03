@@ -1,10 +1,8 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using System;
 using TMPro;
-using Newtonsoft.Json;
-using Unity.Services.Leaderboards;
+
 
 
 public class GameManager : MonoBehaviour
@@ -30,7 +28,7 @@ public class GameManager : MonoBehaviour
     private int hounds = 1;
     private Coroutine coUpdateTimer;
 
-    const string leaderboardId = "leaderboard";
+    
 
 
     private void Awake()
@@ -124,7 +122,8 @@ public class GameManager : MonoBehaviour
         EnddistanceUI.text = Mathf.Round(distance).ToString();
         //BestdistanceUI.text = DBGrabUser.highScore.ToString();
         EndcoinsUI.text = coins.ToString();
-        addScore();
+        UgsDb.Instance.addScore();
+
 
         if ( adsManager.Instance.hasVideoChance)
         {
@@ -138,23 +137,12 @@ public class GameManager : MonoBehaviour
                 DBGrabUser.highScore = (int)Mathf.Round(distance);
             }
             */
+            UgsDb.Instance.addCoins();
             gameOverScreen.SetActive(true);
         }
     }
 
-    public async void addScore()
-    {
-        var metadata = new Dictionary<string, string>() {
-            { "gameLength", GameManager.gameLength.ToString() } ,
-            { "enemiesKilled", GameManager.enemiesKilled.ToString() },
-            { "speed", CameraManager.Instance.CamSpeed.ToString() }
-        };
-        var playerEntry = await LeaderboardsService.Instance
-            .AddPlayerScoreAsync(leaderboardId, GameManager.distance,
-            new AddPlayerScoreOptions { Metadata = metadata }
-            );
-        Debug.Log(JsonConvert.SerializeObject(playerEntry));
-    }
+    
 
 
     private IEnumerator UpdateTimer()

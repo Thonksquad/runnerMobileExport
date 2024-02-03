@@ -2,6 +2,8 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
+
 
 public class adsManager : MonoBehaviour
 {
@@ -9,6 +11,7 @@ public class adsManager : MonoBehaviour
     [SerializeField] private GameObject videoChanceScreen;
     [SerializeField] private GameObject vcCloseBtn;
     [SerializeField] private GameObject vcCloseAndroidPos;
+    public Image progressBar;
     public bool hasVideoChance = true;
     public TextMeshProUGUI vcTxt;
     public Color vcMainColor;
@@ -18,6 +21,8 @@ public class adsManager : MonoBehaviour
     public int vcSecondFontSize = 120;
     private bool vcTxtOnMainState = true;
     private bool clickedWatchBtn = false;
+    private float pbTimer = 0f;
+
 
     private void Awake()
     {
@@ -55,6 +60,8 @@ public class adsManager : MonoBehaviour
         vcTxt.color = vcMainColor;
         vcTxt.fontSize = vcMainFontSize;
         vcTxtOnMainState = true;
+        
+        StartCoroutine(updateProgressBar());
         StartCoroutine(videoChanceTimer());
         
 
@@ -75,9 +82,9 @@ public class adsManager : MonoBehaviour
         float vcTimer = timeToChoose;
         while (vcTimer > 0f)
         {
-            vcTimer -= 0.5f;
+            vcTimer -= 1f;
             changeVCtext(vcTimer);
-            yield return new WaitForSecondsRealtime(0.5f);
+            yield return new WaitForSecondsRealtime(1f);
         }
 
 
@@ -91,6 +98,24 @@ public class adsManager : MonoBehaviour
         }
         clickedWatchBtn = false;
     }
+
+
+
+    private IEnumerator updateProgressBar()
+    {
+        pbTimer = timeToChoose;
+        progressBar.fillAmount = pbTimer / timeToChoose;
+
+        while ( pbTimer > 0f)
+        {
+            yield return new WaitForSecondsRealtime(Time.fixedDeltaTime);
+            progressBar.fillAmount = pbTimer / timeToChoose;
+            pbTimer -= Time.fixedDeltaTime * 1.1f;
+        }
+
+    }
+
+
 
 
 
