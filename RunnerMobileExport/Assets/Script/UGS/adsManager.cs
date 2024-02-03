@@ -9,9 +9,11 @@ public class adsManager : MonoBehaviour
 {
     public static adsManager Instance;
     [SerializeField] private GameObject videoChanceScreen;
-    [SerializeField] private GameObject vcCloseBtn;
-    [SerializeField] private GameObject vcCloseAndroidPos;
-    public Image progressBar;
+
+    // uncomment for  video chance screen old version
+    //[SerializeField] private GameObject vcCloseBtn;
+    //[SerializeField] private GameObject vcCloseAndroidPos;
+    //public Image progressBar;
     public bool hasVideoChance = true;
     public TextMeshProUGUI vcTxt;
     public Color vcMainColor;
@@ -51,6 +53,8 @@ public class adsManager : MonoBehaviour
 
         videoChanceScreen.SetActive(true);
 
+        /*
+
 #if UNITY_ANDROID
         vcCloseBtn.transform.position = vcCloseAndroidPos.transform.position;
 #endif
@@ -63,7 +67,7 @@ public class adsManager : MonoBehaviour
         
         StartCoroutine(updateProgressBar());
         StartCoroutine(videoChanceTimer());
-        
+        */
 
     }
 
@@ -77,6 +81,7 @@ public class adsManager : MonoBehaviour
         SoundManager.Instance.TurnMusicOn();
     }
 
+    /*
     private IEnumerator videoChanceTimer()
     {
         float vcTimer = timeToChoose;
@@ -115,19 +120,6 @@ public class adsManager : MonoBehaviour
 
     }
 
-
-
-
-
-    public void cancelVideoAds()
-    {
-        GameManager.Instance.playerHit();
-        clickedWatchBtn = false;
-        videoChanceScreen.SetActive(false);
-        vcTxt.color = vcMainColor;
-        vcTxt.fontSize = vcMainFontSize;
-    }
-
     private void changeVCtext(float t)
     {
         if (vcTxtOnMainState)
@@ -144,6 +136,23 @@ public class adsManager : MonoBehaviour
         }
         vcTxt.text = t.ToString();
     }
+
+
+    */
+
+
+
+
+    public void cancelVideoAds()
+    {
+        GameManager.Instance.playerHit();
+        clickedWatchBtn = false;
+        videoChanceScreen.SetActive(false);
+        vcTxt.color = vcMainColor;
+        vcTxt.fontSize = vcMainFontSize;
+    }
+
+    
 
 
 }
