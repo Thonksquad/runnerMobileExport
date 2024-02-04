@@ -1859,8 +1859,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: FLY
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c4b7b2d1d13a36c4a9f8d70dbd271d1e, type: 2}
+  m_sharedMaterial: {fileID: -327089736880400425, guid: c4b7b2d1d13a36c4a9f8d70dbd271d1e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1951,7 +1951,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &380558560
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3213,6 +3213,7 @@ GameObject:
   - component: {fileID: 739072115}
   - component: {fileID: 739072116}
   - component: {fileID: 739072117}
+  - component: {fileID: 739072118}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -3306,6 +3307,21 @@ MonoBehaviour:
   timeToChoose: 5
   vcMainFontSize: 240
   vcSecondFontSize: 240
+--- !u!114 &739072118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 739072112}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cebe94fd8f62fe345b52dd169d1c3aff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waitTime: 10
+  shootUi: {fileID: 16686973}
+  flyUi: {fileID: 1245093924}
 --- !u!1 &767018970
 GameObject:
   m_ObjectHideFlags: 0
@@ -3435,8 +3451,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: FIRE
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c4b7b2d1d13a36c4a9f8d70dbd271d1e, type: 2}
+  m_sharedMaterial: {fileID: -327089736880400425, guid: c4b7b2d1d13a36c4a9f8d70dbd271d1e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
