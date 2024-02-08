@@ -12,107 +12,68 @@ public class LoginManager : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _username;
     [SerializeField] private Image _userPFP;
-    [SerializeField] private GameObject ManualLogin;
-    public string GooglePlayToken;
-    public string GooglePlayError;
+    [SerializeField] private TextMeshProUGUI _coins;
+    public string Token;
+    public string Error;
 
-    private async void Start()
-    {
-        await Authenticate();
-    }
-
-    public void showOptions()
-    {
-        ManualLogin.SetActive(true);
-    }
-
-    public async Task Authenticate()
+    void Awake()
     {
         PlayGamesPlatform.Activate();
-        await UnityServices.InitializeAsync();
+    }
 
+    async void Start()
+    {
+        await UnityServices.InitializeAsync();
+        await LoginGooglePlayGames();
+        await SignInWithGooglePlayGamesAsync(Token);
+    }
+    //Fetch the Token / Auth code
+    public Task LoginGooglePlayGames()
+    {
+        var tcs = new TaskCompletionSource<object>();
         PlayGamesPlatform.Instance.Authenticate((success) =>
         {
             if (success == SignInStatus.Success)
             {
-                Debug.Log("Login with Google Play");
+                Debug.Log("Login with Google Play games successful.");
                 PlayGamesPlatform.Instance.RequestServerSideAccess(true, code =>
                 {
-                    GooglePlayToken = code;
-                    Debug.Log("Auth code is " + GooglePlayToken);
+                    Debug.Log("Authorization code: " + code);
+                    Token = code;
+                    // This token serves as an example to be used for SignInWithGooglePlayGames
+                    tcs.SetResult(null);
                 });
-            } else
+            }
+            else
             {
-                GooglePlayError = "Failed to retrieve Google Play auth code";
-                Debug.LogError("Login unsuccessful");
+                Error = "Failed to retrieve Google play games authorization code";
+                Debug.Log("Login Unsuccessful");
+                tcs.SetException(new Exception("Failed"));
             }
         });
-
-        await AuthenticateWithUnity();
+        return tcs.Task;
     }
 
-    private async Task AuthenticateWithUnity()
+
+    async Task SignInWithGooglePlayGamesAsync(string authCode)
     {
         try
         {
-            await AuthenticationService.Instance.SignInWithGoogleAsync(GooglePlayToken);
-            PlayerPrefs.SetString("ugsPlayerIds", AuthenticationService.Instance.PlayerId);
+            await AuthenticationService.Instance.SignInWithGooglePlayGamesAsync(authCode);
+            Debug.Log($"PlayerID: {AuthenticationService.Instance.PlayerId}"); //Display the Unity Authentication PlayerID
+            Debug.Log("SignIn is successful.");
         }
         catch (AuthenticationException ex)
         {
+            // Compare error code to AuthenticationErrorCodes
+            // Notify the player with the proper error message
             Debug.LogException(ex);
-            throw;
         }
         catch (RequestFailedException ex)
         {
+            // Compare error code to CommonErrorCodes
+            // Notify the player with the proper error message
             Debug.LogException(ex);
-            throw;
         }
     }
-
-    /**
-    public async void guestSignIn()
-    {
-        try
-        {
-            await SignInAnonymously();
-        }
-        catch (Exception e)
-        {
-            Debug.Log(e);
-        }
-        ManualLogin.SetActive(false);
-    }
-
-    async Task SignInAnonymously()
-    {
-        AuthenticationService.Instance.SignedIn += () =>
-        {
-            Debug.Log("Signed in as: " + AuthenticationService.Instance.PlayerId);
-            PlayerPrefs.SetString("ugsPlayerIds", AuthenticationService.Instance.PlayerId);
-        };
-        AuthenticationService.Instance.SignInFailed += s =>
-        {
-            // Take some action here...
-            Debug.Log(s);
-        };
-
-        await AuthenticationService.Instance.SignInAnonymouslyAsync();
-    }
-
-
-    // max characters = 50
-    public void setPlayerName(string playerName)
-    {
-        try
-        {
-            AuthenticationService.Instance.UpdatePlayerNameAsync(playerName);
-        }
-        catch (Exception e)
-        {
-            Debug.LogException(e);
-        }
-
-    }
-    **/
 }

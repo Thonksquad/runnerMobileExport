@@ -2589,9 +2589,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _username: {fileID: 1479417012}
   _userPFP: {fileID: 1494804038}
-  ManualLogin: {fileID: 0}
-  GooglePlayToken: 
-  GooglePlayError: 
+  _coins: {fileID: 802035988}
+  Token: 
+  Error: 
 --- !u!114 &341879690
 MonoBehaviour:
   m_ObjectHideFlags: 0
