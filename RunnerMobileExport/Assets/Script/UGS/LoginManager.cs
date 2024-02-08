@@ -21,6 +21,11 @@ public class LoginManager : MonoBehaviour
         //ManualLogin.SetActive(false);
     }
 
+    private void Start()
+    {
+        Authenticate();
+    }
+
     public void showOptions()
     {
         ManualLogin.SetActive(true);
@@ -115,5 +120,4 @@ public class LoginManager : MonoBehaviour
 
     }
     **/
-
 }

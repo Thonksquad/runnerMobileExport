@@ -6,13 +6,13 @@ using Unity.Services.Leaderboards;
 using UnityEngine;
 
 
-public class UgsDb : MonoBehaviour
+public class UploadHandler : MonoBehaviour
 {
 
     const string leaderboardId = "leaderboard";
     const string coinsId = "coins";
 
-    public static UgsDb Instance;
+    public static UploadHandler Instance;
 
 
     private void Awake()

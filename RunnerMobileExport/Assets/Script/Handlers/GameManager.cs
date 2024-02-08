@@ -122,7 +122,7 @@ public class GameManager : MonoBehaviour
         EnddistanceUI.text = Mathf.Round(distance).ToString();
         //BestdistanceUI.text = DBGrabUser.highScore.ToString();
         EndcoinsUI.text = coins.ToString();
-        UgsDb.Instance.addScore();
+        UploadHandler.Instance.addScore();
 
 
         if ( adsManager.Instance.hasVideoChance)
@@ -137,7 +137,7 @@ public class GameManager : MonoBehaviour
                 DBGrabUser.highScore = (int)Mathf.Round(distance);
             }
             */
-            UgsDb.Instance.addCoins();
+            UploadHandler.Instance.addCoins();
             gameOverScreen.SetActive(true);
         }
     }

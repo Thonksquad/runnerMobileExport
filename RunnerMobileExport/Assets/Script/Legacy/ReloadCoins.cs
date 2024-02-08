@@ -14,6 +14,6 @@ public class ReloadCoins : MonoBehaviour
     public async void ChangeCoins()
     {
         //coinsText.text = DBGrabUser.coinAllColected.ToString();
-        coinsText.text = await UgsDb.Instance.getCoins();
+        coinsText.text = await UploadHandler.Instance.getCoins();
     }
 }
