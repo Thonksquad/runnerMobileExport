@@ -18,7 +18,7 @@ public class LoginManager : MonoBehaviour
 
     private async void Awake()
     {
-        ManualLogin.SetActive(false);
+        //ManualLogin.SetActive(false);
     }
 
     public void showOptions()
@@ -70,6 +70,7 @@ public class LoginManager : MonoBehaviour
         }
     }
 
+    /**
     public async void guestSignIn()
     {
         try
@@ -113,4 +114,6 @@ public class LoginManager : MonoBehaviour
         }
 
     }
+    **/
+
 }
