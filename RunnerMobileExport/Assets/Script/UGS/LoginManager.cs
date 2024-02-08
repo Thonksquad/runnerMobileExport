@@ -38,14 +38,13 @@ public class LoginManager : MonoBehaviour
                 Debug.Log("Login with Google Play");
                 PlayGamesPlatform.Instance.RequestServerSideAccess(true, code =>
                 {
-                    Debug.Log($"Auth code is {code}");
                     GooglePlayToken = code;
+                    Debug.Log("Auth code is " + GooglePlayToken);
                 });
             } else
             {
                 GooglePlayError = "Failed to retrieve Google Play auth code";
                 Debug.LogError("Login unsuccessful");
-
             }
         });
 
