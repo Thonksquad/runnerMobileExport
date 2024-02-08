@@ -57,6 +57,7 @@ public class LoginManager : MonoBehaviour
         try
         {
             await AuthenticationService.Instance.SignInWithGoogleAsync(GooglePlayToken);
+            PlayerPrefs.SetString("ugsPlayerIds", AuthenticationService.Instance.PlayerId);
         }
         catch (AuthenticationException ex)
         {
