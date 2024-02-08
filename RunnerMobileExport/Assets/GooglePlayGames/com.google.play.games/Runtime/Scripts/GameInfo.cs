@@ -38,7 +38,7 @@ namespace GooglePlayGames {
 
         public const string ApplicationId = "188056975203"; // Filled in automatically
         public const string IosClientId = "__IOS_CLIENTID__"; // Filled in automatically
-        public const string WebClientId = "188056975203-bkd7v42qp6fjspgr0qs3aah99r9krmkm.apps.googleusercontent.com"; // Filled in automatically
+        public const string WebClientId = "188056975203-9oo1en820jrdhsljq6aj4fuma97t4k0f.apps.googleusercontent.com"; // Filled in automatically
         public const string NearbyConnectionServiceId = "com.Vora.DashBoredLite";
 
         public static bool ApplicationIdInitialized() {

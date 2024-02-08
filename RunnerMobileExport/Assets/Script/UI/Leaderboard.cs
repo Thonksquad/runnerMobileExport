@@ -83,8 +83,6 @@ public class Leaderboard : MonoBehaviour, IPointerDownHandler
             //Debug.Log("" + (res.rank + 1).ToString() + " -- " + res.playerName + " -- " + res.score.ToString());
             i++;
         }
-
-
     }
 
 }

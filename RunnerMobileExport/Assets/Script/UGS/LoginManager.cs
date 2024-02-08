@@ -1,78 +1,82 @@
 using System;
 using System.Threading.Tasks;
-using Unity.Services.Authentication;
-using Unity.Services.Core;
 using UnityEngine;
+using UnityEngine.UI;
+using Unity.Services.Core;
+using Unity.Services.Authentication;
 using GooglePlayGames;
 using GooglePlayGames.BasicApi;
 using TMPro;
-using UnityEngine.UI;
 
 public class LoginManager : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _username;
-    [SerializeField] private Image _userPFP;
     [SerializeField] private TextMeshProUGUI _coins;
-    public string Token;
-    public string Error;
+    [SerializeField] private Image _userPFP;
+    [HideInInspector] public string googlePlayToken, googlePlayError;
 
-    void Awake()
+    private async void Start()
     {
         PlayGamesPlatform.Activate();
+        await InitializeServices();
+        await SignInWithGPGS(googlePlayToken);
     }
 
-    async void Start()
+    private async Task InitializeServices()
     {
-        await UnityServices.InitializeAsync();
-        await LoginGooglePlayGames();
-        await SignInWithGooglePlayGamesAsync(Token);
+        if (!Application.isPlaying) return;
+
+        if (UnityServices.State == ServicesInitializationState.Initialized) return;
+
+        try
+        {
+            await UnityServices.InitializeAsync();
+            Debug.Log("Initialized Successfully!");
+
+            await AuthenticateUser();
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogException(e);
+        }
     }
-    //Fetch the Token / Auth code
-    public Task LoginGooglePlayGames()
+
+    private Task AuthenticateUser()
     {
         var tcs = new TaskCompletionSource<object>();
-        PlayGamesPlatform.Instance.Authenticate((success) =>
+
+        PlayGamesPlatform.Instance.Authenticate((status) =>
         {
-            if (success == SignInStatus.Success)
+            if (status == SignInStatus.Success)
             {
-                Debug.Log("Login with Google Play games successful.");
-                PlayGamesPlatform.Instance.RequestServerSideAccess(true, code =>
-                {
-                    Debug.Log("Authorization code: " + code);
-                    Token = code;
-                    // This token serves as an example to be used for SignInWithGooglePlayGames
-                    tcs.SetResult(null);
-                });
+                PlayGamesPlatform.Instance.RequestServerSideAccess(true, code => { Debug.Log($"Auth code is: {code}"); googlePlayToken = code; tcs.SetResult(null); });
             }
             else
             {
-                Error = "Failed to retrieve Google play games authorization code";
-                Debug.Log("Login Unsuccessful");
-                tcs.SetException(new Exception("Failed"));
+                googlePlayError = "Failed to retrieve Google play games authorization code.";
+                Debug.Log($"{googlePlayError}");
+                tcs.SetException(new Exception("Failed."));
             }
         });
+
         return tcs.Task;
     }
 
-
-    async Task SignInWithGooglePlayGamesAsync(string authCode)
+    private async Task SignInWithGPGS(string authCode)
     {
         try
         {
             await AuthenticationService.Instance.SignInWithGooglePlayGamesAsync(authCode);
-            Debug.Log($"PlayerID: {AuthenticationService.Instance.PlayerId}"); //Display the Unity Authentication PlayerID
-            Debug.Log("SignIn is successful.");
+            PlayerPrefs.SetString("ugsPlayerIds", AuthenticationService.Instance.PlayerId);
+            Debug.Log($"PlayerID: {AuthenticationService.Instance.PlayerId}");
+            Debug.Log("Signed in with Google!");
         }
         catch (AuthenticationException ex)
         {
-            // Compare error code to AuthenticationErrorCodes
-            // Notify the player with the proper error message
             Debug.LogException(ex);
         }
         catch (RequestFailedException ex)
         {
-            // Compare error code to CommonErrorCodes
-            // Notify the player with the proper error message
             Debug.LogException(ex);
         }
     }
