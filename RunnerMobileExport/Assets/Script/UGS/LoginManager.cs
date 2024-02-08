@@ -16,14 +16,9 @@ public class LoginManager : MonoBehaviour
     public string GooglePlayToken;
     public string GooglePlayError;
 
-    private async void Awake()
+    private async void Start()
     {
-        //ManualLogin.SetActive(false);
-    }
-
-    private void Start()
-    {
-        Authenticate();
+        await Authenticate();
     }
 
     public void showOptions()
