@@ -10,6 +10,8 @@ using TMPro;
 using Newtonsoft.Json;
 using Unity.Services.Leaderboards;
 using Unity.Services.Leaderboards.Exceptions;
+using UnityEngine.Networking;
+using System.Collections;
 
 public class LoginManager : MonoBehaviour
 {
@@ -58,6 +60,9 @@ public class LoginManager : MonoBehaviour
                 PlayGamesPlatform.Instance.RequestServerSideAccess(true, code => { Debug.Log($"Auth code is: {code}"); googlePlayToken = code; tcs.SetResult(null); });
                 string displayName = PlayGamesPlatform.Instance.GetUserDisplayName();
                 _username.text = displayName;
+                string pfpURL = PlayGamesPlatform.Instance.GetUserImageUrl();
+                Debug.Log(pfpURL);
+                StartCoroutine(LoadImage(pfpURL));
             }
             else
             {
@@ -113,9 +118,24 @@ public class LoginManager : MonoBehaviour
         }
         catch (Exception ex)
         {
-            Debug.LogException(ex);
+            Debug.Log(ex);
             _coins.text = "0";
         }
     }
 
+    private IEnumerator LoadImage(string url)
+    {
+        UnityWebRequest request = UnityWebRequestTexture.GetTexture(url);
+        yield return request.SendWebRequest();
+
+        if (request.result != UnityWebRequest.Result.Success)
+        {
+            Debug.Log(request.error);
+        } else
+        {
+            Texture2D pfp = ((DownloadHandlerTexture)request.downloadHandler).texture;
+            Sprite sprite = Sprite.Create(pfp, new Rect(0, 0, pfp.width, pfp.height), Vector2.one * 0.5f);
+            _userPFP.sprite = sprite;
+        }
+    }
 }
