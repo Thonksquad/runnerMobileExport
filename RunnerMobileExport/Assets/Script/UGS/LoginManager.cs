@@ -19,6 +19,11 @@ public class LoginManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _coins;
     [SerializeField] private Image _userPFP;
     [HideInInspector] public string googlePlayToken, googlePlayError;
+
+    private Texture2D pfp;
+    private Sprite sprite;
+    private string pfpURL;
+
     const string coinsLB = "coins";
 
     private async void Start()
@@ -30,6 +35,15 @@ public class LoginManager : MonoBehaviour
 #endif
         await UnityServices.InitializeAsync();
         await UGSLogin();
+
+        if (sprite != null)
+        {
+            _userPFP.sprite = sprite;
+        } else
+        {
+            StartCoroutine(LoadImage(pfpURL));
+        }
+
     }
 
     private async Task InitializeGPS()
@@ -60,8 +74,7 @@ public class LoginManager : MonoBehaviour
                 PlayGamesPlatform.Instance.RequestServerSideAccess(true, code => { Debug.Log($"Auth code is: {code}"); googlePlayToken = code; tcs.SetResult(null); });
                 string displayName = PlayGamesPlatform.Instance.GetUserDisplayName();
                 _username.text = displayName;
-                string pfpURL = PlayGamesPlatform.Instance.GetUserImageUrl();
-                Debug.Log(pfpURL);
+                pfpURL = PlayGamesPlatform.Instance.GetUserImageUrl();
                 StartCoroutine(LoadImage(pfpURL));
             }
             else
@@ -133,8 +146,8 @@ public class LoginManager : MonoBehaviour
             Debug.Log(request.error);
         } else
         {
-            Texture2D pfp = ((DownloadHandlerTexture)request.downloadHandler).texture;
-            Sprite sprite = Sprite.Create(pfp, new Rect(0, 0, pfp.width, pfp.height), Vector2.one * 0.5f);
+            pfp = ((DownloadHandlerTexture)request.downloadHandler).texture;
+            sprite = Sprite.Create(pfp, new Rect(0, 0, pfp.width, pfp.height), Vector2.one * 0.5f);
             _userPFP.sprite = sprite;
         }
     }
