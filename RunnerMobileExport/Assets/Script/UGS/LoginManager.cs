@@ -1,104 +1,155 @@
 using System;
 using System.Threading.Tasks;
-using Unity.Services.Authentication;
-using Unity.Services.Core;
 using UnityEngine;
+using UnityEngine.UI;
+using Unity.Services.Core;
+using Unity.Services.Authentication;
 using GooglePlayGames;
 using GooglePlayGames.BasicApi;
 using TMPro;
-using UnityEngine.UI;
+using UnityEngine.Networking;
+using System.Collections;
 
 public class LoginManager : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _username;
+    [SerializeField] private TextMeshProUGUI _coins;
     [SerializeField] private Image _userPFP;
+    [HideInInspector] public string googlePlayToken, googlePlayError;
 
-    public GameObject loginPnl;
+    private Texture2D pfp;
+    private Sprite sprite;
+    private string pfpURL;
 
-    private async void Awake()
+    const string coinsLB = "coins";
+
+    private string userGooglePlayName = "";
+
+    private async void Start()
     {
-        loginPnl.SetActive(false);
+#if UNITY_ANDROID && !UNITY_EDITOR
+        PlayGamesPlatform.Activate();
+        await InitializeGPS();
+        await SignInWithGPGS(googlePlayToken);
+#endif
+        await UnityServices.InitializeAsync();
+        await UGSLogin();
+
+        if (sprite != null)
+        {
+            _userPFP.sprite = sprite;
+        } else
+        {
+            StartCoroutine(LoadImage(pfpURL));
+        }
+
+        _coins.text = await UploadHandler.Instance.getCoins();
+
+#if UNITY_ANDROID && !UNITY_EDITOR
+        setPlayerName(userGooglePlayName);
+#endif
+
+
+    }
+
+    private async Task InitializeGPS()
+    {
+        Debug.Log("Initalizing services");
+        if (!Application.isPlaying) return;
+        if (UnityServices.State == ServicesInitializationState.Initialized) return;
+
         try
         {
             await UnityServices.InitializeAsync();
+            await AuthenticateGPS();
         }
-        catch (Exception e)
+        catch (System.Exception e)
         {
             Debug.LogException(e);
         }
-
-
-        
     }
 
-    public void showOptions()
+    private Task AuthenticateGPS()
     {
-        loginPnl.SetActive(true);
-    }
+        var tcs = new TaskCompletionSource<object>();
 
-
-
-
-    public void googlePlaySignIn()
-    {
-
-        PlayGamesPlatform.Instance.Authenticate(ProcessAuthentication);
-        loginPnl.SetActive(false);
-
-    }
-
-    internal void ProcessAuthentication(SignInStatus status)
-    {
-        if (status == SignInStatus.Success)
+        PlayGamesPlatform.Instance.Authenticate(async (status) =>
         {
+            if (status == SignInStatus.Success)
+            {
+                PlayGamesPlatform.Instance.RequestServerSideAccess(true, code => { Debug.Log($"Auth code is: {code}"); googlePlayToken = code; tcs.SetResult(null); });
+                userGooglePlayName = PlayGamesPlatform.Instance.GetUserDisplayName();
+                _username.text = userGooglePlayName;
+                pfpURL = PlayGamesPlatform.Instance.GetUserImageUrl();
+                StartCoroutine(LoadImage(pfpURL));
+            }
+            else
+            {
+                googlePlayError = "Failed to retrieve Google play games authorization code.";
+                Debug.Log($"{googlePlayError}");
+                tcs.SetException(new Exception("Failed."));
+            }
+        });
 
-            // Continue with Play Games Services
-            string name = PlayGamesPlatform.Instance.GetUserDisplayName();
-            string image = PlayGamesPlatform.Instance.GetUserImageUrl();
-
-            _username.text = name;
-
-        }
-        else
-        {
-            // Disable your integration with Play Games Services or show a login button
-            // to ask users to sign-in. Clicking it should call
-            // PlayGamesPlatform.Instance.ManuallyAuthenticate(ProcessAuthentication).
-
-            _username.text = "Guest " + UnityEngine.Random.Range(100, 5000);
-        }
+        return tcs.Task;
     }
 
-
-    public async void guestSignIn()
+    private async Task SignInWithGPGS(string authCode)
     {
         try
         {
-            await SignInAnonymously();
+            await AuthenticationService.Instance.SignInWithGooglePlayGamesAsync(authCode);
         }
-        catch (Exception e)
+        catch (AuthenticationException ex)
         {
-            Debug.Log(e);
+            Debug.LogException(ex);
         }
-        loginPnl.SetActive(false);
+        catch (RequestFailedException ex)
+        {
+            Debug.LogException(ex);
+        }
     }
 
-    async Task SignInAnonymously()
+    async Task UGSLogin()
     {
-        AuthenticationService.Instance.SignedIn += () =>
+        try
         {
-            Debug.Log("Signed in as: " + AuthenticationService.Instance.PlayerId);
-            PlayerPrefs.SetString("ugsPlayerIds", AuthenticationService.Instance.PlayerId);
-        };
-        AuthenticationService.Instance.SignInFailed += s =>
-        {
-            // Take some action here...
-            Debug.Log(s);
-        };
+            AuthenticationService.Instance.SignedIn += () =>
+            {
+                Debug.Log("Signed in as: " + AuthenticationService.Instance.PlayerId);
+                Debug.Log($"Access Token: {AuthenticationService.Instance.AccessToken}");
+                PlayerPrefs.SetString("ugsPlayerIds", AuthenticationService.Instance.PlayerId);
 
-        await AuthenticationService.Instance.SignInAnonymouslyAsync();
+            };
+            AuthenticationService.Instance.SignInFailed += s =>
+            {
+                Debug.Log(s);
+            };
+            await AuthenticationService.Instance.SignInAnonymouslyAsync();
+        }
+        catch (Exception ex)
+        {
+            Debug.Log(ex);
+        }
     }
 
+
+
+    private IEnumerator LoadImage(string url)
+    {
+        UnityWebRequest request = UnityWebRequestTexture.GetTexture(url);
+        yield return request.SendWebRequest();
+
+        if (request.result != UnityWebRequest.Result.Success)
+        {
+            Debug.Log(request.error);
+        } else
+        {
+            pfp = ((DownloadHandlerTexture)request.downloadHandler).texture;
+            sprite = Sprite.Create(pfp, new Rect(0, 0, pfp.width, pfp.height), Vector2.one * 0.5f);
+            _userPFP.sprite = sprite;
+        }
+    }
 
     // max characters = 50
     public void setPlayerName(string playerName)
@@ -111,6 +162,6 @@ public class LoginManager : MonoBehaviour
         {
             Debug.LogException(e);
         }
-
     }
+
 }

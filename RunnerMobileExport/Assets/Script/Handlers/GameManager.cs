@@ -19,16 +19,12 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI distanceUI;
     public TextMeshProUGUI coinUI;
 
-    // Refactor this so that it grabs from UGS's DB
-    //private bool newHighScore() => distance > DBGrabUser.highScore;
     public static float gameLength;
     public static float enemiesKilled;
     public static float distance;
     public static int coins = 0;
     private int hounds = 1;
     private Coroutine coUpdateTimer;
-
-    
 
 
     private void Awake()
@@ -120,24 +116,18 @@ public class GameManager : MonoBehaviour
         SoundManager.Instance.PlaySound(_deathSound);
         SoundManager.Instance.ToggleMusic();
         EnddistanceUI.text = Mathf.Round(distance).ToString();
-        //BestdistanceUI.text = DBGrabUser.highScore.ToString();
         EndcoinsUI.text = coins.ToString();
-        UgsDb.Instance.addScore();
-
-
+        UploadHandler.Instance.addScore();
+        
         if ( adsManager.Instance.hasVideoChance)
         {
+            gameOverHandler.Instance.loadStatsVc();
             adsManager.Instance.showVideo();
         }
         else
         {
-            /*
-            if (newHighScore())
-            {
-                DBGrabUser.highScore = (int)Mathf.Round(distance);
-            }
-            */
-            UgsDb.Instance.addCoins();
+            UploadHandler.Instance.addCoins();
+            gameOverHandler.Instance.loadStatsGo();
             gameOverScreen.SetActive(true);
         }
     }
