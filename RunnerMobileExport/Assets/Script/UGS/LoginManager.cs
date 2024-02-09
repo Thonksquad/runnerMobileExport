@@ -15,10 +15,14 @@ public class LoginManager : MonoBehaviour
     [SerializeField] private Image _userPFP;
     [HideInInspector] public string googlePlayToken, googlePlayError;
 
-    private async void Start()
+    private async void Awake()
     {
         PlayGamesPlatform.Activate();
         await InitializeServices();
+    }
+
+    private async void Start()
+    {
         await SignInWithGPGS(googlePlayToken);
     }
 
@@ -31,9 +35,8 @@ public class LoginManager : MonoBehaviour
         try
         {
             await UnityServices.InitializeAsync();
-            Debug.Log("Initialized Successfully!");
-
-            await AuthenticateUser();
+            await AuthenticateGPS();
+            LoginUGS();
         }
         catch (System.Exception e)
         {
@@ -41,7 +44,7 @@ public class LoginManager : MonoBehaviour
         }
     }
 
-    private Task AuthenticateUser()
+    private Task AuthenticateGPS()
     {
         var tcs = new TaskCompletionSource<object>();
 
@@ -67,9 +70,7 @@ public class LoginManager : MonoBehaviour
         try
         {
             await AuthenticationService.Instance.SignInWithGooglePlayGamesAsync(authCode);
-            PlayerPrefs.SetString("ugsPlayerIds", AuthenticationService.Instance.PlayerId);
-            Debug.Log($"PlayerID: {AuthenticationService.Instance.PlayerId}");
-            Debug.Log("Signed in with Google!");
+            //PlayerPrefs.SetString("ugsPlayerIds", AuthenticationService.Instance.PlayerId);
         }
         catch (AuthenticationException ex)
         {
@@ -79,5 +80,31 @@ public class LoginManager : MonoBehaviour
         {
             Debug.LogException(ex);
         }
+    }
+
+    public async void LoginUGS()
+    {
+        try
+        {
+            await AnonymousLogin();
+        }
+        catch (Exception e)
+        {
+            Debug.Log(e);
+        }
+    }
+
+    async Task AnonymousLogin()
+    {
+        AuthenticationService.Instance.SignedIn += () =>
+        {
+            Debug.Log("Signed in as: " + AuthenticationService.Instance.PlayerId);
+            PlayerPrefs.SetString("ugsPlayerIds", AuthenticationService.Instance.PlayerId);
+        };
+        AuthenticationService.Instance.SignInFailed += s =>
+        {
+            Debug.Log(s);
+        };
+        await AuthenticationService.Instance.SignInAnonymouslyAsync();
     }
 }
