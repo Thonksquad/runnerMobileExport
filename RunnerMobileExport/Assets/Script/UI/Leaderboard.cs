@@ -86,22 +86,25 @@ public class Leaderboard : MonoBehaviour, IPointerDownHandler
         {
             Debug.Log(ex);
             //Print out the top 10 scores
-            var responseTop5 = await LeaderboardsService.Instance.GetScoresAsync(leaderboardId, new GetScoresOptions { Limit = 5 });
-            string top5 = JsonConvert.SerializeObject(responseTop5);
-            Root first5 = JsonConvert.DeserializeObject<Root>(top5);
-
+            var responseTop10 = await LeaderboardsService.Instance.GetScoresAsync(leaderboardId, new GetScoresOptions { Limit = 10 });
+            string top10 = JsonConvert.SerializeObject(responseTop10);
+            Root first10 = JsonConvert.DeserializeObject<Root>(top10);
+            
             int i = 0;
-
-            foreach (Result res in first5.results)
+            
+            foreach (Result res in first10.results)
             {
-                topTxtRanks[i].text = (res.rank + 1).ToString();
-                topTxtNames[i].text = res.playerName;
-                topTxtScores[i].text = res.score.ToString();
-                if (res.playerId == PlayerPrefs.GetString("ugsPlayerIds"))
+                if( i <= 4 )
                 {
-                    aroundTxtRanks[i].color = playerColor;
-                    aroundTxtNames[i].color = playerColor;
-                    aroundTxtScores[i].color = playerColor;
+                    topTxtRanks[i].text = (res.rank + 1).ToString();
+                    topTxtNames[i].text = res.playerName;
+                    topTxtScores[i].text = res.score.ToString();
+                }
+                else
+                {
+                    aroundTxtRanks[i - 5].text = (res.rank + 1).ToString();
+                    aroundTxtNames[i - 5].text = res.playerName;
+                    aroundTxtScores[i - 5].text = res.score.ToString();
                 }
                 Debug.Log("" + (res.rank + 1).ToString() + " -- " + res.playerName + " -- " + res.score.ToString());
                 i++;
