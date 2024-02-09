@@ -87,6 +87,27 @@ public class Leaderboard : MonoBehaviour, IPointerDownHandler
         catch (Exception ex)
         {
             Debug.Log(ex);
+            //Print out the top 10 scores
+            var responseTop5 = await LeaderboardsService.Instance.GetScoresAsync(leaderboardId, new GetScoresOptions { Limit = 5 });
+            string top5 = JsonConvert.SerializeObject(responseTop5);
+            Root first5 = JsonConvert.DeserializeObject<Root>(top5);
+
+            int i = 0;
+
+            foreach (Result res in first5.results)
+            {
+                topTxtRanks[i].text = (res.rank + 1).ToString();
+                topTxtNames[i].text = res.playerName;
+                topTxtScores[i].text = res.score.ToString();
+                if (res.playerId == PlayerPrefs.GetString("ugsPlayerIds"))
+                {
+                    aroundTxtRanks[i].color = playerColor;
+                    aroundTxtNames[i].color = playerColor;
+                    aroundTxtScores[i].color = playerColor;
+                }
+                Debug.Log("" + (res.rank + 1).ToString() + " -- " + res.playerName + " -- " + res.score.ToString());
+                i++;
+            }
         }
     }
 }
