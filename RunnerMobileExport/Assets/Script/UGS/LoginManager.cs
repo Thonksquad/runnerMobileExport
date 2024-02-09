@@ -15,28 +15,27 @@ public class LoginManager : MonoBehaviour
     [SerializeField] private Image _userPFP;
     [HideInInspector] public string googlePlayToken, googlePlayError;
 
-    private async void Awake()
-    {
-        PlayGamesPlatform.Activate();
-        await InitializeServices();
-    }
-
     private async void Start()
     {
+#if UNITY_ANDROID && !UNITY_EDITOR
+        PlayGamesPlatform.Activate();
+        await InitializeGPS();
         await SignInWithGPGS(googlePlayToken);
+#endif
+        await UnityServices.InitializeAsync();
+        await AnonymousLogin();
     }
 
-    private async Task InitializeServices()
+    private async Task InitializeGPS()
     {
+        Debug.Log("Initalizing services");
         if (!Application.isPlaying) return;
-
         if (UnityServices.State == ServicesInitializationState.Initialized) return;
 
         try
         {
             await UnityServices.InitializeAsync();
             await AuthenticateGPS();
-            LoginUGS();
         }
         catch (System.Exception e)
         {
@@ -82,23 +81,12 @@ public class LoginManager : MonoBehaviour
         }
     }
 
-    public async void LoginUGS()
-    {
-        try
-        {
-            await AnonymousLogin();
-        }
-        catch (Exception e)
-        {
-            Debug.Log(e);
-        }
-    }
-
     async Task AnonymousLogin()
     {
         AuthenticationService.Instance.SignedIn += () =>
         {
             Debug.Log("Signed in as: " + AuthenticationService.Instance.PlayerId);
+            Debug.Log($"Access Token: {AuthenticationService.Instance.AccessToken}");
             PlayerPrefs.SetString("ugsPlayerIds", AuthenticationService.Instance.PlayerId);
         };
         AuthenticationService.Instance.SignInFailed += s =>
