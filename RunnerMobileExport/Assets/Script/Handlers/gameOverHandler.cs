@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class gameOverHandler : MonoBehaviour
 {
-
     public TextMeshProUGUI vcScore;
     public TextMeshProUGUI vcHighScore;
     public TextMeshProUGUI vcCoin;
@@ -30,14 +29,35 @@ public class gameOverHandler : MonoBehaviour
     {
         vcScore.text = GameManager.distance.ToString();
         vcHighScore.text = await UploadHandler.Instance.getPlayerScore();
-        vcCoin.text = await UploadHandler.Instance.getCoins();
+        vcCoin.text = GameManager.coins.ToString();
     }
 
     public async void loadStatsGo()
     {
         goScore.text = GameManager.distance.ToString();
-        goHighScore.text = await UploadHandler.Instance.getPlayerScore();
-        goCoin.text = await UploadHandler.Instance.getCoins();
+        goCoin.text = GameManager.coins.ToString();
+
+        int highScore;
+        if (int.TryParse(await UploadHandler.Instance.getPlayerScore(), out highScore))
+        {
+            Debug.Log(highScore.ToString());
+        } else
+        {
+            Debug.Log("Could not convert to int");
+            goHighScore.text = await UploadHandler.Instance.getPlayerScore();
+        }
+
+        if (highScore == null) return;
+        if (GameManager.distance > highScore)
+        {
+            goHighScore.text = highScore.ToString();
+        } else
+        {
+            goHighScore.text = await UploadHandler.Instance.getPlayerScore();
+        }
+
+        Debug.Log("highscore is " + highScore);
+        Debug.Log("gameover score is " + GameManager.distance);
     }
 
 
