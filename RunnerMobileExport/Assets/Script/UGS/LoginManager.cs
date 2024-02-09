@@ -7,6 +7,9 @@ using Unity.Services.Authentication;
 using GooglePlayGames;
 using GooglePlayGames.BasicApi;
 using TMPro;
+using Newtonsoft.Json;
+using Unity.Services.Leaderboards;
+using Unity.Services.Leaderboards.Exceptions;
 
 public class LoginManager : MonoBehaviour
 {
@@ -14,6 +17,7 @@ public class LoginManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _coins;
     [SerializeField] private Image _userPFP;
     [HideInInspector] public string googlePlayToken, googlePlayError;
+    const string coinsLB = "coins";
 
     private async void Start()
     {
@@ -23,7 +27,7 @@ public class LoginManager : MonoBehaviour
         await SignInWithGPGS(googlePlayToken);
 #endif
         await UnityServices.InitializeAsync();
-        await AnonymousLogin();
+        await UGSLogin();
     }
 
     private async Task InitializeGPS()
@@ -47,11 +51,13 @@ public class LoginManager : MonoBehaviour
     {
         var tcs = new TaskCompletionSource<object>();
 
-        PlayGamesPlatform.Instance.Authenticate((status) =>
+        PlayGamesPlatform.Instance.Authenticate(async (status) =>
         {
             if (status == SignInStatus.Success)
             {
                 PlayGamesPlatform.Instance.RequestServerSideAccess(true, code => { Debug.Log($"Auth code is: {code}"); googlePlayToken = code; tcs.SetResult(null); });
+                string displayName = PlayGamesPlatform.Instance.GetUserDisplayName();
+                _username.text = displayName;
             }
             else
             {
@@ -69,7 +75,6 @@ public class LoginManager : MonoBehaviour
         try
         {
             await AuthenticationService.Instance.SignInWithGooglePlayGamesAsync(authCode);
-            //PlayerPrefs.SetString("ugsPlayerIds", AuthenticationService.Instance.PlayerId);
         }
         catch (AuthenticationException ex)
         {
@@ -81,13 +86,14 @@ public class LoginManager : MonoBehaviour
         }
     }
 
-    async Task AnonymousLogin()
+    async Task UGSLogin()
     {
         AuthenticationService.Instance.SignedIn += () =>
         {
             Debug.Log("Signed in as: " + AuthenticationService.Instance.PlayerId);
             Debug.Log($"Access Token: {AuthenticationService.Instance.AccessToken}");
             PlayerPrefs.SetString("ugsPlayerIds", AuthenticationService.Instance.PlayerId);
+            grabCoins();
         };
         AuthenticationService.Instance.SignInFailed += s =>
         {
@@ -95,4 +101,21 @@ public class LoginManager : MonoBehaviour
         };
         await AuthenticationService.Instance.SignInAnonymouslyAsync();
     }
+
+    private async void grabCoins()
+    {
+        Debug.Log("Grabbing player coins");
+        try
+        {
+            var coins = await LeaderboardsService.Instance.GetPlayerScoreAsync(coinsLB);
+            string playerCoins = JsonConvert.SerializeObject(coins);
+            _coins.text = playerCoins;
+        }
+        catch (Exception ex)
+        {
+            Debug.LogException(ex);
+            _coins.text = "0";
+        }
+    }
+
 }

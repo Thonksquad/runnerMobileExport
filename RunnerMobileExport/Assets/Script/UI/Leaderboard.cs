@@ -23,8 +23,6 @@ public class Leaderboard : MonoBehaviour, IPointerDownHandler
     public TextMeshProUGUI[] aroundTxtNames;
     public TextMeshProUGUI[] aroundTxtScores;
 
-
-
     private void OnEnable()
     {
         showLeaderBoard();
