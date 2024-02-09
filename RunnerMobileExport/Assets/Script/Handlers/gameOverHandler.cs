@@ -24,7 +24,6 @@ public class gameOverHandler : MonoBehaviour
         }
     }
 
-
     public async void loadStatsVc()
     {
         vcScore.text = GameManager.distance.ToString();
@@ -43,7 +42,6 @@ public class gameOverHandler : MonoBehaviour
             Debug.Log(highScore.ToString());
         } else
         {
-            Debug.Log("Could not convert to int");
             goHighScore.text = await UploadHandler.Instance.getPlayerScore();
         }
 
@@ -55,9 +53,6 @@ public class gameOverHandler : MonoBehaviour
         {
             goHighScore.text = await UploadHandler.Instance.getPlayerScore();
         }
-
-        Debug.Log("highscore is " + highScore);
-        Debug.Log("gameover score is " + GameManager.distance);
     }
 
 
