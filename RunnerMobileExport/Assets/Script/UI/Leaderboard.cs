@@ -96,7 +96,7 @@ public class Leaderboard : MonoBehaviour, IPointerDownHandler
             
             foreach (Result res in first10.results)
             {
-                if( i < 4 )
+                if( i <= 4 )
                 {
                     topTxtRanks[i].text = (res.rank + 1).ToString();
                     topTxtNames[i].text = res.playerName;
