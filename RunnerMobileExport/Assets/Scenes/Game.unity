@@ -3213,6 +3213,7 @@ GameObject:
   - component: {fileID: 739072115}
   - component: {fileID: 739072116}
   - component: {fileID: 739072117}
+  - component: {fileID: 739072119}
   - component: {fileID: 739072118}
   m_Layer: 0
   m_Name: GameManager
@@ -3322,6 +3323,24 @@ MonoBehaviour:
   waitTime: 10
   shootUi: {fileID: 16686973}
   flyUi: {fileID: 1245093924}
+--- !u!114 &739072119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 739072112}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7e9873d9ce80d945812e1de75915020, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vcScore: {fileID: 909777181}
+  vcHighScore: {fileID: 171103863}
+  vcCoin: {fileID: 2018132693}
+  goScore: {fileID: 1622664409}
+  goHighScore: {fileID: 196588595}
+  goCoin: {fileID: 36735913}
 --- !u!1 &767018970
 GameObject:
   m_ObjectHideFlags: 0

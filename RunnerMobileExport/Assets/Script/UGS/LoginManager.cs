@@ -7,9 +7,6 @@ using Unity.Services.Authentication;
 using GooglePlayGames;
 using GooglePlayGames.BasicApi;
 using TMPro;
-using Newtonsoft.Json;
-using Unity.Services.Leaderboards;
-using Unity.Services.Leaderboards.Exceptions;
 using UnityEngine.Networking;
 using System.Collections;
 
@@ -25,6 +22,8 @@ public class LoginManager : MonoBehaviour
     private string pfpURL;
 
     const string coinsLB = "coins";
+
+    private string userGooglePlayName = "";
 
     private async void Start()
     {
@@ -43,6 +42,13 @@ public class LoginManager : MonoBehaviour
         {
             StartCoroutine(LoadImage(pfpURL));
         }
+
+        _coins.text = await UploadHandler.Instance.getCoins();
+
+#if UNITY_ANDROID && !UNITY_EDITOR
+        setPlayerName(userGooglePlayName);
+#endif
+
 
     }
 
@@ -72,8 +78,8 @@ public class LoginManager : MonoBehaviour
             if (status == SignInStatus.Success)
             {
                 PlayGamesPlatform.Instance.RequestServerSideAccess(true, code => { Debug.Log($"Auth code is: {code}"); googlePlayToken = code; tcs.SetResult(null); });
-                string displayName = PlayGamesPlatform.Instance.GetUserDisplayName();
-                _username.text = displayName;
+                userGooglePlayName = PlayGamesPlatform.Instance.GetUserDisplayName();
+                _username.text = userGooglePlayName;
                 pfpURL = PlayGamesPlatform.Instance.GetUserImageUrl();
                 StartCoroutine(LoadImage(pfpURL));
             }
@@ -106,35 +112,28 @@ public class LoginManager : MonoBehaviour
 
     async Task UGSLogin()
     {
-        AuthenticationService.Instance.SignedIn += () =>
-        {
-            Debug.Log("Signed in as: " + AuthenticationService.Instance.PlayerId);
-            Debug.Log($"Access Token: {AuthenticationService.Instance.AccessToken}");
-            PlayerPrefs.SetString("ugsPlayerIds", AuthenticationService.Instance.PlayerId);
-            grabCoins();
-        };
-        AuthenticationService.Instance.SignInFailed += s =>
-        {
-            Debug.Log(s);
-        };
-        await AuthenticationService.Instance.SignInAnonymouslyAsync();
-    }
-
-    private async void grabCoins()
-    {
-        Debug.Log("Grabbing player coins");
         try
         {
-            var coins = await LeaderboardsService.Instance.GetPlayerScoreAsync(coinsLB);
-            string playerCoins = JsonConvert.SerializeObject(coins);
-            _coins.text = playerCoins;
+            AuthenticationService.Instance.SignedIn += () =>
+            {
+                Debug.Log("Signed in as: " + AuthenticationService.Instance.PlayerId);
+                Debug.Log($"Access Token: {AuthenticationService.Instance.AccessToken}");
+                PlayerPrefs.SetString("ugsPlayerIds", AuthenticationService.Instance.PlayerId);
+
+            };
+            AuthenticationService.Instance.SignInFailed += s =>
+            {
+                Debug.Log(s);
+            };
+            await AuthenticationService.Instance.SignInAnonymouslyAsync();
         }
         catch (Exception ex)
         {
             Debug.Log(ex);
-            _coins.text = "0";
         }
     }
+
+
 
     private IEnumerator LoadImage(string url)
     {
@@ -151,4 +150,18 @@ public class LoginManager : MonoBehaviour
             _userPFP.sprite = sprite;
         }
     }
+
+    // max characters = 50
+    public void setPlayerName(string playerName)
+    {
+        try
+        {
+            AuthenticationService.Instance.UpdatePlayerNameAsync(playerName);
+        }
+        catch (Exception e)
+        {
+            Debug.LogException(e);
+        }
+    }
+
 }

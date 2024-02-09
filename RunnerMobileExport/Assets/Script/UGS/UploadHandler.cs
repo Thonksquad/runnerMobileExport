@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Unity.Services.Leaderboards;
+using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
 
 
@@ -44,28 +45,69 @@ public class UploadHandler : MonoBehaviour
         Debug.Log(JsonConvert.SerializeObject(playerEntry));
     }
 
+    public async Task<string> getPlayerScore()
+    {
+        string tRes = "0";
+        Debug.Log("Grabbing player score");
+
+        try
+        {
+            var dbResponse = await LeaderboardsService.Instance.GetPlayerScoreAsync(leaderboardId);
+            string res = JsonConvert.SerializeObject(dbResponse).ToString();
+            dbResult psRes = JsonConvert.DeserializeObject<dbResult>(res);
+            tRes = psRes.score.ToString();
+        }
+        catch (Exception ex)
+        {
+            Debug.Log(ex);
+            tRes = "0";
+        }
+
+        return tRes;
+    }
+
     public async void addCoins()
     {
-        var playerEntry = await LeaderboardsService.Instance
+        Debug.Log("add coins to db");
+        try
+        {
+            var playerEntry = await LeaderboardsService.Instance
             .AddPlayerScoreAsync(coinsId, GameManager.coins
             );
-        Debug.Log(JsonConvert.SerializeObject(playerEntry));
+            Debug.Log(JsonConvert.SerializeObject(playerEntry));
+        }
+        catch (Exception ex)
+        {
+            Debug.Log(ex);
+        }
+        
     }
 
     public async Task<string> getCoins()
     {
-        var scoreResponse = await LeaderboardsService.Instance
-        .GetPlayerScoreAsync(coinsId);
-        string res = JsonConvert.SerializeObject(scoreResponse).ToString();
-        coinsResult coinRes = JsonConvert.DeserializeObject<coinsResult>(res);
+        string tRes = "0";
+        Debug.Log("Grabbing player coins");
 
-        return coinRes.score.ToString();
+        try
+        {
+            var dbResponse = await LeaderboardsService.Instance.GetPlayerScoreAsync(coinsId);
+            string res = JsonConvert.SerializeObject(dbResponse).ToString();
+            dbResult coinRes = JsonConvert.DeserializeObject<dbResult>(res);
+            tRes = coinRes.score.ToString();
+        }
+        catch (Exception ex)
+        {
+            Debug.Log(ex);
+            tRes = "0";
+        }
+
+        return tRes;
     }
 
 }
 
 
-public class coinsResult
+public class dbResult
 {
     public string playerId { get; set; }
     public string playerName { get; set; }
