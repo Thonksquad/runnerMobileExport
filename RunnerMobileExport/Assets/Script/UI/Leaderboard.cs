@@ -15,6 +15,7 @@ public class Leaderboard : MonoBehaviour, IPointerDownHandler
     const string leaderboardId = "leaderboard";
 
     public Color playerColor;
+    public Color defaultColor;
 
     public TextMeshProUGUI[] topTxtRanks;
     public TextMeshProUGUI[] topTxtNames;
@@ -36,6 +37,7 @@ public class Leaderboard : MonoBehaviour, IPointerDownHandler
 
     public async void showLeaderBoard()
     {
+
         Debug.Log("Accessing LB");
         try
         {
@@ -58,9 +60,15 @@ public class Leaderboard : MonoBehaviour, IPointerDownHandler
                 topTxtScores[i].text = res.score.ToString();
                 if (res.playerId == PlayerPrefs.GetString("ugsPlayerIds"))
                 {
-                    aroundTxtRanks[i].color = playerColor;
-                    aroundTxtNames[i].color = playerColor;
-                    aroundTxtScores[i].color = playerColor;
+                    topTxtRanks[i].color = playerColor;
+                    topTxtNames[i].color = playerColor;
+                    topTxtScores[i].color = playerColor;
+                }
+                else
+                {
+                    topTxtRanks[i].color = defaultColor;
+                    topTxtNames[i].color = defaultColor;
+                    topTxtScores[i].color = defaultColor;
                 }
                 Debug.Log("" + (res.rank + 1).ToString() + " -- " + res.playerName + " -- " + res.score.ToString());
                 i++;
@@ -77,6 +85,12 @@ public class Leaderboard : MonoBehaviour, IPointerDownHandler
                     aroundTxtRanks[i].color = playerColor;
                     aroundTxtNames[i].color = playerColor;
                     aroundTxtScores[i].color = playerColor;
+                }
+                else
+                {
+                    aroundTxtRanks[i].color = defaultColor;
+                    aroundTxtNames[i].color = defaultColor;
+                    aroundTxtScores[i].color = defaultColor;
                 }
                 Debug.Log("" + (res.rank + 1).ToString() + " -- " + res.playerName + " -- " + res.score.ToString());
                 i++;
