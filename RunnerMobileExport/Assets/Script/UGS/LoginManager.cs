@@ -10,6 +10,7 @@ using TMPro;
 using UnityEngine.Networking;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using Unity.VisualScripting;
 
 public class LoginManager : MonoBehaviour
 {
@@ -52,17 +53,20 @@ public class LoginManager : MonoBehaviour
 #if UNITY_ANDROID && !UNITY_EDITOR
         setPlayerName(userGooglePlayName);
 #endif
+
+        _coins.text = await UploadHandler.Instance.getCoins();
+
         if (sprite != null)
         {
             _userPFP.sprite = sprite;
         }
         else
         {
-            StartCoroutine(LoadImage(pfpURL));
+            if (googlePlayError == null)
+            {
+                StartCoroutine(LoadImage(pfpURL));
+            }
         }
-
-        _coins.text = await UploadHandler.Instance.getCoins();
-
     }
 
     private async Task InitializeGPS()
@@ -174,5 +178,4 @@ public class LoginManager : MonoBehaviour
             Debug.LogException(e);
         }
     }
-
 }
