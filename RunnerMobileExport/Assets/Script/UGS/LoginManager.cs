@@ -9,6 +9,7 @@ using GooglePlayGames.BasicApi;
 using TMPro;
 using UnityEngine.Networking;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class LoginManager : MonoBehaviour
 {
@@ -22,10 +23,9 @@ public class LoginManager : MonoBehaviour
     private string pfpURL;
 
     const string coinsLB = "coins";
-
     private string userGooglePlayName = "";
 
-    private async void Start()
+    private async void Awake()
     {
 #if UNITY_ANDROID && !UNITY_EDITOR
         PlayGamesPlatform.Activate();
@@ -34,21 +34,34 @@ public class LoginManager : MonoBehaviour
 #endif
         await UnityServices.InitializeAsync();
         await UGSLogin();
+    }
 
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    async void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name != "MainMenu") return;
+#if UNITY_ANDROID && !UNITY_EDITOR
+        setPlayerName(userGooglePlayName);
+#endif
         if (sprite != null)
         {
             _userPFP.sprite = sprite;
-        } else
+        }
+        else
         {
             StartCoroutine(LoadImage(pfpURL));
         }
 
         _coins.text = await UploadHandler.Instance.getCoins();
-
-#if UNITY_ANDROID && !UNITY_EDITOR
-        setPlayerName(userGooglePlayName);
-#endif
-
 
     }
 
@@ -132,8 +145,6 @@ public class LoginManager : MonoBehaviour
             Debug.Log(ex);
         }
     }
-
-
 
     private IEnumerator LoadImage(string url)
     {
