@@ -14,7 +14,7 @@ public class Retry : MonoBehaviour, IPointerDownHandler
         player = FindObjectOfType<Player>();
     }
 
-    public void OnPointerDown(PointerEventData eventData)
+    public virtual void OnPointerDown(PointerEventData eventData)
     {
         player.gameOver = false;
         SceneManager.LoadSceneAsync("Game", LoadSceneMode.Single);
