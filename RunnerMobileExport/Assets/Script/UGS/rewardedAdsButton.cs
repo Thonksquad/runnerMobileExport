@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Advertisements;
+using TMPro;
 
 public class rewardedAdsButton : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowListener
 {
@@ -11,11 +12,15 @@ public class rewardedAdsButton : MonoBehaviour, IUnityAdsLoadListener, IUnityAds
     string _adUnitId = null; // This will remain null for unsupported platforms
     [SerializeField] bool _testMode = true;
 
+    public GameObject errorPnl;
+    public TextMeshProUGUI errorMsg;
+
 
     public static rewardedAdsButton Instance;
 
     void Awake()
     {
+        errorPnl.SetActive(false);
         // Get the Ad Unit ID for the current platform:
 #if UNITY_IOS
         _adUnitId = _iOSAdUnitId;
@@ -86,14 +91,18 @@ public class rewardedAdsButton : MonoBehaviour, IUnityAdsLoadListener, IUnityAds
     {
         Debug.Log($"Error loading Ad Unit {adUnitId}: {error.ToString()} - {message}");
         // Use the error details to determine whether to try to load another ad.
-        adsManager.Instance.cancelVideoAds();
+        //adsManager.Instance.cancelVideoAds();
+        errorPnl.SetActive(true);
+        errorMsg.text = "Error loading Ad " + error.ToString() + " _ " + message;
     }
 
     public void OnUnityAdsShowFailure(string adUnitId, UnityAdsShowError error, string message)
     {
         Debug.Log($"Error showing Ad Unit {adUnitId}: {error.ToString()} - {message}");
         // Use the error details to determine whether to try to load another ad.
-        adsManager.Instance.cancelVideoAds();
+        //adsManager.Instance.cancelVideoAds();
+        errorPnl.SetActive(true);
+        errorMsg.text = "Error loading Ad " + error.ToString() + " _ " + message;
     }
 
     public void OnUnityAdsShowStart(string adUnitId) { }
