@@ -47,6 +47,7 @@ public class GameManager : MonoBehaviour
         ActionSystem.onPlayerHit += playerHit;
         ActionSystem.onPlayerRestart += playerRestart;
         ActionSystem.onEnemyDeath += enemyKilled;
+        ActionSystem.onUpdateCoins += coinToDatabase;
 
     }
 
@@ -55,6 +56,7 @@ public class GameManager : MonoBehaviour
         ActionSystem.onPlayerHit -= playerHit;
         ActionSystem.onPlayerRestart -= playerRestart;
         ActionSystem.onEnemyDeath -= enemyKilled;
+        ActionSystem.onUpdateCoins -= coinToDatabase;
     }
 
     void Start()
@@ -126,11 +128,17 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            UploadHandler.Instance.addCoins();
+            coinToDatabase();
             gameOverHandler.Instance.loadStatsGo();
             gameOverScreen.SetActive(true);
         }
     }
+
+    public void coinToDatabase()
+    {
+        UploadHandler.Instance.addCoins();
+    }
+
 
     private IEnumerator UpdateTimer()
     {
