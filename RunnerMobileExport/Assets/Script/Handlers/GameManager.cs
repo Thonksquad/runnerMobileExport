@@ -132,9 +132,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    
-
-
     private IEnumerator UpdateTimer()
     {
         while (GameState == GameState.ArcadeMode)

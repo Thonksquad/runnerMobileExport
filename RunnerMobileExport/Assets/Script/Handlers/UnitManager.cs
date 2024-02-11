@@ -192,7 +192,6 @@ public class UnitManager : MonoBehaviour
         {
             Invoke(nameof(SpawnEnemy), Respawntimer);
         }
-
     }
 
     private IEnumerator SpawnEnemyTimer(float interval)
@@ -223,5 +222,4 @@ public class UnitManager : MonoBehaviour
 
         StartCoroutine(SpawnCoinTimer(coinspawnInterval));
     }
-
 }

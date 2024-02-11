@@ -89,7 +89,6 @@ public class LoginManager : MonoBehaviour
     private Task AuthenticateGPS()
     {
         var tcs = new TaskCompletionSource<object>();
-
         PlayGamesPlatform.Instance.Authenticate(async (status) =>
         {
             if (status == SignInStatus.Success)
