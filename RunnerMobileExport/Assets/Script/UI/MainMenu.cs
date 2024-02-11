@@ -12,7 +12,7 @@ public class MainMenu : MonoBehaviour, IPointerDownHandler
         player = FindObjectOfType<Player>();
     }
 
-    public void OnPointerDown(PointerEventData eventData)
+    public virtual void OnPointerDown(PointerEventData eventData)
     {
         SceneManager.LoadSceneAsync("MainMenu", LoadSceneMode.Single);
         player.gameOver = false;

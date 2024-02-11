@@ -10,4 +10,5 @@ public class ActionSystem
     public static Action onPlayerRecover;
     public static Action onAdRevive;
     public static Action<BaseEnemy> onEnemyDeath;
+    public static Action onUpdateCoins;
 }

@@ -92,6 +92,13 @@ public class Leaderboard : MonoBehaviour, IPointerDownHandler
                     aroundTxtNames[i].color = defaultColor;
                     aroundTxtScores[i].color = defaultColor;
                 }
+
+                if( res.rank < 5 && res.playerId == PlayerPrefs.GetString("ugsPlayerIds"))
+                {
+                    show10results();
+                    break;
+                }
+
                 Debug.Log("" + (res.rank + 1).ToString() + " -- " + res.playerName + " -- " + res.score.ToString());
                 i++;
             }
@@ -123,6 +130,50 @@ public class Leaderboard : MonoBehaviour, IPointerDownHandler
                 Debug.Log("" + (res.rank + 1).ToString() + " -- " + res.playerName + " -- " + res.score.ToString());
                 i++;
             }
+        }
+    }
+
+    public async void show10results()
+    {
+
+        try
+        {
+            var scoresResponse1t5 = await LeaderboardsService.Instance.GetScoresAsync(leaderboardId,
+                new GetScoresOptions { Offset = 5, Limit = 5 });
+            
+            string top5 = JsonConvert.SerializeObject(scoresResponse1t5);
+
+
+            Root first5 = JsonConvert.DeserializeObject<Root>(top5);
+
+
+            int i = 0;
+
+            foreach (Result res in first5.results)
+            {
+                aroundTxtRanks[i].text = (res.rank + 1).ToString();
+                aroundTxtNames[i].text = res.playerName;
+                aroundTxtScores[i].text = res.score.ToString();
+                if (res.playerId == PlayerPrefs.GetString("ugsPlayerIds"))
+                {
+                    aroundTxtRanks[i].color = playerColor;
+                    aroundTxtNames[i].color = playerColor;
+                    aroundTxtScores[i].color = playerColor;
+                }
+                else
+                {
+                    aroundTxtRanks[i].color = defaultColor;
+                    aroundTxtNames[i].color = defaultColor;
+                    aroundTxtScores[i].color = defaultColor;
+                }
+                Debug.Log("" + (res.rank + 1).ToString() + " -- " + res.playerName + " -- " + res.score.ToString());
+                i++;
+            }
+
+        }
+        catch (Exception ex)
+        {
+            Debug.Log(ex);
         }
     }
 }
