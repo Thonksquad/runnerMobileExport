@@ -93,7 +93,7 @@ public class Leaderboard : MonoBehaviour, IPointerDownHandler
                     aroundTxtScores[i].color = defaultColor;
                 }
 
-                if( res.rank < 5 && res.playerId == PlayerPrefs.GetString("ugsPlayerIds"))
+                if( res.rank < 10 && res.playerId == PlayerPrefs.GetString("ugsPlayerIds"))
                 {
                     show10results();
                     break;
