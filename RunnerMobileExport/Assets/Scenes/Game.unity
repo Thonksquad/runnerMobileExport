@@ -428,8 +428,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -50, y: 50}
-  m_SizeDelta: {x: 200, y: 200}
+  m_AnchoredPosition: {x: -80, y: 70}
+  m_SizeDelta: {x: 200, y: 230}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &16686975
 MonoBehaviour:
@@ -4223,7 +4223,7 @@ MonoBehaviour:
   rotatingobstaclePrefab: {fileID: 6272515770486927925, guid: e9f823327200e9d4bb91d1862d5dfc8a, type: 3}
   groundobstaclePrefab: {fileID: 6272515770486927925, guid: 24b5889a72178af4dbd0e4b1aad00ac7, type: 3}
   longobstaclePrefab: {fileID: 6272515770486927925, guid: 8de3314394c2000499cd7a46c0b1b7ec, type: 3}
-  fireballPrefab: {fileID: 1154985950172359225, guid: e314d3dd67163774481c68b1afa4fb1b, type: 3}
+  _fireballPrefab: {fileID: 0}
   _units: []
   mobspawnInterval: 3
   coinspawnInterval: 25
@@ -5045,8 +5045,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 50, y: 50}
-  m_SizeDelta: {x: 200, y: 200}
+  m_AnchoredPosition: {x: 80, y: 70}
+  m_SizeDelta: {x: 200, y: 230}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &1245093926
 MonoBehaviour:
