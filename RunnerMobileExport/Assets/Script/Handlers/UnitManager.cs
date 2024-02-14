@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Pool;
 
 public class UnitManager : MonoBehaviour
 {
@@ -22,7 +23,9 @@ public class UnitManager : MonoBehaviour
     [SerializeField] private GameObject rotatingobstaclePrefab;
     [SerializeField] private GameObject groundobstaclePrefab;
     [SerializeField] private GameObject longobstaclePrefab;
-    [SerializeField] private GameObject fireballPrefab;
+    [SerializeField] private GameObject _fireballPrefab;
+
+    private ObjectPool<GameObject> _fireballPool;
 
     private Player player;
     [SerializeField] private List<BaseEnemy> _units;
@@ -72,6 +75,15 @@ public class UnitManager : MonoBehaviour
     private void Start()
     {
         player = FindObjectOfType<Player>();
+
+        _fireballPool = new ObjectPool<GameObject>(() =>
+        {
+            return Instantiate(_fireballPrefab, new Vector3(xRef, yRef, 0), Quaternion.identity);
+        }, fireball =>
+        {
+            fireball.gameObject.SetActive(false);
+        });
+
         StartCoroutine(SpawnEnemyTimer(mobspawnInterval));
         StartCoroutine(SpawnObstacleTimer(mobspawnInterval));
         StartCoroutine(SpawnCoinTimer(coinspawnInterval));
@@ -143,7 +155,7 @@ public class UnitManager : MonoBehaviour
                     Destroy(newRotate, mobAutoDestroy);
                     break;
                 case 4:
-                    enemy = fireballPrefab;
+                    enemy = _fireballPrefab;
                     GameObject newFireball = Instantiate(enemy, new Vector3(xRef, yRef, 0), Quaternion.identity);
                     Destroy(newFireball, mobAutoDestroy);
                     break;
