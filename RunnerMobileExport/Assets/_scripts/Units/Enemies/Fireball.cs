@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,9 +10,19 @@ public class Fireball : MonoBehaviour
     Rigidbody2D myRigidbody;
     public int damage = 1;
 
+
+    //Create a parent class which inherits this
+    private Action<Fireball> _killAction;
+
     void Start()
     {
         myRigidbody = GetComponent<Rigidbody2D>();
+    }
+
+    //Create a parent class which inherits this
+    public void Init(Action<Fireball> killAction)
+    {
+        _killAction = killAction;
     }
 
     private void OnBecameVisible()

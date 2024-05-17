@@ -4,8 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using Unity.Services.Core;
 using Unity.Services.Authentication;
+
+#if UNITY_ANDROID && !UNITY_EDITOR
 using GooglePlayGames;
 using GooglePlayGames.BasicApi;
+#endif
+
 using TMPro;
 using UnityEngine.Networking;
 using System.Collections;
@@ -78,7 +82,11 @@ public class LoginManager : MonoBehaviour
         try
         {
             await UnityServices.InitializeAsync();
-            await AuthenticateGPS();
+
+#if UNITY_ANDROID && !UNITY_EDITOR
+        await AuthenticateGPS();
+#endif
+
         }
         catch (System.Exception e)
         {
@@ -86,6 +94,7 @@ public class LoginManager : MonoBehaviour
         }
     }
 
+#if UNITY_ANDROID && !UNITY_EDITOR
     private Task AuthenticateGPS()
     {
         var tcs = new TaskCompletionSource<object>();
@@ -125,6 +134,7 @@ public class LoginManager : MonoBehaviour
             Debug.LogException(ex);
         }
     }
+#endif
 
     async Task UGSLogin()
     {

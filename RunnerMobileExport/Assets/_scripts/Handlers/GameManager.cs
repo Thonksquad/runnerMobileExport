@@ -3,8 +3,6 @@ using UnityEngine;
 using System;
 using TMPro;
 
-
-
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private float HoundModifier;
@@ -12,7 +10,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject gamePlayScreen;
     [SerializeField] private AudioClip _deathSound;
     public static GameManager Instance;
-    public GameState GameState;
+    public static GameState GameState;
     public TextMeshProUGUI BestdistanceUI;
     public TextMeshProUGUI EnddistanceUI;
     public TextMeshProUGUI EndcoinsUI;
@@ -84,7 +82,7 @@ public class GameManager : MonoBehaviour
                 distance = 0;
                 coins = 0;
                 hounds = 1;
-                coUpdateTimer = StartCoroutine(UpdateTimer());
+                coUpdateTimer = StartCoroutine(UpdateTimer()); // TODO: MAKE SURE YOU DESTROY ALL TIMERS
                 break;
             case GameState.GamePause:
                 StopCoroutine(coUpdateTimer);

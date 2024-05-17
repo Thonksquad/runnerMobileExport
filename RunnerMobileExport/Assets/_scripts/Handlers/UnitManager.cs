@@ -10,8 +10,8 @@ public class UnitManager : MonoBehaviour
     public float DetectionRadius;
 
     [SerializeField] private LayerMask EnemyDetectionLayer;
-    [SerializeField] private GameObject RandomCoinPrefab;
-    [SerializeField] private GameObject coinPrefab;
+    [SerializeField] private Coin StaticCoinPrefab;
+    [SerializeField] private Coin coinPrefab;
     [SerializeField] private GameObject houndPrefab;
 
     [SerializeField] private GameObject batPrefab;
@@ -23,16 +23,19 @@ public class UnitManager : MonoBehaviour
     [SerializeField] private GameObject rotatingobstaclePrefab;
     [SerializeField] private GameObject groundobstaclePrefab;
     [SerializeField] private GameObject longobstaclePrefab;
-    [SerializeField] private GameObject _fireballPrefab;
+    [SerializeField] private Fireball _fireballPrefab;
 
-    private ObjectPool<GameObject> _fireballPool;
+    [SerializeField] private bool _usePool;
+    private ObjectPool<Fireball> _fireballPool;
+    private ObjectPool<Coin> _coinPool;
+    private ObjectPool<Coin> _staticCoinPool;
 
     private Player player;
     [SerializeField] private List<BaseEnemy> _units;
     private GameObject enemy;
 
-    private float Respawntimer => 1+(0.01f*CameraManager.Instance.CamSpeed);
-    private float mobSpawnDistance => 50f + (0.1f*CameraManager.Instance.CamSpeed);
+    private float Respawntimer => 1 + (0.01f * CameraManager.Instance.CamSpeed);
+    private float mobSpawnDistance => 50f + (0.1f * CameraManager.Instance.CamSpeed);
     [SerializeField] private float mobspawnInterval = 7f;
     [SerializeField] private float coinspawnInterval = 30f;
     [SerializeField] private float mobAutoDestroy = 10f;
@@ -74,19 +77,112 @@ public class UnitManager : MonoBehaviour
 
     private void Start()
     {
+        //Replace the old coroutines with the timer system with each general type (enemies/obstacle)
+        //Create 1 coroutine that creates the timers on loop
+        //Each timer will be updated by TimerUpdater
+
+        //Convert this into a coroutine
+        /**
+        Timer timer = new Timer(3f, () =>
+        {
+            Debug.Log("Timer has ticked to 0! " + Time.time);
+        });
+        **/
+
         player = FindObjectOfType<Player>();
 
-        _fireballPool = new ObjectPool<GameObject>(() =>
-        {
-            return Instantiate(_fireballPrefab, new Vector3(xRef, yRef, 0), Quaternion.identity);
-        }, fireball =>
-        {
-            fireball.gameObject.SetActive(false);
-        });
+        CreateFireBallPool();
+        CreateStaticCoinPool();
+        CreateCoinPool();
+
 
         StartCoroutine(SpawnEnemyTimer(mobspawnInterval));
         StartCoroutine(SpawnObstacleTimer(mobspawnInterval));
         StartCoroutine(SpawnCoinTimer(coinspawnInterval));
+    }
+
+    private void CreateFireBallPool()
+    {
+        _fireballPool = new ObjectPool<Fireball>(() =>
+        {
+            //Return from pool
+            return Instantiate(_fireballPrefab, new Vector3(xRef, yRef, 0), Quaternion.identity);
+        }, fireball =>
+        {
+            //Grab from pool
+            fireball.gameObject.SetActive(true);
+        }, fireball =>
+        {
+            //On release
+            fireball.gameObject.SetActive(false);
+        }, fireball =>
+        {
+            Destroy(fireball.gameObject);
+        },
+        // Check this to false to save CPU cycles (this checks if it's in the pool or not)
+        false,
+        //Current array size
+        3,
+        //Max array size
+        10);
+    }
+
+    //Fix this
+    private void DespawnFireball(Fireball fireball)
+    {
+        Debug.Log("Attempting to despawn fireball");
+        if (_usePool) _fireballPool.Release(fireball);
+        else Destroy(fireball, mobAutoDestroy);
+    }
+
+    private void CreateStaticCoinPool()
+    {
+        _staticCoinPool = new ObjectPool<Coin>(() =>
+        {
+            //Return from pool
+            return Instantiate(StaticCoinPrefab);
+        }, staticCoin =>
+        {
+            //Grab from pool
+            staticCoin.gameObject.SetActive(true);
+        }, staticCoin => {
+            //On release
+            staticCoin.gameObject.SetActive(false);
+        }, staticCoin =>
+        {
+            Destroy(staticCoin.gameObject);
+        },
+        // Check this to false to save CPU cycles (this checks if it's in the pool or not)
+        false,
+        //Current array size
+        3,
+        //Max array size
+        10);
+    }
+
+    private void CreateCoinPool()
+    {
+        _coinPool = new ObjectPool<Coin>(() =>
+        {
+            //Return from pool
+            return Instantiate(coinPrefab);
+        }, dynamicCoin =>
+        {
+            //Grab from pool
+            dynamicCoin.gameObject.SetActive(true);
+        }, dynamicCoin => {
+            //On release
+            dynamicCoin.gameObject.SetActive(false);
+        }, dynamicCoin =>
+        {
+            Destroy(dynamicCoin.gameObject);
+        },
+        // Check this to false to save CPU cycles (this checks if it's in the pool or not)
+        false,
+        //Current array size
+        3,
+        //Max array size
+        10);
     }
 
     public void SpawnHound()
@@ -97,7 +193,8 @@ public class UnitManager : MonoBehaviour
         if (IsSafeToSpawn(new Vector2(xRef, yRef), 3 * DetectionRadius))
         {
             GameObject newHound = Instantiate(houndPrefab, new Vector3(xRef, yRef, 0), Quaternion.identity);
-        } else
+        }
+        else
         {
             Invoke(nameof(SpawnHound), 0.5f);
         }
@@ -105,14 +202,14 @@ public class UnitManager : MonoBehaviour
 
     public void SpawnCoin(float xRef, float yRef)
     {
-        GameObject newCoin = Instantiate(coinPrefab, new Vector3(xRef, yRef, 0), Quaternion.identity);
+        Coin newCoin = Instantiate(coinPrefab, new Vector3(xRef, yRef, 0), Quaternion.identity);
         Vector2 forceDirection = new Vector2(Random.Range(0, .001f), Random.Range(.001f, .003f)).normalized;
         newCoin.GetComponent<Rigidbody2D>().AddForce(.1f * forceDirection, ForceMode2D.Impulse);
     }
 
     public void SpawnRandomCoin()
     {
-        GameObject newCoin = Instantiate(RandomCoinPrefab, new Vector3(player.transform.position.x + mobSpawnDistance, Random.Range(-4f, 4f), 0), Quaternion.identity);
+        Coin newCoin = Instantiate(StaticCoinPrefab, new Vector3(player.transform.position.x + mobSpawnDistance, Random.Range(-4f, 4f), 0), Quaternion.identity);
     }
 
     private void SpawnObstacle()
@@ -138,7 +235,8 @@ public class UnitManager : MonoBehaviour
                         enemy = groundobstaclePrefab;
                         GameObject newGround = Instantiate(enemy, new Vector3(xRef, yRef, 0), Quaternion.identity);
                         Destroy(newGround, mobAutoDestroy);
-                    } else
+                    }
+                    else
                     {
                         goto case 4;
                     }
@@ -155,9 +253,8 @@ public class UnitManager : MonoBehaviour
                     Destroy(newRotate, mobAutoDestroy);
                     break;
                 case 4:
-                    enemy = _fireballPrefab;
-                    GameObject newFireball = Instantiate(enemy, new Vector3(xRef, yRef, 0), Quaternion.identity);
-                    Destroy(newFireball, mobAutoDestroy);
+                    var newFireball = _usePool ? _fireballPool.Get() : Instantiate(_fireballPrefab, new Vector3(xRef, yRef, 0), Quaternion.identity);
+                    newFireball.Init(DespawnFireball);
                     break;
                 default: break;
             }
@@ -227,6 +324,7 @@ public class UnitManager : MonoBehaviour
         StartCoroutine(SpawnObstacleTimer(mobspawnInterval));
     }
 
+    // Convert this to using timer
     private IEnumerator SpawnCoinTimer(float interval)
     {
         yield return new WaitForSeconds(interval);

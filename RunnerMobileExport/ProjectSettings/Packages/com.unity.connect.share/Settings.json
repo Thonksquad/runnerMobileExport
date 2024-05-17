@@ -4,7 +4,7 @@
             {
                 "type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
                 "key": "buildOutputDirList",
-                "value": "{\"m_Value\":\"C:/Users/Daniel/Desktop/dashbored export;C:/Users/Daniel/Desktop/Dashbored Export;C:/Users/Daniel/Desktop/Dashbored export;C:/Users/Daniel/Desktop/DashBored export;C:/Users/Daniel/Desktop/Jetpack export;;;;;\"}"
+                "value": "{\"m_Value\":\"C:/Users/user/Desktop/WebGLBuild/DashBoredNoDB;C:/Users/user/Desktop/WebGL Build;C:/Users/Daniel/Desktop/dashbored export;C:/Users/Daniel/Desktop/Dashbored Export;C:/Users/Daniel/Desktop/Dashbored export;C:/Users/Daniel/Desktop/DashBored export;C:/Users/Daniel/Desktop/Jetpack export;;;\"}"
             }
         ]
     }

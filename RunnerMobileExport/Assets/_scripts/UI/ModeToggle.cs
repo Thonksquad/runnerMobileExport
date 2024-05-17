@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class ModeToggle : MonoBehaviour, IPointerDownHandler
 {
-    public static bool isPCMode = false;
+    public static bool isPCMode = true;
     [SerializeField] private Image _img;
     [SerializeField] private Sprite _pcMode, _mobileMode;
 
@@ -23,7 +23,7 @@ public class ModeToggle : MonoBehaviour, IPointerDownHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        //isPCMode = !isPCMode;
+        isPCMode = !isPCMode;
         if (isPCMode)
         {
             _img.sprite = _pcMode;
