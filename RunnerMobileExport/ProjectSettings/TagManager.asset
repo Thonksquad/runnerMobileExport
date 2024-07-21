@@ -3,7 +3,11 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Bullet
+  - profilepic
+  - username
+  - coins
   layers:
   - Default
   - TransparentFX
@@ -11,14 +15,14 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Player
+  - PlayerProjectile
+  - Enemy
+  - Ground
+  - Enemy Raycast
+  - EnemyProjectile
+  - Powerups
+  - deadEnemy
   - 
   - 
   - 
