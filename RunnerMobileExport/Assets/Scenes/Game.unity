@@ -3261,7 +3261,7 @@ MonoBehaviour:
   DetectionRadius: 3.3
   EnemyDetectionLayer:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 0
   RandomCoinPrefab: {fileID: 5948536843839647400, guid: 08759c7f5de9a294fac7f68e5933fa69, type: 3}
   coinPrefab: {fileID: 2671702028324914507, guid: a68f94b842aa53a4eb01582cb8111447, type: 3}
   houndPrefab: {fileID: 9010371361248096888, guid: e4ac30e04df58ba44bc597f9341da9a4, type: 3}

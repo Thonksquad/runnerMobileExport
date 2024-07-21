@@ -117,13 +117,8 @@
             "userAdded": false,
             "type": "UnityEditor.SceneAsset",
             "ignore": false,
-<<<<<<< Updated upstream
-            "defaultInstantiationMode": 0,
-            "supportsModification": false
-=======
             "defaultInstantiationMode": 1,
             "supportsModification": true
->>>>>>> Stashed changes
         },
         {
             "userAdded": false,
