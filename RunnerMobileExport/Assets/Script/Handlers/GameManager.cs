@@ -1,11 +1,8 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using System;
 using TMPro;
-using Newtonsoft.Json;
 using Unity.Services.Leaderboards;
-
 
 public class GameManager : MonoBehaviour
 {
@@ -14,15 +11,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject gamePlayScreen;
     [SerializeField] private AudioClip _deathSound;
     public static GameManager Instance;
-    public GameState GameState;
+    public static GameState GameState;
     public TextMeshProUGUI BestdistanceUI;
     public TextMeshProUGUI EnddistanceUI;
     public TextMeshProUGUI EndcoinsUI;
     public TextMeshProUGUI distanceUI;
     public TextMeshProUGUI coinUI;
 
-    // Refactor this so that it grabs from UGS's DB
-    //private bool newHighScore() => distance > DBGrabUser.highScore;
     public static float gameLength;
     public static float enemiesKilled;
     public static float distance;
@@ -30,19 +25,15 @@ public class GameManager : MonoBehaviour
     private int hounds = 1;
     private Coroutine coUpdateTimer;
 
-
-    const string leaderboardId = "leaderboard";
-
-
     private void Awake()
     {
-        if(Instance == null)
+        if (Instance == null)
         {
             Instance = this;
         }
         else
         {
-            if(Instance != this)
+            if (Instance != this)
             {
                 Destroy(this);
             }
@@ -52,16 +43,17 @@ public class GameManager : MonoBehaviour
     private void OnEnable()
     {
         ActionSystem.onPlayerHit += playerHit;
-        ActionSystem.onPlayerRecover += playerRecover;
+        ActionSystem.onPlayerRestart += playerRestart;
         ActionSystem.onEnemyDeath += enemyKilled;
-
+        ActionSystem.onUpdateCoins += coinToDatabase;
     }
 
     private void OnDisable()
     {
         ActionSystem.onPlayerHit -= playerHit;
-        ActionSystem.onPlayerRecover -= playerRecover;
+        ActionSystem.onPlayerRestart -= playerRestart;
         ActionSystem.onEnemyDeath -= enemyKilled;
+        ActionSystem.onUpdateCoins -= coinToDatabase;
     }
 
     void Start()
@@ -75,7 +67,6 @@ public class GameManager : MonoBehaviour
         coinUI.text = coins.ToString();
     }
 
-
     public void ChangeState(GameState newState)
     {
         GameState = newState;
@@ -84,6 +75,11 @@ public class GameManager : MonoBehaviour
             case GameState.StartScreen:
                 break;
             case GameState.ArcadeMode:
+                gameLength = 0;
+                enemiesKilled = 0;
+                distance = 0;
+                coins = 0;
+                hounds = 1;
                 coUpdateTimer = StartCoroutine(UpdateTimer());
                 break;
             case GameState.GamePause:
@@ -101,7 +97,7 @@ public class GameManager : MonoBehaviour
         enemiesKilled++;
     }
 
-    public void playerRecover()
+    public void playerRestart()
     {
         enemiesKilled = 0;
         gameLength = 0;
@@ -118,40 +114,26 @@ public class GameManager : MonoBehaviour
         SoundManager.Instance.PlaySound(_deathSound);
         SoundManager.Instance.ToggleMusic();
         EnddistanceUI.text = Mathf.Round(distance).ToString();
-        BestdistanceUI.text = DBGrabUser.highScore.ToString();
         EndcoinsUI.text = coins.ToString();
-        addScore();
+        UploadHandler.Instance.addScore();
 
-        if ( adsManager.Instance.hasVideoChance)
+        if (adsManager.Instance.hasVideoChance)
         {
+            gameOverHandler.Instance.loadStatsVc();
             adsManager.Instance.showVideo();
         }
         else
         {
-            /*
-            if (newHighScore())
-            {
-                DBGrabUser.highScore = (int)Mathf.Round(distance);
-            }
-            */
+            coinToDatabase();
+            gameOverHandler.Instance.loadStatsGo();
             gameOverScreen.SetActive(true);
         }
     }
 
-    public async void addScore()
+    public void coinToDatabase()
     {
-        var metadata = new Dictionary<string, string>() {
-            { "gameLength", GameManager.gameLength.ToString() } ,
-            { "enemiesKilled", GameManager.enemiesKilled.ToString() },
-            { "speed", CameraManager.Instance.CamSpeed.ToString() }
-        };
-        var playerEntry = await LeaderboardsService.Instance
-            .AddPlayerScoreAsync(leaderboardId, GameManager.distance,
-            new AddPlayerScoreOptions { Metadata = metadata }
-            );
-        Debug.Log(JsonConvert.SerializeObject(playerEntry));
+        UploadHandler.Instance.addCoins();
     }
-
 
     private IEnumerator UpdateTimer()
     {
@@ -161,7 +143,7 @@ public class GameManager : MonoBehaviour
             distance = Mathf.Round(gameLength * CameraManager.Instance.CamSpeed);
             distanceUI.text = (distance.ToString() + "m");
 
-            if (distance/(500 + ((hounds-1)*HoundModifier)) > hounds)
+            if (distance / (500 + ((hounds - 1) * HoundModifier)) > hounds)
             {
                 UnitManager.Instance.SpawnHound();
                 hounds++;
@@ -172,7 +154,6 @@ public class GameManager : MonoBehaviour
         }
     }
 }
-
 
 public enum GameState
 {
