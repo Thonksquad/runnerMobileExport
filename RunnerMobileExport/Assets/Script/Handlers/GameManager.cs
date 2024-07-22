@@ -2,12 +2,7 @@ using System.Collections;
 using UnityEngine;
 using System;
 using TMPro;
-<<<<<<<< HEAD:RunnerMobileExport/Assets/_scripts/Handlers/GameManager.cs
-========
-using Newtonsoft.Json;
 using Unity.Services.Leaderboards;
-
->>>>>>>> 8b9d1abd56edea9c681f942b743e61276761c75e:RunnerMobileExport/Assets/Script/Handlers/GameManager.cs
 
 public class GameManager : MonoBehaviour
 {
@@ -23,11 +18,6 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI distanceUI;
     public TextMeshProUGUI coinUI;
 
-<<<<<<<< HEAD:RunnerMobileExport/Assets/_scripts/Handlers/GameManager.cs
-========
-    // Refactor this so that it grabs from UGS's DB
-    //private bool newHighScore() => distance > DBGrabUser.highScore;
->>>>>>>> 8b9d1abd56edea9c681f942b743e61276761c75e:RunnerMobileExport/Assets/Script/Handlers/GameManager.cs
     public static float gameLength;
     public static float enemiesKilled;
     public static float distance;
@@ -35,16 +25,15 @@ public class GameManager : MonoBehaviour
     private int hounds = 1;
     private Coroutine coUpdateTimer;
 
-
     private void Awake()
     {
-        if(Instance == null)
+        if (Instance == null)
         {
             Instance = this;
         }
         else
         {
-            if(Instance != this)
+            if (Instance != this)
             {
                 Destroy(this);
             }
@@ -57,7 +46,6 @@ public class GameManager : MonoBehaviour
         ActionSystem.onPlayerRestart += playerRestart;
         ActionSystem.onEnemyDeath += enemyKilled;
         ActionSystem.onUpdateCoins += coinToDatabase;
-
     }
 
     private void OnDisable()
@@ -79,7 +67,6 @@ public class GameManager : MonoBehaviour
         coinUI.text = coins.ToString();
     }
 
-
     public void ChangeState(GameState newState)
     {
         GameState = newState;
@@ -93,7 +80,7 @@ public class GameManager : MonoBehaviour
                 distance = 0;
                 coins = 0;
                 hounds = 1;
-                coUpdateTimer = StartCoroutine(UpdateTimer()); // TODO: MAKE SURE YOU DESTROY ALL TIMERS
+                coUpdateTimer = StartCoroutine(UpdateTimer());
                 break;
             case GameState.GamePause:
                 StopCoroutine(coUpdateTimer);
@@ -129,25 +116,16 @@ public class GameManager : MonoBehaviour
         EnddistanceUI.text = Mathf.Round(distance).ToString();
         EndcoinsUI.text = coins.ToString();
         UploadHandler.Instance.addScore();
-        
-        if ( adsManager.Instance.hasVideoChance)
+
+        if (adsManager.Instance.hasVideoChance)
         {
             gameOverHandler.Instance.loadStatsVc();
             adsManager.Instance.showVideo();
         }
         else
         {
-<<<<<<<< HEAD:RunnerMobileExport/Assets/_scripts/Handlers/GameManager.cs
             coinToDatabase();
             gameOverHandler.Instance.loadStatsGo();
-========
-            /*
-            if (newHighScore())
-            {
-                DBGrabUser.highScore = (int)Mathf.Round(distance);
-            }
-            */
->>>>>>>> 8b9d1abd56edea9c681f942b743e61276761c75e:RunnerMobileExport/Assets/Script/Handlers/GameManager.cs
             gameOverScreen.SetActive(true);
         }
     }
@@ -157,7 +135,6 @@ public class GameManager : MonoBehaviour
         UploadHandler.Instance.addCoins();
     }
 
-
     private IEnumerator UpdateTimer()
     {
         while (GameState == GameState.ArcadeMode)
@@ -166,7 +143,7 @@ public class GameManager : MonoBehaviour
             distance = Mathf.Round(gameLength * CameraManager.Instance.CamSpeed);
             distanceUI.text = (distance.ToString() + "m");
 
-            if (distance/(500 + ((hounds-1)*HoundModifier)) > hounds)
+            if (distance / (500 + ((hounds - 1) * HoundModifier)) > hounds)
             {
                 UnitManager.Instance.SpawnHound();
                 hounds++;
