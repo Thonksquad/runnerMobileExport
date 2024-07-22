@@ -4,6 +4,7 @@
 PlayerSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 26
+<<<<<<< HEAD
   productGUID: ef723df2bdd55aa4293a46d7bcd22601
   AndroidProfiler: 0
   AndroidFilterTouchesWhenObscured: 0
@@ -17,6 +18,21 @@ PlayerSettings:
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
+=======
+  productGUID: 6ac28e5fb1b328442a3be2b1375d7d59
+  AndroidProfiler: 0
+  AndroidFilterTouchesWhenObscured: 0
+  AndroidEnableSustainedPerformanceMode: 0
+  defaultScreenOrientation: 4
+  targetDevice: 2
+  useOnDemandResources: 0
+  accelerometerFrequency: 60
+  companyName: DefaultCompany
+  productName: RunnerMobileExport
+  defaultCursor: {fileID: 0}
+  cursorHotspot: {x: 0, y: 0}
+  m_SplashScreenBackgroundColor: {r: 0.12156863, g: 0.12156863, b: 0.1254902, a: 1}
+>>>>>>> 8b9d1abd56edea9c681f942b743e61276761c75e
   m_ShowUnitySplashScreen: 1
   m_ShowUnitySplashLogo: 1
   m_SplashScreenOverlayOpacity: 1
@@ -44,8 +60,13 @@ PlayerSettings:
   m_HolographicTrackingLossScreen: {fileID: 0}
   defaultScreenWidth: 1920
   defaultScreenHeight: 1080
+<<<<<<< HEAD
   defaultScreenWidthWeb: 1280
   defaultScreenHeightWeb: 720
+=======
+  defaultScreenWidthWeb: 960
+  defaultScreenHeightWeb: 600
+>>>>>>> 8b9d1abd56edea9c681f942b743e61276761c75e
   m_StereoRenderingPath: 0
   m_ActiveColorSpace: 0
   m_SpriteBatchVertexThreshold: 300
@@ -67,7 +88,11 @@ PlayerSettings:
   disableDepthAndStencilBuffers: 0
   androidStartInFullscreen: 1
   androidRenderOutsideSafeArea: 1
+<<<<<<< HEAD
   androidUseSwappy: 0
+=======
+  androidUseSwappy: 1
+>>>>>>> 8b9d1abd56edea9c681f942b743e61276761c75e
   androidBlitType: 0
   androidResizableWindow: 0
   androidDefaultWindowWidth: 1920
@@ -133,7 +158,11 @@ PlayerSettings:
   vulkanEnableLateAcquireNextImage: 0
   vulkanEnableCommandBufferRecycling: 1
   loadStoreDebugModeEnabled: 0
+<<<<<<< HEAD
   bundleVersion: 0.1.22
+=======
+  bundleVersion: 1.0
+>>>>>>> 8b9d1abd56edea9c681f942b743e61276761c75e
   preloadedAssets: []
   metroInputSource: 0
   wsaTransparentSwapchain: 0
@@ -153,6 +182,7 @@ PlayerSettings:
   resetResolutionOnWindowResize: 0
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
+<<<<<<< HEAD
   applicationIdentifier:
     Android: com.Vora.DashBoredLite
     Standalone: com.DefaultCompany.2DProject
@@ -168,6 +198,20 @@ PlayerSettings:
   AndroidPreferredInstallLocation: 1
   aotOptions: 
   stripEngineCode: 0
+=======
+  applicationIdentifier: {}
+  buildNumber:
+    Standalone: 0
+    iPhone: 0
+    tvOS: 0
+  overrideDefaultApplicationIdentifier: 0
+  AndroidBundleVersionCode: 1
+  AndroidMinSdkVersion: 22
+  AndroidTargetSdkVersion: 0
+  AndroidPreferredInstallLocation: 1
+  aotOptions: 
+  stripEngineCode: 1
+>>>>>>> 8b9d1abd56edea9c681f942b743e61276761c75e
   iPhoneStrippingLevel: 0
   iPhoneScriptCallOptimization: 0
   ForceInternetPermission: 0
@@ -177,7 +221,11 @@ PlayerSettings:
   keepLoadedShadersAlive: 0
   StripUnusedMeshComponents: 0
   strictShaderVariantMatching: 0
+<<<<<<< HEAD
   VertexChannelCompressionMask: 0
+=======
+  VertexChannelCompressionMask: 4054
+>>>>>>> 8b9d1abd56edea9c681f942b743e61276761c75e
   iPhoneSdkVersion: 988
   iOSTargetOSVersionString: 12.0
   tvOSSdkVersion: 0
@@ -237,9 +285,15 @@ PlayerSettings:
   iOSAutomaticallyDetectAndAddCapabilities: 1
   appleEnableProMotion: 0
   shaderPrecisionModel: 0
+<<<<<<< HEAD
   clonedFromGUID: 10ad67313f4034357812315f3c407484
   templatePackageId: com.unity.template.2d@6.1.1
   templateDefaultScene: Assets/Scenes/SampleScene.unity
+=======
+  clonedFromGUID: 00000000000000000000000000000000
+  templatePackageId: 
+  templateDefaultScene: 
+>>>>>>> 8b9d1abd56edea9c681f942b743e61276761c75e
   useCustomMainManifest: 0
   useCustomLauncherManifest: 0
   useCustomMainGradleTemplate: 0
@@ -248,12 +302,21 @@ PlayerSettings:
   useCustomGradlePropertiesTemplate: 0
   useCustomGradleSettingsTemplate: 0
   useCustomProguardFile: 0
+<<<<<<< HEAD
   AndroidTargetArchitectures: 2
   AndroidTargetDevices: 0
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
   AndroidKeystoreName: C:/Users/user/Desktop/keystore/new.keystore
   AndroidKeyaliasName: upload
+=======
+  AndroidTargetArchitectures: 1
+  AndroidTargetDevices: 0
+  AndroidSplashScreenScale: 0
+  androidSplashScreen: {fileID: 0}
+  AndroidKeystoreName: 
+  AndroidKeyaliasName: 
+>>>>>>> 8b9d1abd56edea9c681f942b743e61276761c75e
   AndroidEnableArmv9SecurityFeatures: 0
   AndroidBuildApkPerCpuArchitecture: 0
   AndroidTVCompatibility: 0
@@ -261,7 +324,11 @@ PlayerSettings:
   AndroidEnableTango: 0
   androidEnableBanner: 1
   androidUseLowAccuracyLocation: 0
+<<<<<<< HEAD
   androidUseCustomKeystore: 1
+=======
+  androidUseCustomKeystore: 0
+>>>>>>> 8b9d1abd56edea9c681f942b743e61276761c75e
   m_AndroidBanners:
   - width: 320
     height: 180
@@ -366,6 +433,7 @@ PlayerSettings:
       m_Height: 36
       m_Kind: 0
       m_SubKind: 
+<<<<<<< HEAD
   - m_BuildTarget: iPhone
     m_Icons:
     - m_Textures: []
@@ -500,6 +568,13 @@ PlayerSettings:
   - m_BuildTarget: iOSSupport
     m_APIs: 10000000
     m_Automatic: 1
+=======
+  m_BuildTargetBatching: []
+  m_BuildTargetShaderSettings: []
+  m_BuildTargetGraphicsJobs: []
+  m_BuildTargetGraphicsJobMode: []
+  m_BuildTargetGraphicsAPIs: []
+>>>>>>> 8b9d1abd56edea9c681f942b743e61276761c75e
   m_BuildTargetVRSettings: []
   m_DefaultShaderChunkSizeInMB: 16
   m_DefaultShaderChunkCount: 0
@@ -511,6 +586,7 @@ PlayerSettings:
     Android: 1
     iPhone: 1
     tvOS: 1
+<<<<<<< HEAD
   m_BuildTargetGroupLightmapEncodingQuality:
   - m_BuildTarget: WebGL
     m_EncodingQuality: 1
@@ -523,6 +599,14 @@ PlayerSettings:
   m_BuildTargetDefaultTextureCompressionFormat:
   - m_BuildTarget: Android
     m_Format: 3
+=======
+  m_BuildTargetGroupLightmapEncodingQuality: []
+  m_BuildTargetGroupHDRCubemapEncodingQuality: []
+  m_BuildTargetGroupLightmapSettings: []
+  m_BuildTargetGroupLoadStoreDebugModeSettings: []
+  m_BuildTargetNormalMapEncoding: []
+  m_BuildTargetDefaultTextureCompressionFormat: []
+>>>>>>> 8b9d1abd56edea9c681f942b743e61276761c75e
   playModeTestRunnerEnabled: 0
   runPlayModeTestAsEditModeTest: 0
   actionOnDotNetUnhandledException: 1
@@ -658,7 +742,11 @@ PlayerSettings:
   switchSystemResourceMemory: 16777216
   switchSupportedNpadStyles: 22
   switchNativeFsCacheSize: 32
+<<<<<<< HEAD
   switchIsHoldTypeHorizontal: 0
+=======
+  switchIsHoldTypeHorizontal: 1
+>>>>>>> 8b9d1abd56edea9c681f942b743e61276761c75e
   switchSupportedNpadCount: 8
   switchEnableTouchScreen: 1
   switchSocketConfigEnabled: 0
@@ -672,7 +760,11 @@ PlayerSettings:
   switchSocketInitializeEnabled: 1
   switchNetworkInterfaceManagerInitializeEnabled: 1
   switchPlayerConnectionEnabled: 1
+<<<<<<< HEAD
   switchUseNewStyleFilepaths: 0
+=======
+  switchUseNewStyleFilepaths: 1
+>>>>>>> 8b9d1abd56edea9c681f942b743e61276761c75e
   switchUseLegacyFmodPriorities: 0
   switchUseMicroSleepForYield: 1
   switchEnableRamDiskSupport: 0
@@ -718,7 +810,11 @@ PlayerSettings:
   ps4GarlicHeapSize: 2048
   ps4ProGarlicHeapSize: 2560
   playerPrefsMaxSize: 32768
+<<<<<<< HEAD
   ps4Passcode: bi9UOuSpM2Tlh01vOzwvSikHFswuzleh
+=======
+  ps4Passcode: frAQBc8Wsa1xVPfvJcrgRYwTiizs2trQ
+>>>>>>> 8b9d1abd56edea9c681f942b743e61276761c75e
   ps4pnSessions: 1
   ps4pnPresence: 1
   ps4pnFriends: 1
@@ -759,7 +855,11 @@ PlayerSettings:
   blurSplashScreenBackground: 1
   spritePackerPolicy: 
   webGLMemorySize: 32
+<<<<<<< HEAD
   webGLExceptionSupport: 2
+=======
+  webGLExceptionSupport: 1
+>>>>>>> 8b9d1abd56edea9c681f942b743e61276761c75e
   webGLNameFilesAsHashes: 0
   webGLShowDiagnostics: 0
   webGLDataCaching: 1
@@ -769,7 +869,11 @@ PlayerSettings:
   webGLTemplate: APPLICATION:Default
   webGLAnalyzeBuildSize: 0
   webGLUseEmbeddedResources: 0
+<<<<<<< HEAD
   webGLCompressionFormat: 2
+=======
+  webGLCompressionFormat: 0
+>>>>>>> 8b9d1abd56edea9c681f942b743e61276761c75e
   webGLWasmArithmeticExceptions: 0
   webGLLinkerTarget: 1
   webGLThreadsSupport: 0
@@ -784,6 +888,7 @@ PlayerSettings:
   scriptingDefineSymbols: {}
   additionalCompilerArguments: {}
   platformArchitecture: {}
+<<<<<<< HEAD
   scriptingBackend:
     Android: 1
   il2cppCompilerConfiguration: {}
@@ -803,11 +908,21 @@ PlayerSettings:
     XboxOne: 1
     iPhone: 1
     tvOS: 1
+=======
+  scriptingBackend: {}
+  il2cppCompilerConfiguration: {}
+  il2cppCodeGeneration: {}
+  managedStrippingLevel: {}
+>>>>>>> 8b9d1abd56edea9c681f942b743e61276761c75e
   incrementalIl2cppBuild: {}
   suppressCommonWarnings: 1
   allowUnsafeCode: 0
   useDeterministicCompilation: 1
+<<<<<<< HEAD
   selectedPlatform: 3
+=======
+  selectedPlatform: 0
+>>>>>>> 8b9d1abd56edea9c681f942b743e61276761c75e
   additionalIl2CppArgs: 
   scriptingRuntimeVersion: 1
   gcIncremental: 1
@@ -815,14 +930,22 @@ PlayerSettings:
   apiCompatibilityLevelPerPlatform: {}
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
+<<<<<<< HEAD
   metroPackageName: 2D_BuiltInRenderer
+=======
+  metroPackageName: RunnerMobileExport
+>>>>>>> 8b9d1abd56edea9c681f942b743e61276761c75e
   metroPackageVersion: 
   metroCertificatePath: 
   metroCertificatePassword: 
   metroCertificateSubject: 
   metroCertificateIssuer: 
   metroCertificateNotAfter: 0000000000000000
+<<<<<<< HEAD
   metroApplicationDescription: 2D_BuiltInRenderer
+=======
+  metroApplicationDescription: RunnerMobileExport
+>>>>>>> 8b9d1abd56edea9c681f942b743e61276761c75e
   wsaImages: {}
   metroTileShortName: 
   metroTileShowName: 0
@@ -870,8 +993,12 @@ PlayerSettings:
   XboxOneOverrideIdentityName: 
   XboxOneOverrideIdentityPublisher: 
   vrEditorSettings: {}
+<<<<<<< HEAD
   cloudServicesEnabled:
     Unity Ads: 1
+=======
+  cloudServicesEnabled: {}
+>>>>>>> 8b9d1abd56edea9c681f942b743e61276761c75e
   luminIcon:
     m_Name: 
     m_ModelFolderPath: 
@@ -891,14 +1018,26 @@ PlayerSettings:
   apiCompatibilityLevel: 6
   activeInputHandler: 2
   windowsGamepadBackendHint: 0
+<<<<<<< HEAD
   cloudProjectId: f21d2051-aa03-4433-be6b-8136224d1003
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
   projectName: Dashbored UGS
   organizationId: ogthonk
+=======
+  cloudProjectId: 
+  framebufferDepthMemorylessMode: 0
+  qualitySettingsNames: []
+  projectName: 
+  organizationId: 
+>>>>>>> 8b9d1abd56edea9c681f942b743e61276761c75e
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   hmiLoadingImage: {fileID: 0}
   platformRequiresReadableAssets: 0
   virtualTexturingSupportEnabled: 0
+<<<<<<< HEAD
   insecureHttpOption: 1
+=======
+  insecureHttpOption: 0
+>>>>>>> 8b9d1abd56edea9c681f942b743e61276761c75e

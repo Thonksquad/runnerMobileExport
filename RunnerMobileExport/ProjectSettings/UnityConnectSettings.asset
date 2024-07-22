@@ -4,7 +4,11 @@
 UnityConnectSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 1
+<<<<<<< HEAD
   m_Enabled: 1
+=======
+  m_Enabled: 0
+>>>>>>> 8b9d1abd56edea9c681f942b743e61276761c75e
   m_TestMode: 0
   m_EventOldUrl: https://api.uca.cloud.unity3d.com/v1/events
   m_EventUrl: https://cdp.cloud.unity3d.com/v1/events
@@ -25,14 +29,22 @@ UnityConnectSettings:
     m_InitializeOnStartup: 1
     m_PackageRequiringCoreStatsPresent: 0
   UnityAdsSettings:
+<<<<<<< HEAD
     m_Enabled: 1
+=======
+    m_Enabled: 0
+>>>>>>> 8b9d1abd56edea9c681f942b743e61276761c75e
     m_InitializeOnStartup: 1
     m_TestMode: 0
     m_IosGameId: 
     m_AndroidGameId: 
+<<<<<<< HEAD
     m_GameIds:
       AndroidPlayer: 5534549
       iPhonePlayer: 5534548
+=======
+    m_GameIds: {}
+>>>>>>> 8b9d1abd56edea9c681f942b743e61276761c75e
     m_GameId: 
   PerformanceReportingSettings:
     m_Enabled: 0

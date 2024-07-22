@@ -1,0 +1,126 @@
+trackSelection = true
+<<<<<<< Updated upstream
+=======
+refreshSearchWindowsInPlayMode = false
+>>>>>>> Stashed changes
+fetchPreview = true
+defaultFlags = 0
+keepOpen = false
+queryFolder = "Assets"
+onBoardingDoNotAskAgain = true
+showPackageIndexes = false
+showStatusBar = false
+scopes = {
+<<<<<<< Updated upstream
+	"last_search.2138236A" = "PlaySoundOnStart"
+	"OpenInspectorPreview.2138236A" = "0"
+	"currentGroup.2138236A" = "all"
+}
+providers = {
+	adb = {
+		active = false
+		priority = 2500
+=======
+}
+providers = {
+	log = {
+		active = false
+		priority = 210
+		defaultAction = null
+	}
+	performance = {
+		active = false
+		priority = 100
+>>>>>>> Stashed changes
+		defaultAction = null
+	}
+	asset = {
+		active = true
+		priority = 25
+		defaultAction = null
+	}
+<<<<<<< Updated upstream
+	store = {
+		active = true
+=======
+	packages = {
+		active = true
+		priority = 90
+		defaultAction = null
+	}
+	profilermarkers = {
+		active = false
+>>>>>>> Stashed changes
+		priority = 100
+		defaultAction = null
+	}
+	find = {
+		active = true
+		priority = 25
+		defaultAction = null
+	}
+<<<<<<< Updated upstream
+	log = {
+		active = false
+		priority = 210
+		defaultAction = null
+	}
+	packages = {
+		active = true
+		priority = 90
+		defaultAction = null
+	}
+	performance = {
+		active = false
+		priority = 100
+		defaultAction = null
+	}
+=======
+>>>>>>> Stashed changes
+	scene = {
+		active = true
+		priority = 50
+		defaultAction = null
+	}
+<<<<<<< Updated upstream
+=======
+	store = {
+		active = true
+		priority = 100
+		defaultAction = null
+	}
+	adb = {
+		active = false
+		priority = 2500
+		defaultAction = null
+	}
+>>>>>>> Stashed changes
+}
+objectSelectors = {
+}
+recentSearches = [
+<<<<<<< Updated upstream
+	"PlaySoundOnStart"
+=======
+>>>>>>> Stashed changes
+]
+searchItemFavorites = [
+]
+savedSearchesSortOrder = 0
+showSavedSearchPanel = false
+<<<<<<< Updated upstream
+=======
+hideTabs = false
+>>>>>>> Stashed changes
+expandedQueries = [
+]
+queryBuilder = false
+ignoredProperties = "id;name;classname;imagecontentshash"
+helperWidgetCurrentArea = "all"
+<<<<<<< Updated upstream
+disabledIndexers = ""
+=======
+disabledIndexers = ""
+minIndexVariations = 2
+findProviderIndexHelper = true
+>>>>>>> Stashed changes
