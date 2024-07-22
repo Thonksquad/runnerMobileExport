@@ -3,17 +3,7 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-<<<<<<< Updated upstream
-  - Bullet
-  - profilepic
-  - username
-  - coins
-=======
-  - coins
-  - username
-  - profilepic
->>>>>>> Stashed changes
+  tags: []
   layers:
   - Default
   - TransparentFX
@@ -21,18 +11,14 @@ TagManager:
   - 
   - Water
   - UI
-  - Player
-  - PlayerProjectile
-  - Enemy
-  - Ground
-<<<<<<< Updated upstream
-  - Enemy Raycast
-=======
-  - Enemy Raycasst
->>>>>>> Stashed changes
-  - EnemyProjectile
-  - Powerups
-  - deadEnemy
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
   - 
   - 
   - 
