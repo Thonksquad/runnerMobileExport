@@ -7,6 +7,8 @@ public class Parallax : MonoBehaviour
     public GameObject cam;
     public float parallaxEffect;
     public bool autoScroll = false;
+
+    [SerializeField]
     private Player player;
 
     private float length, startpos;
@@ -22,6 +24,7 @@ public class Parallax : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         float temp = cam.transform.position.x * (1 - parallaxEffect);
         float distance = (cam.transform.position.x * parallaxEffect);
 

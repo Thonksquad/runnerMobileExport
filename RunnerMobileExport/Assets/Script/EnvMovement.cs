@@ -1,0 +1,26 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class EnvMovement : MonoBehaviour
+{
+    [SerializeField]
+    private float _speed = 0.02f; 
+
+    [SerializeField]
+    private float _nextBgX = 111f;
+
+    [SerializeField]
+    private float _passedX = -139f;
+
+
+    private void Update()
+    {
+        transform.position = new Vector3( transform.position.x - _speed, transform.position.y, transform.position.z);
+        if ( transform.position.x < _passedX)
+        {
+            transform.position = new Vector3( _nextBgX, transform.position.y, transform.position.z);
+        }
+    }
+
+}
