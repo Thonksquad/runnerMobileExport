@@ -5,13 +5,13 @@ using UnityEngine;
 public class EnvMovement : MonoBehaviour
 {
     [SerializeField]
-    private float _speed = 0.02f; 
+    private float _speed = 0.04f; 
 
     [SerializeField]
-    private float _nextBgX = 111f;
+    private float _nextBgX = 362f;
 
     [SerializeField]
-    private float _passedX = -139f;
+    private float _passedX = -140f;
 
 
     private void Update()

@@ -8,6 +8,8 @@ public class UnitManager : MonoBehaviour
     public Collider2D[] DetectedEnemies;
     public float DetectionRadius;
 
+    [SerializeField] private SpawnPool _batPool;
+
     [SerializeField] private LayerMask EnemyDetectionLayer;
     [SerializeField] private GameObject RandomCoinPrefab;
     [SerializeField] private GameObject coinPrefab;
@@ -142,9 +144,10 @@ public class UnitManager : MonoBehaviour
             switch (Random.Range(0, 5))
             {
                 case 0:
-                    enemy = batPrefab;
-                    GameObject newBat = Instantiate(enemy, new Vector3(xRef, yRef, 0), Quaternion.identity);
-                    Destroy(newBat, mobAutoDestroy);
+                    _batPool.Spawner();
+                    //enemy = batPrefab;
+                    //GameObject newBat = Instantiate(enemy, new Vector3(xRef, yRef, 0), Quaternion.identity);
+                    //Destroy(newBat, mobAutoDestroy);
                     break;
                 case 1:
                     enemy = dasherPrefab;
