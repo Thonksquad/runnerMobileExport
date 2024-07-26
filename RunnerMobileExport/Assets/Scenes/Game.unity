@@ -629,7 +629,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _poolMemberPrefab: {fileID: -5797898189628340769, guid: 507b6a9633543854aa5b1e401883c41b, type: 3}
   _collectionCheck: 0
-  _defaultCapacity: 5
+  _defaultCapacity: 3
   _maxSize: 5
 --- !u!1 &51849607
 GameObject:
@@ -2065,7 +2065,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _poolMemberPrefab: {fileID: -8870176432994472214, guid: 94b3d36bd875b354d9f78e3c7d3d161d, type: 3}
   _collectionCheck: 0
-  _defaultCapacity: 5
+  _defaultCapacity: 1
   _maxSize: 5
 --- !u!1 &542093615
 GameObject:
@@ -3057,7 +3057,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _poolMemberPrefab: {fileID: 9094989576737739971, guid: e9f823327200e9d4bb91d1862d5dfc8a, type: 3}
   _collectionCheck: 0
-  _defaultCapacity: 5
+  _defaultCapacity: 3
   _maxSize: 5
 --- !u!1 &767018970
 GameObject:
@@ -3439,7 +3439,7 @@ MonoBehaviour:
   _fireballPool: {fileID: 765144197}
   EnemyDetectionLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   RandomCoinPrefab: {fileID: 5948536843839647400, guid: 08759c7f5de9a294fac7f68e5933fa69, type: 3}
   coinPrefab: {fileID: 2671702028324914507, guid: a68f94b842aa53a4eb01582cb8111447, type: 3}
   houndPrefab: {fileID: 9010371361248096888, guid: e4ac30e04df58ba44bc597f9341da9a4, type: 3}
@@ -3977,7 +3977,7 @@ GameObject:
   - component: {fileID: 1192944470}
   - component: {fileID: 1192944469}
   - component: {fileID: 1192944471}
-  m_Layer: 6
+  m_Layer: 9
   m_Name: Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5127,7 +5127,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _poolMemberPrefab: {fileID: 762245628751749084, guid: 8bfd77efaf2f78c4da35dea8e0528dc7, type: 3}
   _collectionCheck: 0
-  _defaultCapacity: 5
+  _defaultCapacity: 3
   _maxSize: 5
 --- !u!1 &1495592022
 GameObject:
@@ -5175,7 +5175,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _poolMemberPrefab: {fileID: 8103531941605775893, guid: 241384a036752c54a95809c06bffa5d4, type: 3}
   _collectionCheck: 0
-  _defaultCapacity: 5
+  _defaultCapacity: 3
   _maxSize: 5
 --- !u!1 &1520691845
 GameObject:
@@ -5223,7 +5223,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _poolMemberPrefab: {fileID: -2617368752843742004, guid: 55451eb5675c306479a551cae48deec6, type: 3}
   _collectionCheck: 0
-  _defaultCapacity: 5
+  _defaultCapacity: 3
   _maxSize: 5
 --- !u!1001 &1540004824
 PrefabInstance:
