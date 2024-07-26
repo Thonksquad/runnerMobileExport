@@ -5,36 +5,36 @@ using UnityEngine.Pool;
 public class SpawnPool : MonoBehaviour
 {
 
-    [SerializeField] private SpawnEnemy _enemyPrefab;
+    [SerializeField] private PoolMember _poolMemberPrefab;
 
-    private IObjectPool<SpawnEnemy> _enemyPool;
+    private IObjectPool<PoolMember> _pool;
 
 
     private void Awake()
     {
-        _enemyPool = new ObjectPool<SpawnEnemy>(CreateEnemy, OnGet, OnRelease);
+        _pool = new ObjectPool<PoolMember>(CreateEnemy, OnGet, OnRelease);
     }
 
     public void Spawner()
     {
-        _enemyPool.Get();
+        _pool.Get();
     }
 
-    private void OnGet(SpawnEnemy spawnEnemy)
+    private void OnGet(PoolMember poolMember)
     {
-        spawnEnemy.gameObject.SetActive(true);
+        poolMember.gameObject.SetActive(true);
     }
 
-    private void OnRelease(SpawnEnemy spawnEnemy)
+    private void OnRelease(PoolMember poolMember)
     {
-        spawnEnemy.gameObject.SetActive(false);
+        poolMember.gameObject.SetActive(false);
     }
 
-    private SpawnEnemy CreateEnemy()
+    private PoolMember CreateEnemy()
     {
-        SpawnEnemy spawnEnemy = Instantiate(_enemyPrefab);
-        spawnEnemy.SetPool(_enemyPool);
-        return spawnEnemy;
+        PoolMember poolMember = Instantiate(_poolMemberPrefab);
+        poolMember.SetPool(_pool);
+        return poolMember;
     } 
 
 }

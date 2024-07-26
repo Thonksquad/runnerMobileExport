@@ -9,6 +9,15 @@ public class UnitManager : MonoBehaviour
     public float DetectionRadius;
 
     [SerializeField] private SpawnPool _batPool;
+    [SerializeField] private SpawnPool _dasherPool;
+    [SerializeField] private SpawnPool _leaperPool;
+    [SerializeField] private SpawnPool _archerPool;
+
+    [SerializeField] private SpawnPool _floatingObstaclePool;
+    [SerializeField] private SpawnPool _rotatingObstaclePool;
+    [SerializeField] private SpawnPool _groundObstaclePool;
+    [SerializeField] private SpawnPool _longObstaclePool;
+    [SerializeField] private SpawnPool _fireballPool;
 
     [SerializeField] private LayerMask EnemyDetectionLayer;
     [SerializeField] private GameObject RandomCoinPrefab;
@@ -91,39 +100,45 @@ public class UnitManager : MonoBehaviour
             switch (Random.Range(0, 5))
             {
                 case 0:
-                    enemy = floatingobstaclePrefab;
-                    GameObject newFloating = Instantiate(enemy, new Vector3(xRef, yRef, 0), Quaternion.identity);
-                    newFloating.transform.rotation = Quaternion.Euler(0, 0, Random.Range(0, 180));
-                    Destroy(newFloating, mobAutoDestroy);
+                    _floatingObstaclePool.Spawner();
+                    //enemy = floatingobstaclePrefab;
+                    //GameObject newFloating = Instantiate(enemy, new Vector3(xRef, yRef, 0), Quaternion.identity);
+                    //newFloating.transform.rotation = Quaternion.Euler(0, 0, Random.Range(0, 180));
+                    //Destroy(newFloating, mobAutoDestroy);
                     break;
                 case 1:
+                    
                     xRef = player.transform.position.x + mobSpawnDistance;
                     yRef = -8f;
                     if (IsSafeToSpawn(new Vector2(xRef, yRef), DetectionRadius * 3))
                     {
-                        enemy = groundobstaclePrefab;
-                        GameObject newGround = Instantiate(enemy, new Vector3(xRef, yRef, 0), Quaternion.identity);
-                        Destroy(newGround, mobAutoDestroy);
+                        _groundObstaclePool.Spawner();
+                        //enemy = groundobstaclePrefab;
+                        //GameObject newGround = Instantiate(enemy, new Vector3(xRef, yRef, 0), Quaternion.identity);
+                        //Destroy(newGround, mobAutoDestroy);
                     } else
                     {
                         goto case 4;
                     }
                     break;
                 case 2:
-                    enemy = longobstaclePrefab;
-                    GameObject newLong = Instantiate(enemy, new Vector3(xRef, yRef, 0), Quaternion.identity);
-                    newLong.transform.rotation = Quaternion.Euler(0, 0, Random.Range(0, 180));
-                    Destroy(newLong, mobAutoDestroy);
+                    _longObstaclePool.Spawner();
+                    //enemy = longobstaclePrefab;
+                    //GameObject newLong = Instantiate(enemy, new Vector3(xRef, yRef, 0), Quaternion.identity);
+                    //newLong.transform.rotation = Quaternion.Euler(0, 0, Random.Range(0, 180));
+                    //Destroy(newLong, mobAutoDestroy);
                     break;
                 case 3:
-                    enemy = rotatingobstaclePrefab;
-                    GameObject newRotate = Instantiate(enemy, new Vector3(xRef, yRef, 0), Quaternion.identity);
-                    Destroy(newRotate, mobAutoDestroy);
+                    _rotatingObstaclePool.Spawner();
+                    //enemy = rotatingobstaclePrefab;
+                    //GameObject newRotate = Instantiate(enemy, new Vector3(xRef, yRef, 0), Quaternion.identity);
+                    //Destroy(newRotate, mobAutoDestroy);
                     break;
                 case 4:
-                    enemy = fireballPrefab;
-                    GameObject newFireball = Instantiate(enemy, new Vector3(xRef, yRef, 0), Quaternion.identity);
-                    Destroy(newFireball, mobAutoDestroy);
+                    _fireballPool.Spawner();
+                    //enemy = fireballPrefab;
+                    //GameObject newFireball = Instantiate(enemy, new Vector3(xRef, yRef, 0), Quaternion.identity);
+                    //Destroy(newFireball, mobAutoDestroy);
                     break;
                 default: break;
             }
@@ -150,19 +165,22 @@ public class UnitManager : MonoBehaviour
                     //Destroy(newBat, mobAutoDestroy);
                     break;
                 case 1:
-                    enemy = dasherPrefab;
-                    GameObject newDasher = Instantiate(enemy, new Vector3(xRef, -7.5f, 0), Quaternion.identity);
-                    Destroy(newDasher, mobAutoDestroy);
+                    _dasherPool.Spawner();
+                    //enemy = dasherPrefab;
+                    //GameObject newDasher = Instantiate(enemy, new Vector3(xRef, -7.5f, 0), Quaternion.identity);
+                    //Destroy(newDasher, mobAutoDestroy);
                     break;
                 case 2:
-                    enemy = leaperPrefab;
-                    GameObject newLeaper = Instantiate(enemy, new Vector3(xRef, yRef, 0), Quaternion.identity);
-                    Destroy(newLeaper, mobAutoDestroy);
+                    _leaperPool.Spawner();
+                    //enemy = leaperPrefab;
+                    //GameObject newLeaper = Instantiate(enemy, new Vector3(xRef, yRef, 0), Quaternion.identity);
+                    //Destroy(newLeaper, mobAutoDestroy);
                     break;
                 case 3:
-                    enemy = archerPrefab;
-                    GameObject newArcher = Instantiate(enemy, new Vector3(xRef, yRef, 0), Quaternion.identity);
-                    Destroy(newArcher, mobAutoDestroy);
+                    _archerPool.Spawner();
+                    //enemy = archerPrefab;
+                    //GameObject newArcher = Instantiate(enemy, new Vector3(xRef, yRef, 0), Quaternion.identity);
+                    //Destroy(newArcher, mobAutoDestroy);
                     break;
                 default: break;
             }

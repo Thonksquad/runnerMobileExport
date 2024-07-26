@@ -14,8 +14,8 @@ GameObject:
   - component: {fileID: 7921254837936261016}
   - component: {fileID: 1146436461}
   - component: {fileID: 7687147449092395548}
-  - component: {fileID: -1875672976816393601}
   - component: {fileID: 1311398793}
+  - component: {fileID: -8870176432994472214}
   m_Layer: 8
   m_Name: Bat
   m_TagString: Untagged
@@ -168,23 +168,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1
---- !u!114 &-1875672976816393601
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7921254837936261015}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 61b4adb767c66b6439d37e71a570c066, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _enemyDestroyTimer: 10
-  _minSpawnX: 45
-  _maxSpawnX: 55
-  _minSpawnY: -6
-  _maxSpawnY: 6
 --- !u!58 &1311398793
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -220,3 +203,20 @@ CircleCollider2D:
   m_Offset: {x: -3, y: 0}
   serializedVersion: 2
   m_Radius: 5.139306
+--- !u!114 &-8870176432994472214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7921254837936261015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12d094331a7452e4cac57387ef554b30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _enemyDestroyTimer: 10
+  _minSpawnX: 45
+  _maxSpawnX: 55
+  _minSpawnY: -6
+  _maxSpawnY: 6
