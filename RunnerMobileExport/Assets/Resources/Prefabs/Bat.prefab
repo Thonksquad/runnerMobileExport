@@ -215,6 +215,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12d094331a7452e4cac57387ef554b30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _poolMemberType: 1
   _enemyDestroyTimer: 10
   _minSpawnX: 45
   _maxSpawnX: 55

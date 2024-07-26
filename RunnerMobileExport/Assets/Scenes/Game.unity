@@ -628,6 +628,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _poolMemberPrefab: {fileID: -5797898189628340769, guid: 507b6a9633543854aa5b1e401883c41b, type: 3}
+  _collectionCheck: 0
+  _defaultCapacity: 5
+  _maxSize: 5
 --- !u!1 &51849607
 GameObject:
   m_ObjectHideFlags: 0
@@ -2061,6 +2064,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _poolMemberPrefab: {fileID: -8870176432994472214, guid: 94b3d36bd875b354d9f78e3c7d3d161d, type: 3}
+  _collectionCheck: 0
+  _defaultCapacity: 5
+  _maxSize: 5
 --- !u!1 &542093615
 GameObject:
   m_ObjectHideFlags: 0
@@ -3002,6 +3008,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _poolMemberPrefab: {fileID: 1058127538860945082, guid: e314d3dd67163774481c68b1afa4fb1b, type: 3}
+  _collectionCheck: 0
+  _defaultCapacity: 5
+  _maxSize: 5
 --- !u!1 &766456404
 GameObject:
   m_ObjectHideFlags: 0
@@ -3047,6 +3056,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _poolMemberPrefab: {fileID: 9094989576737739971, guid: e9f823327200e9d4bb91d1862d5dfc8a, type: 3}
+  _collectionCheck: 0
+  _defaultCapacity: 5
+  _maxSize: 5
 --- !u!1 &767018970
 GameObject:
   m_ObjectHideFlags: 0
@@ -3431,15 +3443,6 @@ MonoBehaviour:
   RandomCoinPrefab: {fileID: 5948536843839647400, guid: 08759c7f5de9a294fac7f68e5933fa69, type: 3}
   coinPrefab: {fileID: 2671702028324914507, guid: a68f94b842aa53a4eb01582cb8111447, type: 3}
   houndPrefab: {fileID: 9010371361248096888, guid: e4ac30e04df58ba44bc597f9341da9a4, type: 3}
-  batPrefab: {fileID: 7921254837936261015, guid: 94b3d36bd875b354d9f78e3c7d3d161d, type: 3}
-  dasherPrefab: {fileID: 1154985950172359225, guid: 507b6a9633543854aa5b1e401883c41b, type: 3}
-  leaperPrefab: {fileID: 2930911891607711384, guid: 8bfd77efaf2f78c4da35dea8e0528dc7, type: 3}
-  archerPrefab: {fileID: 4647744720817561245, guid: 55451eb5675c306479a551cae48deec6, type: 3}
-  floatingobstaclePrefab: {fileID: 6272515770486927925, guid: 241384a036752c54a95809c06bffa5d4, type: 3}
-  rotatingobstaclePrefab: {fileID: 6272515770486927925, guid: e9f823327200e9d4bb91d1862d5dfc8a, type: 3}
-  groundobstaclePrefab: {fileID: 6272515770486927925, guid: 24b5889a72178af4dbd0e4b1aad00ac7, type: 3}
-  longobstaclePrefab: {fileID: 6272515770486927925, guid: 8de3314394c2000499cd7a46c0b1b7ec, type: 3}
-  fireballPrefab: {fileID: 1154985950172359225, guid: e314d3dd67163774481c68b1afa4fb1b, type: 3}
   _units: []
   mobspawnInterval: 3
   coinspawnInterval: 25
@@ -3516,6 +3519,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _poolMemberPrefab: {fileID: 4852503969192542990, guid: 24b5889a72178af4dbd0e4b1aad00ac7, type: 3}
+  _collectionCheck: 0
+  _defaultCapacity: 5
+  _maxSize: 5
 --- !u!224 &971096572 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1207761358380318899, guid: 1eafed28d706397418ff059063ce0bb5, type: 3}
@@ -5120,6 +5126,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _poolMemberPrefab: {fileID: 762245628751749084, guid: 8bfd77efaf2f78c4da35dea8e0528dc7, type: 3}
+  _collectionCheck: 0
+  _defaultCapacity: 5
+  _maxSize: 5
 --- !u!1 &1495592022
 GameObject:
   m_ObjectHideFlags: 0
@@ -5165,6 +5174,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _poolMemberPrefab: {fileID: 8103531941605775893, guid: 241384a036752c54a95809c06bffa5d4, type: 3}
+  _collectionCheck: 0
+  _defaultCapacity: 5
+  _maxSize: 5
 --- !u!1 &1520691845
 GameObject:
   m_ObjectHideFlags: 0
@@ -5210,6 +5222,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _poolMemberPrefab: {fileID: -2617368752843742004, guid: 55451eb5675c306479a551cae48deec6, type: 3}
+  _collectionCheck: 0
+  _defaultCapacity: 5
+  _maxSize: 5
 --- !u!1001 &1540004824
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6821,6 +6836,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _poolMemberPrefab: {fileID: -5432921677900154474, guid: 8de3314394c2000499cd7a46c0b1b7ec, type: 3}
+  _collectionCheck: 0
+  _defaultCapacity: 5
+  _maxSize: 5
 --- !u!1001 &1207761357686047055
 PrefabInstance:
   m_ObjectHideFlags: 0

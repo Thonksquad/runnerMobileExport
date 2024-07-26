@@ -24,16 +24,6 @@ public class UnitManager : MonoBehaviour
     [SerializeField] private GameObject coinPrefab;
     [SerializeField] private GameObject houndPrefab;
 
-    [SerializeField] private GameObject batPrefab;
-    [SerializeField] private GameObject dasherPrefab;
-    [SerializeField] private GameObject leaperPrefab;
-    [SerializeField] private GameObject archerPrefab;
-
-    [SerializeField] private GameObject floatingobstaclePrefab;
-    [SerializeField] private GameObject rotatingobstaclePrefab;
-    [SerializeField] private GameObject groundobstaclePrefab;
-    [SerializeField] private GameObject longobstaclePrefab;
-    [SerializeField] private GameObject fireballPrefab;
 
     private Player player;
     [SerializeField] private List<BaseEnemy> _units;
