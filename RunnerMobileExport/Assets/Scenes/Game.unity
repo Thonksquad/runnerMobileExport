@@ -223,7 +223,7 @@ GameObject:
   m_Component:
   - component: {fileID: 14548383}
   - component: {fileID: 14548382}
-  - component: {fileID: 14548384}
+  - component: {fileID: 14548385}
   m_Layer: 0
   m_Name: volcano
   m_TagString: Untagged
@@ -298,7 +298,7 @@ Transform:
   m_Father: {fileID: 600738286}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &14548384
+--- !u!114 &14548385
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -307,13 +307,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 14548381}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fbf523d39909cb54e888dba9c716d688, type: 3}
+  m_Script: {fileID: 11500000, guid: 20304b1d55c17914eb742e88b60bef6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cam: {fileID: 519420028}
-  parallaxEffect: 0.007
-  autoScroll: 1
-  player: {fileID: 51849613}
+  _speed: 0.007
+  _nextBgX: 362
+  _passedX: -140
 --- !u!1 &28084432
 GameObject:
   m_ObjectHideFlags: 0
@@ -4688,7 +4687,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1363570127}
   - component: {fileID: 1363570129}
-  - component: {fileID: 1363570128}
+  - component: {fileID: 1363570130}
   m_Layer: 0
   m_Name: volcano2
   m_TagString: Untagged
@@ -4711,22 +4710,6 @@ Transform:
   m_Father: {fileID: 600738286}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1363570128
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1363570126}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fbf523d39909cb54e888dba9c716d688, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cam: {fileID: 519420028}
-  parallaxEffect: 0.007
-  autoScroll: 1
-  player: {fileID: 51849613}
 --- !u!212 &1363570129
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4779,6 +4762,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1363570130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1363570126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20304b1d55c17914eb742e88b60bef6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _speed: 0.007
+  _nextBgX: 362
+  _passedX: -140
 --- !u!1 &1387344699
 GameObject:
   m_ObjectHideFlags: 0
