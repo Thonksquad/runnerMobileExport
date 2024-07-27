@@ -54,8 +54,11 @@ public class Player : MonoBehaviour
     private bool LandedThisFrame;
     [SerializeField] private PlayerAnimationHandler AnimationHandler;
 
+    public static Player Instance;
+
     private void Awake()
     {
+        Instance = this;
         int LayerPlayer = LayerMask.NameToLayer("Player");
         int LayerEnemy = LayerMask.NameToLayer("Enemy");
         playerControls = new PlayerInputActions();

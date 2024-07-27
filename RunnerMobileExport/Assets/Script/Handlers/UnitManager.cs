@@ -48,7 +48,7 @@ public class UnitManager : MonoBehaviour
 
     private void Start()
     {
-        player = FindObjectOfType<Player>();
+        player = Player.Instance;
         StartCoroutine(SpawnEnemyTimer(mobspawnInterval));
         StartCoroutine(SpawnObstacleTimer(mobspawnInterval));
         StartCoroutine(SpawnCoinTimer(coinspawnInterval));

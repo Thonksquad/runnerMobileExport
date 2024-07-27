@@ -15,8 +15,9 @@ public class bat : BaseEnemy
     }
 
 
-    private void Update()
+    public override void Update()
     {
+        base.Update();
         if (player == null)
             return;
         if (!isDead)

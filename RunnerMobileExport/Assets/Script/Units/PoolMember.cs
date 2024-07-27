@@ -5,7 +5,6 @@ using UnityEngine.Pool;
 public class PoolMember : MonoBehaviour
 {
 
-    [SerializeField] PoolMemberType _poolMemberType = new PoolMemberType();
     [SerializeField] private float _enemyDestroyTimer = 10f;
     [SerializeField] private float _minSpawnX = 45f;
     [SerializeField] private float _maxSpawnX = 55f;
@@ -21,9 +20,8 @@ public class PoolMember : MonoBehaviour
 
     private void OnEnable()
     {
-        Invoke(nameof(ReturnToPool), _enemyDestroyTimer);
+        //Invoke(nameof(ReturnToPool), _enemyDestroyTimer);
         transform.position = new Vector3(Random.Range(_minSpawnX, _maxSpawnX), Random.Range(_minSpawnY, _maxSpawnY), 0f);
-        TypeManager();
     }
 
     public void ReturnToPool()
@@ -31,7 +29,7 @@ public class PoolMember : MonoBehaviour
         _pool.Release(this);
     }
 
-
+    /*
     private void TypeManager()
     {
         switch (_poolMemberType)
@@ -52,12 +50,6 @@ public class PoolMember : MonoBehaviour
                 break;
         }
     }
+    */
 }
 
-enum PoolMemberType
-{
-    none,
-    bat,
-    floatingObstacle,
-    longObstacle
-};

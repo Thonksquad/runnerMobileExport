@@ -7,8 +7,9 @@ public class ArcherEnemy : BaseEnemy
     [SerializeField] private ArcherAim myArm;
     [SerializeField] private SpriteRenderer arm;
 
-    private void Update()
+    public override void Update()
     {
+        base.Update();
         if (!isDead)
         {
             Flip();

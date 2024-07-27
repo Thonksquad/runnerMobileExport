@@ -16,8 +16,9 @@ public class DashEnemy: BaseEnemy
         myRigidbody = GetComponent<Rigidbody2D>();
     }
 
-    private void Update()
+    public override void Update()
     {
+        base.Update();
         if (!isDead)
         {
             Debug.DrawRay(obstacleRayObject.transform.position, transform.TransformDirection(Vector2.left) * 5f, Color.red);

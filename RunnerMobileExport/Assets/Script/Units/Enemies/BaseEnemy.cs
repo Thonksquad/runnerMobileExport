@@ -9,6 +9,8 @@ public abstract class BaseEnemy : MonoBehaviour
     public Animator _anim;
     public bool isDead { get; protected set; } = false;
 
+    [SerializeField] private float _speed = 0.04f;
+
     protected virtual void Start()
     {
         player = FindObjectOfType<Player>();
@@ -26,6 +28,18 @@ public abstract class BaseEnemy : MonoBehaviour
         //moved to individual classes
         //rb.bodyType = RigidbodyType2D.Dynamic;
         //rb.velocity = new Vector3(0, -10, 0);
+    }
+
+    public virtual void OnEnable()
+    {
+        isDead = false;
+        int enemyLayer = LayerMask.NameToLayer("Enemy");
+        gameObject.layer = enemyLayer;
+    }
+
+    public virtual void Update()
+    {
+        transform.position = new Vector3(transform.position.x - _speed, transform.position.y, transform.position.z);
     }
 
     public virtual void OnTriggerEnter2D(Collider2D colider)
@@ -55,6 +69,8 @@ public abstract class BaseEnemy : MonoBehaviour
         }
     }
 }
+
+
 
 public enum EnemyDifficulty
 {

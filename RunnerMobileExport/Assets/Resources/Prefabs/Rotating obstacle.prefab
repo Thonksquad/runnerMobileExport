@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 3204004949169861375}
   - component: {fileID: -6405045460920285016}
   - component: {fileID: 9094989576737739971}
+  - component: {fileID: -3010137973838631210}
   m_Layer: 8
   m_Name: Rotating obstacle
   m_TagString: Untagged
@@ -220,8 +221,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12d094331a7452e4cac57387ef554b30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _poolMemberType: 0
   _enemyDestroyTimer: 10
   _minSpawnX: 45
   _maxSpawnX: 55
   _minSpawnY: -6
   _maxSpawnY: 6
+--- !u!114 &-3010137973838631210
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6272515770486927925}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0210c38c4062a5c498ae2ccbe86533d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _speed: 0.04

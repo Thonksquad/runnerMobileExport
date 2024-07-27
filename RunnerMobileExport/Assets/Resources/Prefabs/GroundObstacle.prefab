@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2848589969673671946}
   - component: {fileID: 7510069997685081567}
   - component: {fileID: 4852503969192542990}
+  - component: {fileID: 9027731536806154624}
   m_Layer: 8
   m_Name: GroundObstacle
   m_TagString: Untagged
@@ -191,3 +192,16 @@ MonoBehaviour:
   _maxSpawnX: 55
   _minSpawnY: -8.001
   _maxSpawnY: -8.01
+--- !u!114 &9027731536806154624
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6272515770486927925}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0210c38c4062a5c498ae2ccbe86533d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _speed: 0.04
