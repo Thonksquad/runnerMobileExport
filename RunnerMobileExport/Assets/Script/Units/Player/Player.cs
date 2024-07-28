@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 using UnityEngine.Events;
 using System;
+using UnityServiceLocator;
 
 public class Player : MonoBehaviour
 {
@@ -54,14 +55,20 @@ public class Player : MonoBehaviour
     private bool LandedThisFrame;
     [SerializeField] private PlayerAnimationHandler AnimationHandler;
 
-    public static Player Instance;
+    //public static Player Instance;
+
+
 
     private void Awake()
     {
-        Instance = this;
+        //Instance = this;
+
         int LayerPlayer = LayerMask.NameToLayer("Player");
         int LayerEnemy = LayerMask.NameToLayer("Enemy");
         playerControls = new PlayerInputActions();
+
+        //ServiceLocator.Global.Register<Player>(this);
+        ServiceLocator.ForSceneOf(this).Register<Player>(this);
     }
 
     private void OnEnable()

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityServiceLocator;
 
 public class UnitManager : MonoBehaviour
 {
@@ -48,7 +49,9 @@ public class UnitManager : MonoBehaviour
 
     private void Start()
     {
-        player = Player.Instance;
+        //player = Player.Instance; 
+        ServiceLocator.Global.Get(out player); // Global Service
+
         StartCoroutine(SpawnEnemyTimer(mobspawnInterval));
         StartCoroutine(SpawnObstacleTimer(mobspawnInterval));
         StartCoroutine(SpawnCoinTimer(coinspawnInterval));
