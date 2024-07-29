@@ -27,6 +27,9 @@ public class UnitManager : MonoBehaviour
 
 
     private Player player;
+
+
+
     [SerializeField] private List<BaseEnemy> _units;
     private GameObject enemy;
 
@@ -49,8 +52,7 @@ public class UnitManager : MonoBehaviour
 
     private void Start()
     {
-        //player = Player.Instance; 
-        ServiceLocator.Global.Get(out player); // Global Service
+        ServiceLocator.ForSceneOf(this).Get(out player);
 
         StartCoroutine(SpawnEnemyTimer(mobspawnInterval));
         StartCoroutine(SpawnObstacleTimer(mobspawnInterval));

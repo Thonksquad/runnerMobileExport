@@ -12,10 +12,7 @@ public class Hound : MonoBehaviour
 
     private void Awake()
     {
-        //player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
-        //player = Player.Instance;
-        ServiceLocator.Global.Get(out player); // Global Service
-
+        ServiceLocator.ForSceneOf(this).Get(out player); 
     }
 
     private void Start()

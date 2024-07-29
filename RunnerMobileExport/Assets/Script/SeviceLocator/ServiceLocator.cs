@@ -16,6 +16,12 @@ namespace UnityServiceLocator {
         const string k_globalServiceLocatorName = "ServiceLocator [Global]";
         const string k_sceneServiceLocatorName = "ServiceLocator [Scene]";
 
+        public static void ResetVars()
+        {
+            sceneContainers = new Dictionary<Scene, ServiceLocator>();
+            tmpSceneGameObjects = new List<GameObject>();
+        }
+
         internal void ConfigureAsGlobal(bool dontDestroyOnLoad) {
             if (global == this) {
                 Debug.LogWarning("ServiceLocator.ConfigureAsGlobal: Already configured as global", this);
@@ -189,11 +195,14 @@ namespace UnityServiceLocator {
         
         // https://docs.unity3d.com/ScriptReference/RuntimeInitializeOnLoadMethodAttribute.html
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
-        static void ResetStatics() {
+        public static void ResetStatics() {
             global = null;
             sceneContainers = new Dictionary<Scene, ServiceLocator>();
             tmpSceneGameObjects = new List<GameObject>();
         }
+
+        
+
 
 #if UNITY_EDITOR
         [MenuItem("GameObject/ServiceLocator/Add Global")]

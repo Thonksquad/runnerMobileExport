@@ -4,8 +4,13 @@ using UnityEngine;
 
 namespace UnityServiceLocator {
     public class ServiceManager {
-        readonly Dictionary<Type, object> services = new Dictionary<Type, object>();
+        public Dictionary<Type, object> services = new Dictionary<Type, object>();
         public IEnumerable<object> RegisteredServices => services.Values;
+
+        public void RestartServices()
+        {
+            services = new Dictionary<Type, object>();
+        }
         
         public bool TryGet<T>(out T service) where T : class {
             Type type = typeof(T);
@@ -32,7 +37,14 @@ namespace UnityServiceLocator {
             
             if (!services.TryAdd(type, service)) {
                 Debug.LogError($"ServiceManager.Register: Service of type {type.FullName} already registered");
+                services.Remove(type);
+                Debug.LogError($"ServiceManager.Register: deregister  of type {type.FullName} and registering again... ");
+                if (!services.TryAdd(type, service))
+                {
+                    Debug.LogError($"ServiceManager.Register: Service of type {type.FullName} already registered");
+                }
             }
+
             
             return this;
         }

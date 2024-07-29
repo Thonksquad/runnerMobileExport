@@ -2018,7 +2018,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CamSpeed: 8
-  player: {fileID: 51849613}
 --- !u!1 &522695969
 GameObject:
   m_ObjectHideFlags: 0
