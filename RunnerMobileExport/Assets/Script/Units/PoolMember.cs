@@ -11,7 +11,7 @@ public class PoolMember : MonoBehaviour
     [SerializeField] private float _minSpawnY = -6f;
     [SerializeField] private float _maxSpawnY = 6f;
 
-    private IObjectPool<PoolMember> _pool;
+    public IObjectPool<PoolMember> _pool;
 
     public virtual void SetPool(IObjectPool<PoolMember> pool)
     {

@@ -20,10 +20,14 @@ public class UnitManager : MonoBehaviour
     [SerializeField] private SpawnPool _longObstaclePool;
     [SerializeField] private SpawnPool _fireballPool;
 
+    [SerializeField] private SpawnPool _randomCoinPool;
+    [SerializeField] private SpawnPool _coinPool;
+
     [SerializeField] private LayerMask EnemyDetectionLayer;
-    [SerializeField] private GameObject RandomCoinPrefab;
+    //[SerializeField] private GameObject RandomCoinPrefab;
     [SerializeField] private GameObject coinPrefab;
     [SerializeField] private GameObject houndPrefab;
+    public Vector3 coinSpawnLocation;
 
 
     private Player player;
@@ -75,14 +79,15 @@ public class UnitManager : MonoBehaviour
 
     public void SpawnCoin(float xRef, float yRef)
     {
-        GameObject newCoin = Instantiate(coinPrefab, new Vector3(xRef, yRef, 0), Quaternion.identity);
-        Vector2 forceDirection = new Vector2(Random.Range(0, .001f), Random.Range(.001f, .003f)).normalized;
-        newCoin.GetComponent<Rigidbody2D>().AddForce(.1f * forceDirection, ForceMode2D.Impulse);
+        //GameObject newCoin = Instantiate(coinPrefab, new Vector3(xRef, yRef, 0), Quaternion.identity);
+        coinSpawnLocation = new Vector3(xRef, yRef, 0f);
+        _coinPool.Spawner();
     }
 
     public void SpawnRandomCoin()
     {
-        GameObject newCoin = Instantiate(RandomCoinPrefab, new Vector3(player.transform.position.x + mobSpawnDistance, Random.Range(-4f, 4f), 0), Quaternion.identity);
+        //GameObject newCoin = Instantiate(RandomCoinPrefab, new Vector3(player.transform.position.x + mobSpawnDistance, Random.Range(-4f, 4f), 0), Quaternion.identity);
+        _randomCoinPool.Spawner();
     }
 
     private void SpawnObstacle()
