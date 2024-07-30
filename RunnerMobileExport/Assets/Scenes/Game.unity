@@ -836,6 +836,7 @@ MonoBehaviour:
     m_Flags: 0
   houndbulletPrefab: {fileID: 4284286552761519809, guid: 10be56d3ecec2634cac1a938b21c5acf, type: 3}
   bulletPrefab: {fileID: 4284286552761519809, guid: 68ada51e436ab4d46bf2e6fc982bd95a, type: 3}
+  _bulletPool: {fileID: 1385194810}
   bulletTransform: {fileID: 61061522}
   canFire: 0
   fireCD: 0.7
@@ -3470,6 +3471,7 @@ Transform:
   - {fileID: 956736104}
   - {fileID: 2094000495}
   - {fileID: 765144196}
+  - {fileID: 1385194809}
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4782,6 +4784,55 @@ MonoBehaviour:
   _speed: 0.007
   _nextBgX: 362
   _passedX: -140
+--- !u!1 &1385194808
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1385194809}
+  - component: {fileID: 1385194810}
+  m_Layer: 0
+  m_Name: bulletPool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1385194809
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1385194808}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 932779542}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1385194810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1385194808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb53c02b006900645bfa45604aa3ba36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnLocation: {fileID: 61061522}
+  _poolMemberPrefab: {fileID: 3186589163719988506, guid: 68ada51e436ab4d46bf2e6fc982bd95a, type: 3}
+  _collectionCheck: 0
+  _defaultCapacity: 10
+  _maxSize: 10
 --- !u!1 &1387344699
 GameObject:
   m_ObjectHideFlags: 0

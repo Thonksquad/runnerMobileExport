@@ -1,16 +1,30 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityServiceLocator;
 
-public class Bullet : MonoBehaviour
+
+public class Bullet : PoolMember
 {
+
     private Vector3 mousepos;
     private Camera mainCam;
     private Rigidbody2D rb;
-    public float force;
+    public float force; 
 
-    void Start()
+    public Transform spawnLocation; 
+    private Player player;
+
+
+    private void Start()
     {
+        ServiceLocator.ForSceneOf(this).Get(out player);
+        spawnLocation = player.bulletTransform;
+    }
+
+    public override void OnEnable()
+    {
+        ServiceLocator.ForSceneOf(this).Get(out player);
+        spawnLocation = player.bulletTransform;
+        transform.position = spawnLocation.position;
         mainCam = Camera.main;
         rb = GetComponent<Rigidbody2D>();
         mousepos = mainCam.ScreenToWorldPoint(Input.mousePosition);
@@ -21,7 +35,10 @@ public class Bullet : MonoBehaviour
 
     void OnBecameInvisible()
     {
-        Destroy(gameObject);
+        //Destroy(gameObject);
+        ReturnToPool();
     }
+
+
 
 }

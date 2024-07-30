@@ -54,7 +54,8 @@ public abstract class BaseEnemy : MonoBehaviour
             {
                 CameraManager.Instance.CamSpeed += .25f;
             }
-            Destroy(colider.gameObject);
+            //Destroy(colider.gameObject);
+            colider.gameObject.GetComponent<Bullet>().ReturnToPool();
 
             if (gameObject.TryGetComponent(out BaseEnemy enemy)){
                 enemy.HandleDeath();

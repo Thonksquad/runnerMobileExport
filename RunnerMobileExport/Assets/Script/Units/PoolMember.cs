@@ -13,43 +13,21 @@ public class PoolMember : MonoBehaviour
 
     private IObjectPool<PoolMember> _pool;
 
-    public void SetPool(IObjectPool<PoolMember> pool)
+    public virtual void SetPool(IObjectPool<PoolMember> pool)
     {
         _pool = pool;
     }
 
-    private void OnEnable()
+    public virtual void OnEnable()
     {
         //Invoke(nameof(ReturnToPool), _enemyDestroyTimer);
         transform.position = new Vector3(Random.Range(_minSpawnX, _maxSpawnX), Random.Range(_minSpawnY, _maxSpawnY), 0f);
     }
 
-    public void ReturnToPool()
+    public virtual void ReturnToPool()
     {
         _pool.Release(this);
     }
 
-    /*
-    private void TypeManager()
-    {
-        switch (_poolMemberType)
-        {
-            case PoolMemberType.bat:
-                // reset animation
-                break;
-
-            case PoolMemberType.floatingObstacle:
-                transform.rotation = Quaternion.Euler(0, 0, Random.Range(0, 180));
-                break;
-
-            case PoolMemberType.longObstacle:
-                transform.rotation = Quaternion.Euler(0, 0, Random.Range(0, 180));
-                break;
-
-            default:
-                break;
-        }
-    }
-    */
 }
 

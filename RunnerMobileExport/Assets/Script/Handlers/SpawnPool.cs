@@ -5,19 +5,19 @@ using UnityEngine.Pool;
 public class SpawnPool : MonoBehaviour
 {
 
-    [SerializeField] private PoolMember _poolMemberPrefab;
+    [SerializeField] public PoolMember _poolMemberPrefab;
 
     [SerializeField] private bool _collectionCheck = false;
     [SerializeField] private int _defaultCapacity = 5;
     [SerializeField] private int _maxSize = 5;
 
-    private IObjectPool<PoolMember> _pool;
+    public IObjectPool<PoolMember> _pool;
 
 
     private void Awake()
     {
         _pool = new ObjectPool<PoolMember>(
-            CreateEnemy,
+            CreatePoolMember,
             OnGet, 
             OnRelease, 
             poolMember => { Destroy(poolMember.gameObject); },
@@ -42,7 +42,7 @@ public class SpawnPool : MonoBehaviour
         poolMember.gameObject.SetActive(false);
     }
 
-    private PoolMember CreateEnemy()
+    public virtual PoolMember CreatePoolMember()
     {
         PoolMember poolMember = Instantiate(_poolMemberPrefab);
         poolMember.SetPool(_pool);

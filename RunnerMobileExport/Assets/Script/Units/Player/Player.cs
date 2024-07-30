@@ -29,6 +29,7 @@ public class Player : MonoBehaviour
 
     public GameObject houndbulletPrefab;
     public GameObject bulletPrefab;
+    [SerializeField] private SpawnPoolBullet _bulletPool;
     public Transform bulletTransform;
     public bool canFire;
     private float fireTimer;
@@ -108,7 +109,8 @@ public class Player : MonoBehaviour
                 Invoke(nameof(HoundFire), .2f);
             } else
             {
-                Instantiate(bulletPrefab, bulletTransform.position, Quaternion.identity);
+                //Instantiate(bulletPrefab, bulletTransform.position, Quaternion.identity);
+                _bulletPool.Spawner();
             }
         }
     }
