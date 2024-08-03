@@ -111,7 +111,7 @@ public class Player : MonoBehaviour
             } else
             {
                 //Instantiate(bulletPrefab, bulletTransform.position, Quaternion.identity);
-                _bulletPool.Spawner();
+                _bulletPool.Spawner(new Vector2(bulletTransform.position.x, bulletTransform.position.y));
             }
         }
     }
@@ -119,7 +119,7 @@ public class Player : MonoBehaviour
     private void HoundFire()
     {
         //Instantiate(houndbulletPrefab, bulletTransform.position, Quaternion.identity);
-        _houndBulletPool.Spawner();
+        _houndBulletPool.Spawner(new Vector2(bulletTransform.position.x, bulletTransform.position.y));
     }
 
     void Update()

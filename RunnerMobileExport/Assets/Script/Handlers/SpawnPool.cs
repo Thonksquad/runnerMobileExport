@@ -27,9 +27,10 @@ public class SpawnPool : MonoBehaviour
             );
     }
 
-    public void Spawner()
+    public void Spawner(Vector2 pos)
     {
-        _pool.Get();
+        PoolMember poolMember = _pool.Get();
+        poolMember.transform.position = pos;
     }
 
     private void OnGet(PoolMember poolMember)

@@ -44,7 +44,6 @@ public class Coin : PoolMember
     public override void OnEnable()
     {
         ServiceLocator.ForSceneOf(this).Get(out player);
-        transform.position = UnitManager.Instance.coinSpawnLocation;
         Vector2 forceDirection = new Vector2(Random.Range(0, .001f), Random.Range(.001f, .003f)).normalized;
         gameObject.GetComponent<Rigidbody2D>().AddForce(.1f * forceDirection, ForceMode2D.Impulse);
     }

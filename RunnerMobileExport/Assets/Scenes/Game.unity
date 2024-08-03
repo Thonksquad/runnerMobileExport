@@ -3408,6 +3408,7 @@ GameObject:
   m_Component:
   - component: {fileID: 932779542}
   - component: {fileID: 932779541}
+  - component: {fileID: 932779543}
   m_Layer: 0
   m_Name: UnitManager
   m_TagString: Untagged
@@ -3445,7 +3446,14 @@ MonoBehaviour:
     m_Bits: 256
   coinPrefab: {fileID: 2671702028324914507, guid: a68f94b842aa53a4eb01582cb8111447, type: 3}
   houndPrefab: {fileID: 9010371361248096888, guid: e4ac30e04df58ba44bc597f9341da9a4, type: 3}
-  coinSpawnLocation: {x: 0, y: 0, z: 0}
+  randomCoinSpawnLocation: {x: 0, y: 0}
+  coinSpawnLocation: {x: 0, y: 0}
+  obstacleSpawnPoint: {x: 0, y: 0}
+  enemySpawnPoint: {x: 0, y: 0}
+  _minSpawnX: 45
+  _maxSpawnX: 60
+  _minSpawnY: -6
+  _maxSpawnY: 6
   _units: []
   mobspawnInterval: 3
   coinspawnInterval: 25
@@ -3481,6 +3489,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &932779543
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 932779540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7f60f6ffde4ddf4dac19ff9de7fd346, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _startValue: 1
+  _endValue: 3
+  _modifier: 0.1
 --- !u!1 &956736103
 GameObject:
   m_ObjectHideFlags: 0

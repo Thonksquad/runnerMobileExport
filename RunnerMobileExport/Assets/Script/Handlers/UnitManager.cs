@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityServiceLocator;
+using Utilities.Cooldown;
 
 public class UnitManager : MonoBehaviour
 {
@@ -27,11 +28,19 @@ public class UnitManager : MonoBehaviour
     //[SerializeField] private GameObject RandomCoinPrefab;
     [SerializeField] private GameObject coinPrefab;
     [SerializeField] private GameObject houndPrefab;
-    public Vector3 coinSpawnLocation;
 
 
-    private Player player;
 
+    private Player player; 
+    private Cooldown _cd = new(7f); 
+    [HideInInspector] public Vector2 randomCoinSpawnLocation;
+    [HideInInspector] public Vector2 coinSpawnLocation;
+    [HideInInspector] public Vector2 obstacleSpawnPoint;
+    [HideInInspector] public Vector2 enemySpawnPoint;
+    [SerializeField] private float _minSpawnX = 45f;
+    [SerializeField] private float _maxSpawnX = 60f;
+    [SerializeField] private float _minSpawnY = -6f;
+    [SerializeField] private float _maxSpawnY = 6f;
 
 
     [SerializeField] private List<BaseEnemy> _units;
@@ -47,6 +56,7 @@ public class UnitManager : MonoBehaviour
     [SerializeField] private float yRef;
     [SerializeField] private float groundHeight = -6.5f;
 
+
     private bool IsSafeToSpawn(Vector2 pos, float radius) => Physics2D.OverlapCircleAll(pos, radius, EnemyDetectionLayer).Length == 0;
 
     private void Awake()
@@ -56,11 +66,7 @@ public class UnitManager : MonoBehaviour
 
     private void Start()
     {
-        ServiceLocator.ForSceneOf(this).Get(out player);
-
-        StartCoroutine(SpawnEnemyTimer(mobspawnInterval));
-        StartCoroutine(SpawnObstacleTimer(mobspawnInterval));
-        StartCoroutine(SpawnCoinTimer(coinspawnInterval));
+        ServiceLocator.ForSceneOf(this).Get(out player); 
     }
 
     public void SpawnHound()
@@ -79,66 +85,52 @@ public class UnitManager : MonoBehaviour
 
     public void SpawnCoin(float xRef, float yRef)
     {
-        //GameObject newCoin = Instantiate(coinPrefab, new Vector3(xRef, yRef, 0), Quaternion.identity);
-        coinSpawnLocation = new Vector3(xRef, yRef, 0f);
-        _coinPool.Spawner();
+        coinSpawnLocation = new Vector2(xRef, yRef);
+        _coinPool.Spawner(coinSpawnLocation);
     }
 
     public void SpawnRandomCoin()
     {
-        //GameObject newCoin = Instantiate(RandomCoinPrefab, new Vector3(player.transform.position.x + mobSpawnDistance, Random.Range(-4f, 4f), 0), Quaternion.identity);
-        _randomCoinPool.Spawner();
+        randomCoinSpawnLocation = new Vector2(Random.Range(_minSpawnX, _maxSpawnX), Random.Range(-6f, 6f));
+        _randomCoinPool.Spawner(randomCoinSpawnLocation);
     }
 
-    private void SpawnObstacle()
+    public void SpawnObstacle()
     {
-        xRef = player.transform.position.x + mobSpawnDistance;
+        xRef = Random.Range(_minSpawnX, _maxSpawnX);
         yRef = Random.Range(-6f, 6f);
 
         if (IsSafeToSpawn(new Vector2(xRef, yRef), DetectionRadius * 3))
         {
+            obstacleSpawnPoint = new Vector2(xRef, yRef);
             switch (Random.Range(0, 5))
             {
                 case 0:
-                    _floatingObstaclePool.Spawner();
-                    //enemy = floatingobstaclePrefab;
-                    //GameObject newFloating = Instantiate(enemy, new Vector3(xRef, yRef, 0), Quaternion.identity);
-                    //newFloating.transform.rotation = Quaternion.Euler(0, 0, Random.Range(0, 180));
-                    //Destroy(newFloating, mobAutoDestroy);
+                    _floatingObstaclePool.Spawner(obstacleSpawnPoint);
                     break;
                 case 1:
-                    
-                    xRef = player.transform.position.x + mobSpawnDistance;
+
+                    xRef = Random.Range(_minSpawnX, _maxSpawnX);
                     yRef = -8f;
+                    obstacleSpawnPoint = new Vector2(xRef, yRef);
+
                     if (IsSafeToSpawn(new Vector2(xRef, yRef), DetectionRadius * 3))
                     {
-                        _groundObstaclePool.Spawner();
-                        //enemy = groundobstaclePrefab;
-                        //GameObject newGround = Instantiate(enemy, new Vector3(xRef, yRef, 0), Quaternion.identity);
-                        //Destroy(newGround, mobAutoDestroy);
-                    } else
+                        _groundObstaclePool.Spawner(obstacleSpawnPoint);
+                    }
+                    else
                     {
                         goto case 4;
                     }
                     break;
                 case 2:
-                    _longObstaclePool.Spawner();
-                    //enemy = longobstaclePrefab;
-                    //GameObject newLong = Instantiate(enemy, new Vector3(xRef, yRef, 0), Quaternion.identity);
-                    //newLong.transform.rotation = Quaternion.Euler(0, 0, Random.Range(0, 180));
-                    //Destroy(newLong, mobAutoDestroy);
+                    _longObstaclePool.Spawner(obstacleSpawnPoint);
                     break;
                 case 3:
-                    _rotatingObstaclePool.Spawner();
-                    //enemy = rotatingobstaclePrefab;
-                    //GameObject newRotate = Instantiate(enemy, new Vector3(xRef, yRef, 0), Quaternion.identity);
-                    //Destroy(newRotate, mobAutoDestroy);
+                    _rotatingObstaclePool.Spawner(obstacleSpawnPoint);
                     break;
                 case 4:
-                    _fireballPool.Spawner();
-                    //enemy = fireballPrefab;
-                    //GameObject newFireball = Instantiate(enemy, new Vector3(xRef, yRef, 0), Quaternion.identity);
-                    //Destroy(newFireball, mobAutoDestroy);
+                    _fireballPool.Spawner(obstacleSpawnPoint);
                     break;
                 default: break;
             }
@@ -149,38 +141,28 @@ public class UnitManager : MonoBehaviour
         }
     }
 
-    private void SpawnEnemy()
+    public void SpawnEnemy()
     {
-        xRef = player.transform.position.x + mobSpawnDistance;
+        xRef = Random.Range(_minSpawnX, _maxSpawnX);
         yRef = Random.Range(-6f, 6f);
 
         if (IsSafeToSpawn(new Vector2(xRef, yRef), DetectionRadius))
         {
+            enemySpawnPoint = new Vector2(xRef, yRef);
             switch (Random.Range(0, 5))
             {
                 case 0:
-                    _batPool.Spawner();
-                    //enemy = batPrefab;
-                    //GameObject newBat = Instantiate(enemy, new Vector3(xRef, yRef, 0), Quaternion.identity);
-                    //Destroy(newBat, mobAutoDestroy);
+                    _batPool.Spawner(enemySpawnPoint);
                     break;
                 case 1:
-                    _dasherPool.Spawner();
-                    //enemy = dasherPrefab;
-                    //GameObject newDasher = Instantiate(enemy, new Vector3(xRef, -7.5f, 0), Quaternion.identity);
-                    //Destroy(newDasher, mobAutoDestroy);
+                    enemySpawnPoint = new Vector2(xRef, -7.5f);
+                    _dasherPool.Spawner(enemySpawnPoint);
                     break;
                 case 2:
-                    _leaperPool.Spawner();
-                    //enemy = leaperPrefab;
-                    //GameObject newLeaper = Instantiate(enemy, new Vector3(xRef, yRef, 0), Quaternion.identity);
-                    //Destroy(newLeaper, mobAutoDestroy);
+                    _leaperPool.Spawner(enemySpawnPoint);
                     break;
                 case 3:
-                    _archerPool.Spawner();
-                    //enemy = archerPrefab;
-                    //GameObject newArcher = Instantiate(enemy, new Vector3(xRef, yRef, 0), Quaternion.identity);
-                    //Destroy(newArcher, mobAutoDestroy);
+                    _archerPool.Spawner(enemySpawnPoint);
                     break;
                 default: break;
             }
@@ -192,33 +174,5 @@ public class UnitManager : MonoBehaviour
 
     }
 
-    private IEnumerator SpawnEnemyTimer(float interval)
-    {
-        yield return new WaitForSeconds(interval);
-        SpawnEnemy();
-
-        if (mobspawnInterval > 1f)
-        {
-            mobspawnInterval -= .05f;
-        }
-
-        StartCoroutine(SpawnEnemyTimer(mobspawnInterval));
-    }
-
-    private IEnumerator SpawnObstacleTimer(float interval)
-    {
-        yield return new WaitForSeconds(interval);
-        SpawnObstacle();
-
-        StartCoroutine(SpawnObstacleTimer(mobspawnInterval));
-    }
-
-    private IEnumerator SpawnCoinTimer(float interval)
-    {
-        yield return new WaitForSeconds(interval);
-        SpawnRandomCoin();
-
-        StartCoroutine(SpawnCoinTimer(coinspawnInterval));
-    }
 
 }
