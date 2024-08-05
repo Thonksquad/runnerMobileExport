@@ -13,7 +13,7 @@ public class SpawnCooldown : MonoBehaviour
     private Cooldown _cdMain = new(7f);
     private Cooldown _cdObstacle = new(7f);
     private Cooldown _cdEnemy = new(7f);
-    private Cooldown _cdCoin = new(7f);
+    private Cooldown _cdCoin = new(30f);
 
     private void OnEnable()
     {
@@ -86,6 +86,6 @@ public class SpawnCooldown : MonoBehaviour
             }
         }
         _cdCoin.Start();
-    } 
+    }
 
 }
