@@ -33,12 +33,14 @@ public class Bullet : PoolMember
         rb.velocity = new Vector3(90, 0).normalized * (force + CameraManager.Instance.CamSpeed);
     }
 
+
+    /*
     void OnBecameInvisible()
     {
         //Destroy(gameObject);
         ReturnToPool();
     }
-
+    */
 
 
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityServiceLocator;
 
-public class Coin : PoolMember
+public class Coin : MonoBehaviour
 {
     [SerializeField] private float _speed = 0.04f;
     [SerializeField] private AudioClip _clip;
@@ -23,7 +23,7 @@ public class Coin : PoolMember
             SoundManager.Instance.PlaySound(_clip);
             GameManager.Instance.IncreaseCoin(1);
             //Destroy(gameObject);
-            ReturnToPool();
+            gameObject.GetComponent<PoolMember>().ReturnToPool();
         }
     }
 
@@ -41,7 +41,7 @@ public class Coin : PoolMember
         }
     }
 
-    public override void OnEnable()
+    public void OnEnable()
     {
         ServiceLocator.ForSceneOf(this).Get(out player);
         Vector2 forceDirection = new Vector2(Random.Range(0, .001f), Random.Range(.001f, .003f)).normalized;

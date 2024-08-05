@@ -3,6 +3,7 @@ using Utilities.Cooldown;
 
 public class SpawnCooldown : MonoBehaviour
 {
+    [SerializeField] private float _SpawnDelay = 0.75f;
     [SerializeField] private float _startValue = 1f;
     [SerializeField] private float _endValue = 3f;
     [SerializeField] private float _modifier = 0.1f;
@@ -14,7 +15,7 @@ public class SpawnCooldown : MonoBehaviour
     {
         _cd.Completed += CoolDownFinished;
         _currentValue = _startValue;
-        Main();
+        Invoke(nameof(Main), 1f); 
     }
 
 
@@ -49,11 +50,27 @@ public class SpawnCooldown : MonoBehaviour
         {
             for (int i = 0; i < x; i++)
             {
-                UnitManager.Instance.SpawnRandomCoin();
-                UnitManager.Instance.SpawnObstacle();
-                UnitManager.Instance.SpawnEnemy();
+                SpawnObstacle();
+                Invoke(nameof(SpawnEnemy), _SpawnDelay);
+                Invoke(nameof(SpawnRandomCoin), _SpawnDelay*2); 
             }
         }
+    }
+
+
+    private void SpawnObstacle()
+    {
+        UnitManager.Instance.SpawnObstacle();
+    }
+
+    private void SpawnEnemy()
+    {
+        UnitManager.Instance.SpawnEnemy();
+    } 
+
+    private void SpawnRandomCoin()
+    {
+        UnitManager.Instance.SpawnRandomCoin();
     }
 
 }

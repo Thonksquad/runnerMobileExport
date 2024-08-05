@@ -3,7 +3,6 @@ using UnityEngine;
 public class Catcher : MonoBehaviour
 {
     private void OnCollisionEnter2D(Collision2D collision)
-    //private void OnTriggerEnter2D(Collider2D colider)
     {
         if (collision.gameObject.GetComponent<PoolMember>() != null)
         {

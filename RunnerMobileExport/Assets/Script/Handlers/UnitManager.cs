@@ -1,8 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityServiceLocator;
-using Utilities.Cooldown;
+using UnityServiceLocator; 
 
 public class UnitManager : MonoBehaviour
 {
@@ -24,15 +23,12 @@ public class UnitManager : MonoBehaviour
     [SerializeField] private SpawnPool _randomCoinPool;
     [SerializeField] private SpawnPool _coinPool;
 
-    [SerializeField] private LayerMask EnemyDetectionLayer;
-    //[SerializeField] private GameObject RandomCoinPrefab;
-    [SerializeField] private GameObject coinPrefab;
+    [SerializeField] private LayerMask EnemyDetectionLayer; 
     [SerializeField] private GameObject houndPrefab;
 
 
 
-    private Player player; 
-    private Cooldown _cd = new(7f); 
+    private Player player;  
     [HideInInspector] public Vector2 randomCoinSpawnLocation;
     [HideInInspector] public Vector2 coinSpawnLocation;
     [HideInInspector] public Vector2 obstacleSpawnPoint;

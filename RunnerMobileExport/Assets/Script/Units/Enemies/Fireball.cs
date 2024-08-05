@@ -29,7 +29,7 @@ public class Fireball : MonoBehaviour
         if (collision.gameObject.TryGetComponent(out Player player))
         {
             player.TakeDamage(damage);
-            Destroy(gameObject);
+            //Destroy(gameObject);
         }
     }
 
