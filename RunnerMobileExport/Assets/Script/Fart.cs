@@ -5,8 +5,13 @@ using UnityEngine;
 public class Fart : MonoBehaviour
 {
     // Start is called before the first frame update
-    void Start()
+    private void OnEnable()
     {
-        Destroy(gameObject, .5f);
+        Invoke("DisableThis", 0.5f);
+    }
+
+    private void DisableThis()
+    {
+        gameObject.SetActive(false);
     }
 }

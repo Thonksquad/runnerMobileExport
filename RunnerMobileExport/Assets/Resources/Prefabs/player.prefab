@@ -133,25 +133,6 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -185,12 +166,6 @@ Rigidbody2D:
   m_AngularDrag: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
@@ -209,7 +184,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 0
   maxHP: 1
-  body: {fileID: 0}
   gameOver: 0
   myAnim: {fileID: 6086196788680871203}
   isInvulnerable: 0
@@ -234,8 +208,8 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
-  houndbulletPrefab: {fileID: 4284286552761519809, guid: 10be56d3ecec2634cac1a938b21c5acf, type: 3}
   bulletPrefab: {fileID: 4284286552761519809, guid: 68ada51e436ab4d46bf2e6fc982bd95a, type: 3}
+  houndbulletPrefab: {fileID: 4284286552761519809, guid: 10be56d3ecec2634cac1a938b21c5acf, type: 3}
   bulletTransform: {fileID: 6086196788686413119}
   canFire: 0
   fireCD: 0.7
@@ -245,12 +219,12 @@ MonoBehaviour:
   fallVelocity: 0
   gameTrackerScreen: {fileID: 0}
   _WalkingDuration: 2
-  _Koda: {fileID: 6086196788183868278}
-  _FartPrefab: {fileID: 4134818614373637093, guid: 3deb980364fd32d49ad9b3c7727478a5, type: 3}
-  AnimationHandler: {fileID: 6086196788680871229}
+  _FartPrefab: {fileID: 0}
+  cursor: {fileID: 0}
+  reloadBar: {fileID: 0}
 --- !u!95 &6086196788680871203
 Animator:
-  serializedVersion: 5
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -267,8 +241,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &6086196788680871202
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -361,7 +334,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   platformLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 512
   myCol: {fileID: 6086196788680871201}
   _player: {fileID: 0}
   footsteps: {fileID: 0}

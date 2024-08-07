@@ -5,7 +5,6 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 40186157, guid: a68f94b842aa53a4eb01582cb8111447, type: 3}
@@ -92,13 +91,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: RandomCoinPrefab
       objectReference: {fileID: 0}
-    - target: {fileID: 2671702028324914508, guid: a68f94b842aa53a4eb01582cb8111447, type: 3}
-      propertyPath: _maxSpawnY
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 2671702028324914508, guid: a68f94b842aa53a4eb01582cb8111447, type: 3}
-      propertyPath: _minSpawnY
-      value: -4
+    - target: {fileID: 2671702028324914507, guid: a68f94b842aa53a4eb01582cb8111447, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2671702028324914511, guid: a68f94b842aa53a4eb01582cb8111447, type: 3}
       propertyPath: m_BodyType
@@ -113,7 +108,4 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a68f94b842aa53a4eb01582cb8111447, type: 3}

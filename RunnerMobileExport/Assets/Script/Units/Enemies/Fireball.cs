@@ -16,7 +16,7 @@ public class Fireball : MonoBehaviour
 
     private void OnBecameVisible()
     {
-        SoundManager.Instance.PlaySound(fireballSound);
+     //   SoundManager.Instance.PlaySound(fireballSound);
     }
 
     private void Update()
@@ -29,7 +29,7 @@ public class Fireball : MonoBehaviour
         if (collision.gameObject.TryGetComponent(out Player player))
         {
             player.TakeDamage(damage);
-            //Destroy(gameObject);
+            gameObject.SetActive(false);
         }
     }
 

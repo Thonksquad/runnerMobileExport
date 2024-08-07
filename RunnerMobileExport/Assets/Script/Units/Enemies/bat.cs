@@ -8,16 +8,20 @@ public class bat : BaseEnemy
     public bool chase = false;
     private Rigidbody2D rb;
 
-    protected override void Start()
+    private void Awake()
     {
-        base.Start();
         rb = GetComponent<Rigidbody2D>();
     }
 
-
-    public override void Update()
+    protected override void OnEnable()
     {
-        base.Update();
+        base.OnEnable();
+        rb.bodyType = RigidbodyType2D.Kinematic;
+    }
+
+
+    private void Update()
+    {
         if (player == null)
             return;
         if (!isDead)
@@ -54,5 +58,4 @@ public class bat : BaseEnemy
             }
         }
     }
-
 }

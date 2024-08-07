@@ -18,14 +18,15 @@ public class LeaperEnemy : BaseEnemy
     private void Awake()
     {
         _target = FindObjectOfType<Player>().transform;
+        rb = GetComponent<Rigidbody2D>();
     }
 
 
     protected override void Start()
     {
         base.Start();
-        rb = GetComponent<Rigidbody2D>();
     }
+
 
     void FixedUpdate()
     {
@@ -51,12 +52,31 @@ public class LeaperEnemy : BaseEnemy
             }
             else
             {
+                if (chaseControl.enabled)   // this condition is so that Invoke doesn't get called multiple times
+                    Invoke("DisableGameObject", 0.25f);
+
                 chaseControl.enabled = false;
                 myControl.enabled = false;
                 rb.bodyType = RigidbodyType2D.Dynamic;
-                Destroy(gameObject, .25f);
             }
         }
+    }
+
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        rb = GetComponent<Rigidbody2D>();
+        rb.bodyType = RigidbodyType2D.Kinematic;
+        isDead = false;
+        chaseControl.enabled = true;
+        myControl.enabled = true;
+        chase = false;
+    }
+
+
+    private void DisableGameObject()
+    {
+        gameObject.SetActive(false);
     }
 
     private void OnBecameInvisible()

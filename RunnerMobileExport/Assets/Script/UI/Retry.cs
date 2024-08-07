@@ -18,5 +18,6 @@ public class Retry : MonoBehaviour, IPointerDownHandler
     {
         player.gameOver = false;
         SceneManager.LoadSceneAsync("Game", LoadSceneMode.Single);
+        ActionSystem.onPlayerRevive();
     }
 }

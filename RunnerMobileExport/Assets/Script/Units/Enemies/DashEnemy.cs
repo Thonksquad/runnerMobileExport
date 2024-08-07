@@ -16,9 +16,14 @@ public class DashEnemy: BaseEnemy
         myRigidbody = GetComponent<Rigidbody2D>();
     }
 
-    public override void Update()
+    protected override void OnEnable()
     {
-        base.Update();
+        base.OnEnable();
+        walkSpeed = 0f;
+    }
+
+    private void Update()
+    {
         if (!isDead)
         {
             Debug.DrawRay(obstacleRayObject.transform.position, transform.TransformDirection(Vector2.left) * 5f, Color.red);
@@ -38,6 +43,5 @@ public class DashEnemy: BaseEnemy
             myRigidbody.velocity = new Vector3(0, -10, 0);
             walkSpeed = 0;
         }
-
     }
 }

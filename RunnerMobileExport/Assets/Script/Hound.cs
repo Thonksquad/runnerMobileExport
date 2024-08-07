@@ -1,36 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityServiceLocator;
 
 public class Hound : MonoBehaviour
 {
-
-    [SerializeField] private float _speed = 0.04f;
-
     private Player player;
 
     private void Awake()
     {
-        ServiceLocator.ForSceneOf(this).Get(out player); 
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
     }
 
     private void Start()
     {
-        Destroy(gameObject, 10);
-    }
-
-    private void Update()
-    {
-        transform.position = new Vector3(transform.position.x - _speed, transform.position.y, transform.position.z);
+        Invoke("DoDisable", 10.0f);
     }
 
     private void OnBecameVisible()
     {
         if (player.onHound)
         {
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
+    }
+
+    private void DoDisable()
+    {
+        gameObject.SetActive(false);
     }
 
 
@@ -42,7 +38,8 @@ public class Hound : MonoBehaviour
             {
                 player.onHound = true;
                 player.hp = 2;
-                Destroy(gameObject);
+                gameObject.SetActive(false);
+                ActionSystem.onPlayerHoundPickup();
             }
         }
     }

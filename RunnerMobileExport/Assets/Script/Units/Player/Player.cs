@@ -5,16 +5,20 @@ using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 using UnityEngine.Events;
 using System;
-using UnityServiceLocator;
-
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
     private int LayerPlayer;
     private int LayerEnemy;
+    private Rigidbody2D body;
+    private ObjectPool bulletPool = new ObjectPool();
+    private ObjectPool fartPool = new ObjectPool();
+    private ObjectPool houndBulletPool = new ObjectPool();
+    private Transform _Koda;
+
     public int hp;
     public int maxHP = 1;
-    public Rigidbody2D body;
     public bool gameOver = false;
     public Animator myAnim;
     public PlayerInputActions playerControls;
@@ -27,10 +31,8 @@ public class Player : MonoBehaviour
     public InputAction fly;
     public InputAction fire;
 
-    public GameObject houndbulletPrefab;
     public GameObject bulletPrefab;
-    [SerializeField] private SpawnPool _bulletPool;
-    [SerializeField] private SpawnPool _houndBulletPool;
+    public GameObject houndbulletPrefab;
     public Transform bulletTransform;
     public bool canFire;
     private float fireTimer;
@@ -51,27 +53,28 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject gameTrackerScreen;
     [SerializeField] private float _WalkingDuration = 2f;
 
-    [SerializeField] private Transform _Koda;
-    [SerializeField] private Fart _FartPrefab;
+    [SerializeField] private GameObject _FartPrefab;
+
+    [SerializeField] private SpriteRenderer reloadBar;
     public Coroutine fartRoutine;
 
     private bool LandedThisFrame;
-    [SerializeField] private PlayerAnimationHandler AnimationHandler;
-
+    private PlayerAnimationHandler AnimationHandler;
 
     private void Awake()
     {
-        ServiceLocator.ForSceneOf(this).Register<Player>(this); // Scene Scope
-
+        body = GetComponent<Rigidbody2D>();
+        AnimationHandler = GetComponent<PlayerAnimationHandler>();
+        _Koda = gameObject.transform.Find("koda");
         int LayerPlayer = LayerMask.NameToLayer("Player");
         int LayerEnemy = LayerMask.NameToLayer("Enemy");
         playerControls = new PlayerInputActions();
+        reloadBar.enabled = false;
     }
 
     private void OnEnable()
     {
-        ActionSystem.onPlayerRecover += TurnCollisionOn;
-        ActionSystem.onPlayerRevive += Revive;
+        ActionSystem.onPlayerRevive += TurnCollisionOn;
         fly = playerControls.Player.Fly;
         fly.Enable();
         fire = playerControls.Player.Fire;
@@ -81,8 +84,7 @@ public class Player : MonoBehaviour
 
     private void OnDisable()
     {
-        ActionSystem.onPlayerRecover -= TurnCollisionOn;
-        ActionSystem.onPlayerRevive -= Revive;
+        ActionSystem.onPlayerRevive -= TurnCollisionOn;
         fly.Disable();
         fire.Disable();
         fire.performed -= OnFire;
@@ -94,6 +96,9 @@ public class Player : MonoBehaviour
         body = GetComponent<Rigidbody2D>();
         myAnim = GetComponent<Animator>();
         LandedThisFrame = AnimationHandler.IsGrounded();
+        bulletPool.CreateObjectPool(bulletPrefab, 5);
+        fartPool.CreateObjectPool(_FartPrefab, 2);
+        houndBulletPool.CreateObjectPool(houndbulletPrefab, 6);
     }
 
     private void OnFire(InputAction.CallbackContext ctx)
@@ -111,19 +116,21 @@ public class Player : MonoBehaviour
             } else
             {
                 //Instantiate(bulletPrefab, bulletTransform.position, Quaternion.identity);
-                _bulletPool.Spawner(new Vector2(bulletTransform.position.x, bulletTransform.position.y));
+                bulletPool.DoSpawn(bulletTransform.position);
             }
+
+            StartCoroutine(Handle_UIReloadBar());
         }
     }
 
     private void HoundFire()
     {
-        //Instantiate(houndbulletPrefab, bulletTransform.position, Quaternion.identity);
-        _houndBulletPool.Spawner(new Vector2(bulletTransform.position.x, bulletTransform.position.y));
+        houndBulletPool.DoSpawn(bulletTransform.position);
     }
 
     void Update()
     {
+     //   HandleCursor();
 
         if (LandedThisFrame != AnimationHandler.IsGrounded())
         {
@@ -139,7 +146,7 @@ public class Player : MonoBehaviour
                 fartTimer += Time.deltaTime;
                 if (fartTimer > fartCD)
                 {
-                    Instantiate(_FartPrefab, _Koda.position, Quaternion.identity);
+                    fartPool.DoSpawn(_Koda.position);
                     canFart = false;
                     fartTimer = 0;
                 }
@@ -150,7 +157,7 @@ public class Player : MonoBehaviour
         {
             gameOverCounter++;
             gameTrackerScreen.SetActive(false);
-            ActionSystem.onPlayerHit();
+            ActionSystem.onPlayerDeath();
             return;
         }
 
@@ -171,6 +178,16 @@ public class Player : MonoBehaviour
 
             flyVelocity = (float)(8f + (CameraManager.Instance.CamSpeed * 0.15));
             body.velocity = new Vector3(0, flyVelocity, 0);
+            // jump logic
+            /**
+            if (AnimationHandler.IsGrounded())
+            {
+                body.velocity = new Vector3(0, 32f, 0);
+            } else
+            {
+                body.velocity = new Vector3(0, 8f, 0);
+            }
+            **/
         }
         else if (fly.WasReleasedThisFrame())
         {
@@ -206,12 +223,20 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void Revive()
+    private IEnumerator Handle_UIReloadBar()
     {
-        gameTrackerScreen.SetActive(true);
-        TurnCollisionOn();
-        gameOver = false;
-        gameOverCounter = 0;
+        reloadBar.enabled = true;
+        float tempWidth = reloadBar.transform.localScale.x;
+
+        while (!canFire)
+        {
+            reloadBar.transform.localScale = new Vector2(tempWidth * (fireTimer / fireCD), reloadBar.transform.localScale.y);
+            reloadBar.transform.parent.position = transform.position + new Vector3(((tempWidth * (fireTimer / fireCD)) / 2) - tempWidth/2, 0, 0);
+            yield return null;
+        }
+
+        reloadBar.enabled = false;
     }
 
+  //  private IEnumerator HandleCursor
 }

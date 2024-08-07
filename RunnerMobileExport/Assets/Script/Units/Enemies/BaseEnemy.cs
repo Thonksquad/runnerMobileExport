@@ -9,17 +9,25 @@ public abstract class BaseEnemy : MonoBehaviour
     public Animator _anim;
     public bool isDead { get; protected set; } = false;
 
-    [SerializeField] private float _speed = 0.04f;
-
     protected virtual void Start()
     {
         player = FindObjectOfType<Player>();
         _anim = GetComponent<Animator>();
         _anim.CrossFade("alive", 0, 0);
+        ActionSystem.onPlayerHoundPickup += OnPlayerHoundPickup;
+      //  ActionSystem.onBossSpawn += OnPlayerHoundPickup;
+    }
+
+    protected virtual void OnEnable()
+    {
+        isDead = false;
+        int enemyLayer = LayerMask.NameToLayer("Enemy");
+        gameObject.layer = enemyLayer;
     }
 
     public virtual void HandleDeath()
     {
+        Debug.Log(gameObject.name);
         ActionSystem.onEnemyDeath(this);
         isDead = true;
         _anim.CrossFade("dead", 0, 0);
@@ -30,23 +38,20 @@ public abstract class BaseEnemy : MonoBehaviour
         //rb.velocity = new Vector3(0, -10, 0);
     }
 
-    public virtual void OnEnable()
+    private void OnPlayerHoundPickup()
     {
-        isDead = false;
-        int enemyLayer = LayerMask.NameToLayer("Enemy");
-        gameObject.layer = enemyLayer;
-    }
-
-    public virtual void Update()
-    {
-        transform.position = new Vector3(transform.position.x - _speed, transform.position.y, transform.position.z);
+        HandleDeath();
+      //  gameObject.SetActive(false);
     }
 
     public virtual void OnTriggerEnter2D(Collider2D colider)
     {
-        int coinChance = Random.Range(1, 101);
+        int coinChance = Random.Range(1, 101);  // roll coinDrop chance
+
         if (colider.gameObject.GetComponent<Bullet>() != null)
         {
+            colider.gameObject.SetActive(false);    // disable collided bullet
+
             if (CameraManager.Instance.CamSpeed < 20)
             {
                 CameraManager.Instance.CamSpeed += .5f;
@@ -54,24 +59,19 @@ public abstract class BaseEnemy : MonoBehaviour
             {
                 CameraManager.Instance.CamSpeed += .25f;
             }
-            //Destroy(colider.gameObject);
-            colider.gameObject.GetComponent<Bullet>().ReturnToPool();
 
-            if (gameObject.TryGetComponent(out BaseEnemy enemy)){
+            if (gameObject.TryGetComponent(out BaseEnemy enemy))   // do HandleDeath()
+            {
                 enemy.HandleDeath();
             }
 
-            //Destroy(this.gameObject,1f);
-
-            if (coinChance <= 30)
+            if (coinChance <= 30)   // Spawn coin
             {
                 UnitManager.Instance.SpawnCoin(transform.position.x, transform.position.y);
             }
         }
     }
 }
-
-
 
 public enum EnemyDifficulty
 {
