@@ -159,10 +159,9 @@ public class BossEye : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Bullet")
+        if (collision.gameObject.GetComponent<Bullet>() != null)
         {
-            collision.gameObject.SetActive(false);
-
+            collision.gameObject.GetComponent<Bullet>().ReturnToPool();
             if (canBeHit)
             {
                 hitHP--;

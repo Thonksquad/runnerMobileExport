@@ -11,6 +11,10 @@ public class BossHandler : MonoBehaviour
     public static int bossMaxHP = 100;
     private GameObject currentBoss;
 
+    [SerializeField] private float _bossSpawnWarningPosition = 400f;
+    [SerializeField] private float _bossSpawnPosition = 500f;
+    [SerializeField] private GameObject _warningImage;
+
     [Header("Spawner Stats")]
     [SerializeField] BossNames bossToSpawn;
     [SerializeField] float spawnTimer;
@@ -28,24 +32,45 @@ public class BossHandler : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(HandleSpawnTimer());
+        bossAlive = false;
+        StartCoroutine(WaitForSpawnWarning());
     }
 
-    private IEnumerator HandleSpawnTimer()
-    {
-        float tempTimer = spawnTimer;
-        bossAlive = false;
 
-        while (tempTimer > 0)
+    private IEnumerator WaitForSpawnWarning()
+    {
+        bool wait = true;
+        while (wait)
         {
-            tempTimer -= Time.deltaTime;
-            yield return null;
+            if (GameManager.distance > _bossSpawnWarningPosition)
+            {
+                wait = false;
+            }
+            yield return new WaitForSeconds(3f);
         }
+        SpawnCooldown.Instance.StartBoss();
+        _warningImage.SetActive(true);
+        StartCoroutine(WaitForSpawn());
+    }
+
+    private IEnumerator WaitForSpawn()
+    {
+        bool wait = true;
+        while (wait)
+        {
+            if (GameManager.distance > _bossSpawnPosition)
+            {
+                wait = false;
+            }
+            yield return new WaitForSeconds(3f);
+        }
+        _warningImage.SetActive(false);
 
         // Spawn
         EnableBossUI();
         SpawnBoss();
     }
+
 
     private void SpawnBoss()
     {
@@ -70,6 +95,7 @@ public class BossHandler : MonoBehaviour
             yield return null;
 
         EndBossEncounter();
+        SpawnCooldown.Instance.EndBoss();
     }
 
     internal void EndBossEncounter()

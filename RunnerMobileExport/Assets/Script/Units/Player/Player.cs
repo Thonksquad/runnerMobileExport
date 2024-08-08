@@ -60,9 +60,11 @@ public class Player : MonoBehaviour
 
     private bool LandedThisFrame;
     private PlayerAnimationHandler AnimationHandler;
+    public static Player Instance;
 
     private void Awake()
     {
+        Instance = this;
         body = GetComponent<Rigidbody2D>();
         AnimationHandler = GetComponent<PlayerAnimationHandler>();
         _Koda = gameObject.transform.Find("koda");

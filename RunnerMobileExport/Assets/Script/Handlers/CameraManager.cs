@@ -15,9 +15,6 @@ public class CameraManager : MonoBehaviour
 
     void Update()
     {
-        if (!player.gameOver)
-        {
-            transform.position += new Vector3(CamSpeed * Time.deltaTime, 0, 0);
-        }
+        
     }
 }

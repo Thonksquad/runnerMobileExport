@@ -12,9 +12,5 @@ public class ReloadUsername : MonoBehaviour
     {
         TryGetComponent(out discordName);
     }
-
-    public void ChangeUsername()
-    {
-        discordName.text = DBGrabUser.discordNameLeader;
-    }
+     
 }

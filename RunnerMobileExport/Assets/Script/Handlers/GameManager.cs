@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI EndcoinsUI;
     public TextMeshProUGUI distanceUI;
     public TextMeshProUGUI coinUI;
-    private bool newHighScore() => distance > DBGrabUser.highScore;
+
     public static float gameLength;
     public static float enemiesKilled;
     public static float bossesKilled;
@@ -102,16 +102,12 @@ public class GameManager : MonoBehaviour
 
     public void playerDeath()
     {
-        if (newHighScore())
-        {
-           DBGrabUser.highScore = (int)Mathf.Round(distance);
-        }
+         
         Time.timeScale = 0;
       //  SoundManager.Instance.PlaySound(_deathSound);
         gameOverScreen.SetActive(true);
       //  SoundManager.Instance.ToggleMusic();
-        EnddistanceUI.text = Mathf.Round(distance).ToString();
-        BestdistanceUI.text = DBGrabUser.highScore.ToString();
+        EnddistanceUI.text = Mathf.Round(distance).ToString(); 
         EndcoinsUI.text = coins.ToString();
     }
 

@@ -49,6 +49,7 @@ public class Boss1 : MonoBehaviour
         StartCoroutine(Do_Intro());
     }
 
+
     private IEnumerator Do_Intro()
     {
         while (Mathf.Abs(initialLocalPosition.x - transform.localPosition.x) > 0.1f)

@@ -10,10 +10,5 @@ public class ReloadPfp : MonoBehaviour
     private void Awake()
     {
         TryGetComponent(out ProfileImage);
-    }
-
-    public void ChangeImage()
-    {
-        ProfileImage.sprite = DBGrabUser.StoredSprite;
-    }
+    } 
 }
