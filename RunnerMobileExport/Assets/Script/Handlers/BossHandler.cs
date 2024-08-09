@@ -48,6 +48,12 @@ public class BossHandler : MonoBehaviour
             }
             yield return new WaitForSeconds(3f);
         }
+
+
+        if (!Player.Instance.onHound)
+        {
+            UnitManager.Instance.SpawnHound();
+        }
         SpawnCooldown.Instance.StartBoss();
         _warningImage.SetActive(true);
         StartCoroutine(WaitForSpawn());

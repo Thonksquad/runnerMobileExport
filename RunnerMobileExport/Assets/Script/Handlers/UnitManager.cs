@@ -68,7 +68,7 @@ public class UnitManager : MonoBehaviour
 
     public void SpawnHound()
     {
-        xRef = player.transform.position.x + mobSpawnDistance;
+        xRef = player.transform.position.x + 10;
         yRef = -6.5f;
 
         if (IsSafeToSpawn(new Vector2(xRef, yRef), 3 * DetectionRadius))
@@ -76,7 +76,7 @@ public class UnitManager : MonoBehaviour
             GameObject newHound = Instantiate(houndPrefab, new Vector3(xRef, yRef, 0), Quaternion.identity);
         } else
         {
-            Invoke(nameof(SpawnHound), 0.5f);
+            Invoke(nameof(SpawnHound), 0.25f);
         }
     }
 

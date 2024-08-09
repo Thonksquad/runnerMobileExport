@@ -4,16 +4,24 @@ using UnityEngine;
 
 public class Hound : MonoBehaviour
 {
+
+    [SerializeField] private float _speed = 0.04f;
+
     private Player player;
 
     private void Awake()
     {
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        player = Player.Instance;
     }
 
     private void Start()
     {
-        Invoke("DoDisable", 10.0f);
+        Invoke("DoDisable", 20.0f);
+    } 
+
+    private void Update()
+    {
+        transform.position = new Vector3(transform.position.x - _speed, transform.position.y, transform.position.z);
     }
 
     private void OnBecameVisible()

@@ -1,9 +1,10 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
+using System.Collections.Generic; 
 using UnityEngine;
 using static WaitForTime;
 using Random = UnityEngine.Random;
+using Utilities.Cooldown;
 
 public class Boss1 : MonoBehaviour
 {
@@ -28,6 +29,14 @@ public class Boss1 : MonoBehaviour
     [SerializeField] internal List<EyeEntries> _Eyes;
     [Serializable] public class EyeEntries { public EyeTypesEnum eyeType; public Sprite pupilSprite; public float reloadTime; public Color eyeColor;}
 
+    private Cooldown _cd1 = new(0.5f);
+    private Cooldown _cd2;
+    private Cooldown _cd3 = new(1.75f);
+    private Cooldown _cd4;
+    private Cooldown _cd5 = new(1.5f);
+    private Cooldown _cd6;
+    private Cooldown _cd7 = new(3f);
+
     public enum EyeTypesEnum
     {
         NORMAL,
@@ -42,12 +51,34 @@ public class Boss1 : MonoBehaviour
     }
 
     private void OnEnable()
-    {
+    { 
+        _cd2 = new(Random.Range(eyeOpenDelayMINMAX.x, eyeOpenDelayMINMAX.y)); 
+        _cd4 = new(Random.Range(eyeOpenDelayMINMAX.x, eyeOpenDelayMINMAX.y));
+        _cd6 = new(Random.Range(eyeOpenDelayMINMAX.x, eyeOpenDelayMINMAX.y));
+        _cd1.Completed += Phase1_ChooseEyeToOpenHandler;
+        _cd2.Completed += Cd2;
+        _cd3.Completed += Phase2_ChooseEyeToOpenHandler;
+        _cd4.Completed += Cd4;
+        _cd5.Completed += Phase3_ChooseEyeToOpenHandler;
+        _cd6.Completed += Cd6;
+        _cd7.Completed += Cd7;
         BossHandler.bossCurrentHP = health;
         initialLocalPosition = transform.localPosition;
         transform.localPosition = new Vector3(initialLocalPosition.x + 30, initialLocalPosition.y , initialLocalPosition.z );
         StartCoroutine(Do_Intro());
+    } 
+
+    private void OnDisable()
+    {
+        _cd1.Completed -= Phase1_ChooseEyeToOpenHandler;
+        _cd2.Completed -= Cd2;
+        _cd3.Completed -= Phase2_ChooseEyeToOpenHandler;
+        _cd4.Completed -= Cd4;
+        _cd5.Completed -= Phase3_ChooseEyeToOpenHandler;
+        _cd6.Completed -= Cd6;
+        _cd7.Completed -= Cd7;
     }
+
 
 
     private IEnumerator Do_Intro()
@@ -67,24 +98,22 @@ public class Boss1 : MonoBehaviour
         switch (phase)
         {
             case 1:
-                phaseBehaviorCoroutine = Phase1_ChooseEyeToOpen();
-                StartCoroutine(phaseBehaviorCoroutine); // startBoss
+                _cd1.Start();
                 break;
             case 2:
-                phaseBehaviorCoroutine = Phase2_ChooseEyeToOpen();
-                StartCoroutine(phaseBehaviorCoroutine); // startBoss
+                _cd3.Start();
                 break;
         }
+    } 
+
+    private void Phase1_ChooseEyeToOpenHandler()
+    {
+        StartCoroutine(Phase1_ChooseEyeToOpen()); 
     }
 
     private IEnumerator Phase1_ChooseEyeToOpen()
-    {
-        float newT = Time.time;
-        while (Time.time < newT + 0.5f)    // REPLACE WITH NEW TIMER SYSTEM
-            yield return null;
-
-        OpenRandomEye(0);
-
+    { 
+        OpenRandomEye(0); 
         while (BossHandler.bossCurrentHP > (float)BossHandler.bossMaxHP / 2)
         {
             while (_closedBossEyes.Count <= 0)
@@ -92,21 +121,7 @@ public class Boss1 : MonoBehaviour
                 yield return null;
             }
 
-            // yield return new WaitForSeconds(Random.Range(eyeOpenDelayMINMAX.x, eyeOpenDelayMINMAX.y));
-            float newT2 = Time.time;    // REPLACE WITH NEW TIMER SYSTEM
-            float newTimer = Random.Range(eyeOpenDelayMINMAX.x, eyeOpenDelayMINMAX.y);
-            while (Time.time < newT2 + newTimer)
-                yield return null;
-
-            int phase1EyeType;
-
-            if (Random.Range(0, 2) == 1)    //Spawn eye with either basic or 50% chance of tripple
-                phase1EyeType = 1;
-            else
-                phase1EyeType = 0;
-
-            if (BossHandler.bossCurrentHP > (float)BossHandler.bossMaxHP / 2)
-                OpenRandomEye(phase1EyeType);
+            _cd2.Start();
             yield return null;
         }
 
@@ -114,59 +129,73 @@ public class Boss1 : MonoBehaviour
         Do_Changephase(2);
     }
 
+    private void Cd2()
+    { 
+        int phase1EyeType;
+
+        if (Random.Range(0, 2) == 1)    //Spawn eye with either basic or 50% chance of tripple
+            phase1EyeType = 1;
+        else
+            phase1EyeType = 0;
+
+        if (BossHandler.bossCurrentHP > (float)BossHandler.bossMaxHP / 2)
+        {
+            OpenRandomEye(phase1EyeType);
+        }   
+    }
+
+
+    private void Phase2_ChooseEyeToOpenHandler()
+    {
+        StartCoroutine(Phase2_ChooseEyeToOpen());
+    }
+
     private IEnumerator Phase2_ChooseEyeToOpen()
     {
-        float newT = Time.time;    // REPLACE WITH NEW TIMER SYSTEM
-        float newTimer = 1.75f;
-        while (Time.time < newT + newTimer)
-            yield return null;
 
-        OpenRandomEye(Random.Range(0, 3));
-     //   OpenRandomEye(Random.Range(0, 3));
+        OpenRandomEye(Random.Range(0, 3)); 
         OpenRandomEye(2);
 
-        //  while (BossHandler.bossCurrentHP > (float)BossHandler.bossMaxHP * 0.15f)
+
         while (BossHandler.bossCurrentHP > (float)BossHandler.bossMaxHP * 0.25)
         {
             while (_closedBossEyes.Count <= 0)
             {
                 yield return null;
             }
-
-            //   yield return new WaitForSeconds(Random.Range(eyeOpenDelayMINMAX.x, eyeOpenDelayMINMAX.y));
-            float newT2 = Time.time;    // REPLACE WITH NEW TIMER SYSTEM
-            float newTimer2 = Random.Range(eyeOpenDelayMINMAX.x, eyeOpenDelayMINMAX.y);
-            while (Time.time < newT2 + newTimer2)
-                yield return null;
-            int phase2EyeType;
-
-            phase2EyeType = Random.Range(0, 3);
-            OpenRandomEye(phase2EyeType);
-
-            if (_closedBossEyes.Count == 3) // IF ALL EYES ARE CLOSED OPEN ANOTHER EYE
-            {
-                phase2EyeType = Random.Range(0, 3);
-                OpenRandomEye(phase2EyeType);
-            }
+            _cd4.Start(); 
 
             yield return null;
         }
 
         Do_Changephase(3);
     }
-    private IEnumerator Phase3_ChooseEyeToOpen()
-    {
-        float newT = Time.time;    // REPLACE WITH NEW TIMER SYSTEM
-        float newTimer = 1.5f;
-        while (Time.time < newT + newTimer)
-            yield return null;
 
+    private void Cd4()
+    { 
+        int phase2EyeType;
+
+        phase2EyeType = Random.Range(0, 3);
+        OpenRandomEye(phase2EyeType);
+
+        if (_closedBossEyes.Count == 3) // IF ALL EYES ARE CLOSED OPEN ANOTHER EYE
+        {
+            phase2EyeType = Random.Range(0, 3);
+            OpenRandomEye(phase2EyeType);
+        }
+    }
+
+    private void Phase3_ChooseEyeToOpenHandler()
+    {
+        StartCoroutine(Phase3_ChooseEyeToOpen());
+    }
+
+    private IEnumerator Phase3_ChooseEyeToOpen()
+    { 
         existingBossEyes[1].gameObject.SetActive(false);
         finalPhaseMeleeEye.SetActive(true);
-        OpenRandomEye(Random.Range(0, 3));
-        //   OpenRandomEye(Random.Range(0, 3));
+        OpenRandomEye(Random.Range(0, 3)); 
         OpenRandomEye(2);
-
         //  while (BossHandler.bossCurrentHP > (float)BossHandler.bossMaxHP * 0.15f)
         while (BossHandler.bossCurrentHP > 0)
         {
@@ -174,30 +203,31 @@ public class Boss1 : MonoBehaviour
             {
                 yield return null;
             }
-
-            //   yield return new WaitForSeconds(Random.Range(eyeOpenDelayMINMAX.x, eyeOpenDelayMINMAX.y));
-            float newT2 = Time.time;    // REPLACE WITH NEW TIMER SYSTEM
-            float newTimer2 = Random.Range(eyeOpenDelayMINMAX.x, eyeOpenDelayMINMAX.y);
-            while (Time.time < newT2 + newTimer2)
-                yield return null;
-            int phase2EyeType;
-
-            phase2EyeType = Random.Range(0, 3);
-            OpenRandomEye(phase2EyeType);
-
-            if (_closedBossEyes.Count == 3) // IF ALL EYES ARE CLOSED OPEN ANOTHER EYE
-            {
-                phase2EyeType = Random.Range(0, 3);
-                OpenRandomEye(phase2EyeType);
-            }
+            _cd6.Start();
+            
 
             yield return null;
         }
 
-        StartCoroutine(Do_Death());
+        Do_Death();
     }
 
-    private IEnumerator Do_Death()
+
+    private void Cd6()
+    {
+        int phase2EyeType;
+
+        phase2EyeType = Random.Range(0, 3);
+        OpenRandomEye(phase2EyeType);
+
+        if (_closedBossEyes.Count == 3) // IF ALL EYES ARE CLOSED OPEN ANOTHER EYE
+        {
+            phase2EyeType = Random.Range(0, 3);
+            OpenRandomEye(phase2EyeType);
+        }
+    }
+
+    private void Do_Death()
     {
         Vector3 origPos = transform.localPosition;
         finalPhaseMeleeEye.SetActive(false);
@@ -208,17 +238,25 @@ public class Boss1 : MonoBehaviour
 
         shakeScript.Do_shake(1.2f, 3.0f);
 
-        float newT2 = Time.time;    // REPLACE WITH NEW TIMER SYSTEM
-        float newTimer2 = 3;
-        while (Time.time < newT2 + newTimer2)
+        _cd7.Start();
+        StartCoroutine(DoExit()); 
+        transform.localPosition = origPos;
+    }
+    private IEnumerator DoExit()
+    {
+        bool x = _cd7.IsActive;
+        while (x)
         {
             transform.localPosition = transform.localPosition + Vector3.right * Time.deltaTime * 4;
+            x = _cd7.IsActive;
             yield return null;
-        }
+        } 
+    }
 
+    private void Cd7()
+    { 
         Do_reset();
         gameObject.SetActive(false);
-        transform.localPosition = origPos;
     }
 
     private void Do_reset()
@@ -240,14 +278,12 @@ public class Boss1 : MonoBehaviour
         if (phaseToChangeTo == 2)
         {
             shakeScript.Do_shake(0.55f, 1.0f);
-            phaseBehaviorCoroutine = Phase2_ChooseEyeToOpen();
-            StartCoroutine(phaseBehaviorCoroutine); // startBoss}
+            _cd3.Start();
         }
         else if (phaseToChangeTo == 3)
         {
             shakeScript.Do_shake(0.75f, 0.85f);
-            phaseBehaviorCoroutine = Phase3_ChooseEyeToOpen();
-            StartCoroutine(phaseBehaviorCoroutine); // startBoss}
+            _cd5.Start();
         }
     }
 

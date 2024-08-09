@@ -4026,8 +4026,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68a4b0718dbfe184fafaef27347372ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _bossSpawnWarningPosition: 100
-  _bossSpawnPosition: 200
+  _bossSpawnWarningPosition: 50
+  _bossSpawnPosition: 75
   _warningImage: {fileID: 223331362}
   bossToSpawn: 0
   spawnTimer: 5

@@ -46,4 +46,15 @@ public class B1HomingProjectile : MonoBehaviour
             yield return null;
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.TryGetComponent(out Player player))
+        {
+            player.TakeDamage(1);
+            Destroy(gameObject);
+        }
+    }
+
+
 }
