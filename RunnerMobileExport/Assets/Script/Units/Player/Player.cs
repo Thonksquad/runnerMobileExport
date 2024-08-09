@@ -41,6 +41,7 @@ public class Player : MonoBehaviour
     public bool canFart;
     private float fartTimer;
     public float fartCD;
+    private float FartAngle;
 
     private float _lockedTill;
     private AudioClip _currentState;
@@ -50,10 +51,7 @@ public class Player : MonoBehaviour
 
     [SerializeField] private GameObject gameTrackerScreen;
     [SerializeField] private float _WalkingDuration = 2f;
-
-    [SerializeField] private Transform _Koda;
-    [SerializeField] private Fart _FartPrefab;
-    public Coroutine fartRoutine;
+    [SerializeField] private ParticleSystem _fartSystem;
 
     private bool LandedThisFrame;
     [SerializeField] private PlayerAnimationHandler AnimationHandler;
@@ -139,7 +137,7 @@ public class Player : MonoBehaviour
                 fartTimer += Time.deltaTime;
                 if (fartTimer > fartCD)
                 {
-                    Instantiate(_FartPrefab, _Koda.position, Quaternion.identity);
+                    _fartSystem.Play();
                     canFart = false;
                     fartTimer = 0;
                 }
