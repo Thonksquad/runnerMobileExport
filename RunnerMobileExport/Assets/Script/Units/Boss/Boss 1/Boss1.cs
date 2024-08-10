@@ -114,7 +114,7 @@ public class Boss1 : MonoBehaviour
     private IEnumerator Phase1_ChooseEyeToOpen()
     { 
         OpenRandomEye(0); 
-        while (BossHandler.bossCurrentHP > (float)BossHandler.bossMaxHP / 2)
+        while (BossHandler.bossCurrentHP > (float)BossHandler.bossMaxHP * 0.75)
         {
             while (_closedBossEyes.Count <= 0)
             {
@@ -138,7 +138,7 @@ public class Boss1 : MonoBehaviour
         else
             phase1EyeType = 0;
 
-        if (BossHandler.bossCurrentHP > (float)BossHandler.bossMaxHP / 2)
+        if (BossHandler.bossCurrentHP > (float)BossHandler.bossMaxHP * 0.75)
         {
             OpenRandomEye(phase1EyeType);
         }   
@@ -157,7 +157,7 @@ public class Boss1 : MonoBehaviour
         OpenRandomEye(2);
 
 
-        while (BossHandler.bossCurrentHP > (float)BossHandler.bossMaxHP * 0.25)
+        while (BossHandler.bossCurrentHP > (float)BossHandler.bossMaxHP * 0.33)
         {
             while (_closedBossEyes.Count <= 0)
             {

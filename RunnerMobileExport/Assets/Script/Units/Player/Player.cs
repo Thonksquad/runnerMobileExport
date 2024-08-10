@@ -62,6 +62,8 @@ public class Player : MonoBehaviour
     private PlayerAnimationHandler AnimationHandler;
     public static Player Instance;
 
+    public static int bossHit;
+
     private void Awake()
     {
         Instance = this;
@@ -223,6 +225,11 @@ public class Player : MonoBehaviour
             StopAllCoroutines();
             gameOver = true;
         }
+    }
+
+    public void BossDamage()
+    {
+        bossHit++;
     }
 
     private IEnumerator Handle_UIReloadBar()

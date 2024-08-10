@@ -9,11 +9,14 @@ public class BossHandler : MonoBehaviour
     public static bool bossAlive;
     public static int bossCurrentHP = 100;
     public static int bossMaxHP = 100;
+    public static int bossCoins = 0;
     private GameObject currentBoss;
 
     [SerializeField] private float _bossSpawnWarningPosition = 400f;
     [SerializeField] private float _bossSpawnPosition = 500f;
     [SerializeField] private GameObject _warningImage;
+    [SerializeField] private GameObject _killScreen;
+    [SerializeField] private float _killScreenTime = 5f;
 
     [Header("Spawner Stats")]
     [SerializeField] BossNames bossToSpawn;
@@ -100,8 +103,35 @@ public class BossHandler : MonoBehaviour
         while (currentBoss.activeInHierarchy)
             yield return null;
 
+        StartCoroutine(BossKillScreen());
         EndBossEncounter();
+    }
+
+    private IEnumerator BossKillScreen()
+    {
+        BossCoinCalculator(); 
+        _killScreen.SetActive(true);
+        yield return new WaitForSeconds(_killScreenTime);
+        _killScreen.SetActive(false);
         SpawnCooldown.Instance.EndBoss();
+    }
+
+    private void BossCoinCalculator()
+    {
+        int hits = Player.bossHit;
+        if (hits <= 1)
+        {
+            bossCoins = 5;
+        }
+        else if (hits <= 4)
+        {
+            bossCoins = 3;
+        }
+        else
+        {
+            bossCoins = 1;
+        }
+        GameManager.Instance.bossCoinUI.text = bossCoins.ToString();
     }
 
     internal void EndBossEncounter()

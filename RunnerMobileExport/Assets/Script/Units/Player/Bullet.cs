@@ -30,8 +30,7 @@ public class Bullet : MonoBehaviour
     }
 
     public void ReturnToPool()
-    {
-        Debug.Log("hit eye");
+    { 
         gameObject.SetActive(false);
     }
 

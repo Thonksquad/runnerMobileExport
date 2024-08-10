@@ -51,7 +51,7 @@ public class B1HomingProjectile : MonoBehaviour
     {
         if (collision.gameObject.TryGetComponent(out Player player))
         {
-            player.TakeDamage(1);
+            player.BossDamage();
             Destroy(gameObject);
         }
     }

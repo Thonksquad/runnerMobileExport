@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI EndcoinsUI;
     public TextMeshProUGUI distanceUI;
     public TextMeshProUGUI coinUI;
+    public TextMeshProUGUI bossCoinUI;
 
     public static float gameLength;
     public static float enemiesKilled;
