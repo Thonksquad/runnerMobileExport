@@ -1,6 +1,8 @@
 using System.Collections;
-using System.Collections.Generic;
+using System.Collections.Generic; 
 using UnityEngine;
+using Utilities.Cooldown;
+
 
 public class Boss1MeleeEye : MonoBehaviour
 {
@@ -10,7 +12,9 @@ public class Boss1MeleeEye : MonoBehaviour
     private Vector3 origPosition;
     private int targetPos;
     private LineRenderer trailLine;
-    private int previousTarget = 99;
+    private int previousTarget = 99; 
+
+    private Cooldown _cd1 = new(0.5f);
 
     private void Awake()
     {
@@ -19,9 +23,16 @@ public class Boss1MeleeEye : MonoBehaviour
 
     private void OnEnable()
     {
+        _cd1.Completed += EyeCooldown;
         StopAllCoroutines();
         StartCoroutine(LookingMode());
+    } 
+    private void OnDisable()
+    {
+        _cd1.Completed -= EyeCooldown;
     }
+
+
 
     private void FixedUpdate()
     {
@@ -29,19 +40,7 @@ public class Boss1MeleeEye : MonoBehaviour
         trailLine.SetPosition(1, new Vector3(transform.position.x, transform.position.y, -1));
     }
 
-    /*private IEnumerator Intro()
-    {
-        float newT = Time.time;    // REPLACE WITH NEW TIMER SYSTEM
-        float newTimer = 0.5f;
-        while (Time.time < newT + newTimer)
-        {
-            transform.localPosition = transform.localPosition += Vector3.left * Time.deltaTime;
-            yield return null;
-        }
 
-        yield return null;
-        StartCoroutine(LookingMode());
-    }*/
 
     private IEnumerator LookingMode()
     {
@@ -76,9 +75,8 @@ public class Boss1MeleeEye : MonoBehaviour
         origPosition = transform.localPosition;
        // Vector3 targetPosition = targetPosList[Random.Range(0,targetPosList.Count-1)].localPosition;
 
-        float newT = Time.time;    // REPLACE WITH NEW TIMER SYSTEM
-        float newTimer = 0.5f;
-        while (Time.time < newT + newTimer)
+        _cd1.Start();
+        while (_cd1.IsActive)
         {
             yield return null;
         }
@@ -86,7 +84,7 @@ public class Boss1MeleeEye : MonoBehaviour
         while (Vector3.Distance (transform.localPosition, targetPosList[targetPos].localPosition) > 0.065f)
         {
             transform.localPosition = Vector3.Lerp(transform.localPosition, targetPosList[targetPos].localPosition, Time.deltaTime * 2.2f);
-        //    Debug.Log(Vector3.Distance(transform.position, targetPos));
+
             yield return null;
         }
         transform.localPosition = targetPosList[targetPos].localPosition;   
@@ -101,9 +99,20 @@ public class Boss1MeleeEye : MonoBehaviour
         StartCoroutine(LookingMode());
     }
 
+    private void EyeCooldown()
+    {
+
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Bullet")
             collision.gameObject.SetActive(false);
+
+        if (collision.gameObject.TryGetComponent(out Player player))
+        {
+            Debug.Log("leaper boss damage");
+            player.BossDamage();
+        }
     }
 }

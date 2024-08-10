@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityServiceLocator;
 
 public class Hound : MonoBehaviour
 {
@@ -11,13 +10,13 @@ public class Hound : MonoBehaviour
 
     private void Awake()
     {
-        player = Player.Instance;
+        ServiceLocator.ForSceneOf(this).Get(out player); 
     }
 
     private void Start()
     {
-        Invoke("DoDisable", 20.0f);
-    } 
+        Destroy(gameObject, 10);
+    }
 
     private void Update()
     {
@@ -28,13 +27,8 @@ public class Hound : MonoBehaviour
     {
         if (player.onHound)
         {
-            gameObject.SetActive(false);
+            Destroy(gameObject);
         }
-    }
-
-    private void DoDisable()
-    {
-        gameObject.SetActive(false);
     }
 
 
@@ -46,8 +40,7 @@ public class Hound : MonoBehaviour
             {
                 player.onHound = true;
                 player.hp = 2;
-                gameObject.SetActive(false);
-                ActionSystem.onPlayerHoundPickup();
+                Destroy(gameObject);
             }
         }
     }

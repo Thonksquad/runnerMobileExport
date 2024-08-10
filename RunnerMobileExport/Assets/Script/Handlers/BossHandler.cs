@@ -1,5 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
+using UnityServiceLocator;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -28,6 +28,8 @@ public class BossHandler : MonoBehaviour
     [SerializeField] private TextMeshProUGUI bossHPtext;
     [SerializeField] private Image bossHPBar;
 
+    private Player player;
+
     private enum BossNames
     {
         WallOfFlesh
@@ -35,6 +37,7 @@ public class BossHandler : MonoBehaviour
 
     private void Start()
     {
+        ServiceLocator.ForSceneOf(this).Get(out player);
         bossAlive = false;
         StartCoroutine(WaitForSpawnWarning());
     }
@@ -53,7 +56,7 @@ public class BossHandler : MonoBehaviour
         }
 
 
-        if (!Player.Instance.onHound)
+        if (!player.onHound)
         {
             UnitManager.Instance.SpawnHound();
         }

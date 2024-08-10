@@ -1,37 +1,46 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityServiceLocator;
 
-public class Bullet : MonoBehaviour
+
+public class Bullet : PoolMember
 {
+
     private Vector3 mousepos;
     private Camera mainCam;
     private Rigidbody2D rb;
-    public float force;
+    public float force; 
 
-    void OnEnable()
+    public Transform spawnLocation; 
+    private Player player;
+
+
+    private void Start()
     {
+        ServiceLocator.ForSceneOf(this).Get(out player);
+        spawnLocation = player.bulletTransform;
+    }
+
+    public override void OnEnable()
+    {
+        ServiceLocator.ForSceneOf(this).Get(out player);
+        spawnLocation = player.bulletTransform;
+        transform.position = spawnLocation.position;
         mainCam = Camera.main;
         rb = GetComponent<Rigidbody2D>();
         mousepos = mainCam.ScreenToWorldPoint(Input.mousePosition);
         Vector3 bulletDirection = mousepos - transform.position;
         Vector3 bulletRotation = transform.position - mousepos;
         rb.velocity = new Vector3(90, 0).normalized * (force + CameraManager.Instance.CamSpeed);
-
-        //Omnidirection
-        //rb.velocity = new Vector3(bulletDirection.x, bulletDirection.y).normalized * force;
-        //float rot = Mathf.Atan2(bulletRotation.y, bulletRotation.x) * Mathf.Rad2Deg;
-        //transform.rotation = Quaternion.Euler(0, 0, rot+90);
     }
 
+
+    /*
     void OnBecameInvisible()
     {
-        gameObject.SetActive(false);
+        //Destroy(gameObject);
+        ReturnToPool();
     }
+    */
 
-    public void ReturnToPool()
-    { 
-        gameObject.SetActive(false);
-    }
 
 }

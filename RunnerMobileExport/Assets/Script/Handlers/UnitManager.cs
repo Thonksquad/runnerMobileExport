@@ -1,4 +1,4 @@
-using System.Collections;
+using UnityServiceLocator;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -61,9 +61,8 @@ public class UnitManager : MonoBehaviour
     }
 
     private void Start()
-    {
-        player = Player.Instance;
-        //ServiceLocator.ForSceneOf(this).Get(out player); 
+    { 
+        ServiceLocator.ForSceneOf(this).Get(out player); 
     }
 
     public void SpawnHound()

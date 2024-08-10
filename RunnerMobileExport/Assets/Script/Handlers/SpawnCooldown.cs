@@ -6,8 +6,7 @@ public class SpawnCooldown : MonoBehaviour
     [SerializeField] private float _SpawnDelay = 0.75f;
     [SerializeField] private float _startValue = 1f;
     [SerializeField] private float _endValue = 3f;
-    [SerializeField] private float _modifier = 0.1f;
-    [SerializeField] private float _bossPosition = 500f;
+    [SerializeField] private float _modifier = 0.1f; 
 
     private float _currentValue;
     private int _roundedValue;

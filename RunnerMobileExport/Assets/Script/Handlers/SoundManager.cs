@@ -1,67 +1,89 @@
-using System.Linq;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-namespace Scripts.SoundEffects
+public class SoundManager : SingletonPersistent<SoundManager>
 {
-    public class AudioSourcePool : MonoBehaviour
+    [SerializeField] private AudioSource _musicSource, _effectSource;
+    //[SerializeField] private Button _musicButton, _effectsButton;
+    //private bool _toggleMusic, _toggleEffects;
+
+    /**
+ private void Awake()
+ {
+     if (Instance == null)
+     {
+         Instance = this;
+         DontDestroyOnLoad(gameObject);
+     } else Destroy(gameObject);
+
+     //InitButtons();
+ }
+
+
+ private void InitButtons()
+ {
+     _toggleMusic = true;
+     _toggleEffects = true;
+
+     ColorBlock colors = _musicButton.colors;
+     colors.normalColor = Color.green;
+     _musicButton.colors = colors;
+
+     colors = _effectsButton.colors;
+     colors.normalColor = Color.green;
+     _effectsButton.colors = colors;
+ }
+
+ public void ToggleMusic()
+ {
+     _toggleMusic = !_toggleMusic;
+     _musicSource.mute = !_musicSource.mute;
+     ColorBlock colors = _musicButton.colors;
+     colors.normalColor = _toggleMusic ? Color.green : Color.red;
+     _musicButton.colors = colors;
+ }
+
+ public void ToggleEffects()
+ {
+     _effectSource.mute = !_effectSource.mute;
+     _toggleEffects = !_toggleEffects;
+
+     ColorBlock colors = _effectsButton.colors;
+     colors.normalColor = _toggleEffects ? Color.green : Color.red;
+     _effectsButton.colors = colors;
+ }
+ **/
+
+    public void PlaySound(AudioClip clip)
     {
-        [SerializeField] private float defaultVolume;
-        [SerializeField] private bool pauseable;
-        [SerializeField, Range(2, 8)] private int poolSize;
+        _effectSource.PlayOneShot(clip);
+    }
 
-        private AudioSource[] pool;
+    public void PlayMusic(AudioClip clip)
+    {
+        _musicSource.clip = clip;
+        _musicSource.Play();
+    }
 
-        private void Awake()
-        {
-            pool = new AudioSource[poolSize];
-            for (int i = 0; i < poolSize; i++)
-            {
-                var source = gameObject.AddComponent<AudioSource>();
-                source.playOnAwake = false;
-                source.priority = 0;
-                pool[i] = source;
-            }
+    public void TurnMusicOn()
+    {
+        _musicSource.mute = false;
+    }
 
-            OnVolumeChanged(defaultVolume);
+    public void ToggleMusic()
+    {
+        _musicSource.mute = !_musicSource.mute;
+    }
 
-            // Subscribe OnVolumeChanged and OnPauseTriggered to axternal events that handles volume change and pausing
+    public void ToggleSound()
+    {
+        _effectSource.mute = !_effectSource.mute;
+    }
 
-        }
-
-        public void Play(AudioClip clip, float pitch = 1)
-        {
-            var source = pool.FirstOrDefault(audioSource => !audioSource.isPlaying);
-            if (source == null)
-            {
-                source = pool[0];
-                Debug.LogWarning("Pool does not have enough audio sources to satify the requests");
-            }
-            source.clip = clip;
-            source.pitch = pitch;
-            source.Play();
-        }
-
-        private void OnVolumeChanged(float volume)
-        {
-            foreach (AudioSource source in pool) source.volume = volume;
-        }
-
-
-        private void OnPauseTriggered(bool isPaused)
-        {
-            if (!pauseable) return;
-            foreach (AudioSource source in pool)
-            {
-                if (isPaused) source.Pause();
-                else source.UnPause();
-            }
-        }
-
-        private void OnDestroy()
-        {
-            // Remember to unsubscribe from events you subscribed in Awake()
-            // SettingsMenu.OnSFXVolumeChanged -= OnVolumeChanged;
-            // PauseTrigger.OnPauseTriggered -= OnPauseTriggered;
-        }
+    public void ChangeMasterVolume(float val)
+    {
+        AudioListener.volume = val;
     }
 }

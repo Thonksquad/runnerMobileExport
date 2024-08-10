@@ -1,7 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
+using System.Collections; 
 using UnityEngine;
 using static Boss1;
+using Utilities.Cooldown;
+using System.Collections.Generic;
+using UnityServiceLocator;
+
 
 public class BossEye : MonoBehaviour
 {
@@ -14,19 +17,51 @@ public class BossEye : MonoBehaviour
     private EyeEntries thisEyeEntry;
     private SpriteRenderer eyeRenderer;
     private LineRenderer laserLineRenderer;
+    private EdgeCollider2D edgeCollider2D;
+
     private IEnumerator shootCoroutineReference;
     private Boss1 bossScrReference => transform.parent.GetComponent<Boss1>();
+
+
+    private Cooldown _cd1; 
+    private Cooldown _cd2 = new(0.4f);
+    private Cooldown _cd3 = new(0.35f);
+
+    private Player _player;
+    private Vector3 _playerTarget;
+
 
     private void Awake()
     {
         eyeRenderer = GetComponent<SpriteRenderer>();
         laserLineRenderer = GetComponent<LineRenderer>();
+        edgeCollider2D = GetComponent<EdgeCollider2D>();
     }
 
     private void Start()
     {
+        ServiceLocator.ForSceneOf(this).Get(out _player);
         DoEyeClose(false);
     }
+
+
+    private void SetEdgeCollider()
+    {
+        List<Vector2> edges = new List<Vector2>();
+        //edges.Add(new Vector2(transform.position.x, transform.position.y));
+        //edges.Add(new Vector2(-_playerTarget.x , _playerTarget.y));
+
+        for (int i = 0; i < laserLineRenderer.positionCount; i++)
+        {
+            Vector3 lineRendererPoint = laserLineRenderer.GetPosition(i);
+            edges.Add(new Vector2(lineRendererPoint.x, lineRendererPoint.y));
+        }
+
+        edgeCollider2D.SetPoints( edges );
+    }
+
+
+
 
     internal void DoEyeClose(bool doDamage)
     {
@@ -69,11 +104,11 @@ public class BossEye : MonoBehaviour
 
     private IEnumerator Handle_Shooting()
     {
+        _cd1 = new(thisEyeEntry.reloadTime);
         while (canBeHit)
-        {
-            float newT2 = Time.time;    // REPLACE WITH NEW TIMER SYSTEM
-            float newTimer = thisEyeEntry.reloadTime;
-            while (Time.time < newT2 + newTimer)
+        { 
+            _cd1.Start();
+            while (_cd1.IsActive)
                 yield return null;
             //  yield return new WaitForSeconds(thisEyeEntry.reloadTime);   // RELOAD RATE / basic will reload 1x slower 
             StartCoroutine("DoShoot_" + thisEyeEntry.eyeType.ToString());      // Determine what type of eye this is and do its shooting pattern
@@ -99,10 +134,10 @@ public class BossEye : MonoBehaviour
 
         pupilPivotScript.doFollow = false;
         canBeHit = false;
+        _playerTarget = _player.transform.position;
 
-        float newT = Time.time;    // REPLACE WITH NEW TIMER SYSTEM
-        float newTimer2 = 0.4f;
-        while (Time.time < newT + newTimer2)
+        _cd2.Start();
+        while (_cd2.IsActive)
             yield return null;
 
 
@@ -113,10 +148,12 @@ public class BossEye : MonoBehaviour
             yield return null;
         }
 
-        float newT2 = Time.time;    // REPLACE WITH NEW TIMER SYSTEM
-        float newTimer = 0.35f;
-        while (Time.time < newT2 + newTimer)
+        SetEdgeCollider();
+        edgeCollider2D.enabled = true;
+        _cd3.Start();
+        while ( _cd3.IsActive)
             yield return null;
+        edgeCollider2D.enabled = false;
 
         while (laserLineRenderer.startWidth > origSize)
         {
@@ -174,5 +211,12 @@ public class BossEye : MonoBehaviour
                 StartCoroutine(EyeHit());
             }
         }
+
+        if (collision.gameObject.GetComponent<Player>() != null)
+        {
+            Debug.Log("laser hit player");
+            collision.gameObject.GetComponent<Player>().BossDamage();
+        }
+
     }
 }

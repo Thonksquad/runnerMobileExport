@@ -1,20 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.InputSystem;
-using UnityEngine.Events;
-using System;
-using UnityEngine.UI;
+using System.Collections; 
+using UnityEngine; 
+using UnityEngine.InputSystem; 
+using UnityServiceLocator;
 
 public class Player : MonoBehaviour
 {
     private int LayerPlayer;
     private int LayerEnemy;
     private Rigidbody2D body;
-    private ObjectPool bulletPool = new ObjectPool();
     private ObjectPool fartPool = new ObjectPool();
-    private ObjectPool houndBulletPool = new ObjectPool();
     private Transform _Koda;
 
     public int hp;
@@ -30,6 +24,9 @@ public class Player : MonoBehaviour
 
     public InputAction fly;
     public InputAction fire;
+
+    [SerializeField] private SpawnPool _bulletPool;
+    [SerializeField] private SpawnPool _houndBulletPool;
 
     public GameObject bulletPrefab;
     public GameObject houndbulletPrefab;
@@ -66,7 +63,8 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        Instance = this;
+        ServiceLocator.ForSceneOf(this).Register<Player>(this); // Scene Scope
+
         body = GetComponent<Rigidbody2D>();
         AnimationHandler = GetComponent<PlayerAnimationHandler>();
         _Koda = gameObject.transform.Find("koda");
@@ -99,10 +97,8 @@ public class Player : MonoBehaviour
         hp = maxHP;
         body = GetComponent<Rigidbody2D>();
         myAnim = GetComponent<Animator>();
-        LandedThisFrame = AnimationHandler.IsGrounded();
-        bulletPool.CreateObjectPool(bulletPrefab, 5);
-        fartPool.CreateObjectPool(_FartPrefab, 2);
-        houndBulletPool.CreateObjectPool(houndbulletPrefab, 6);
+        LandedThisFrame = AnimationHandler.IsGrounded(); 
+        fartPool.CreateObjectPool(_FartPrefab, 2); 
     }
 
     private void OnFire(InputAction.CallbackContext ctx)
@@ -119,8 +115,7 @@ public class Player : MonoBehaviour
                 Invoke(nameof(HoundFire), .2f);
             } else
             {
-                //Instantiate(bulletPrefab, bulletTransform.position, Quaternion.identity);
-                bulletPool.DoSpawn(bulletTransform.position);
+                _bulletPool.Spawner(new Vector2(bulletTransform.position.x, bulletTransform.position.y));
             }
 
             StartCoroutine(Handle_UIReloadBar());
@@ -129,7 +124,7 @@ public class Player : MonoBehaviour
 
     private void HoundFire()
     {
-        houndBulletPool.DoSpawn(bulletTransform.position);
+        _houndBulletPool.Spawner(new Vector2(bulletTransform.position.x, bulletTransform.position.y));
     }
 
     void Update()
