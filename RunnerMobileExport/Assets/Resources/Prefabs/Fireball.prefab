@@ -227,7 +227,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06ceb29883b45444d884f925119c1565, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkSpeed: 12
+  walkSpeed: 200
   fireballSound: {fileID: 8300000, guid: e4572f9e8cb61b84b8f6d4ae46fb0181, type: 3}
   damage: 1
 --- !u!114 &1058127538860945082
@@ -242,12 +242,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12d094331a7452e4cac57387ef554b30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _poolMemberType: 0
-  _enemyDestroyTimer: 10
-  _minSpawnX: 45
-  _maxSpawnX: 55
-  _minSpawnY: -6
-  _maxSpawnY: 6
 --- !u!61 &-8845935600874142972
 BoxCollider2D:
   m_ObjectHideFlags: 0

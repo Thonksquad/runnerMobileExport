@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Fireball : MonoBehaviour
 {
-    [SerializeField] float walkSpeed = 40f;
+    [SerializeField] float walkSpeed = 200f; // Standardize this to others
     [SerializeField] private AudioClip fireballSound;
     Rigidbody2D myRigidbody;
     public int damage = 1;
