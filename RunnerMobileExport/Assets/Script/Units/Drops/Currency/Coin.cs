@@ -37,11 +37,7 @@ public class Coin : MonoBehaviour
         }
         else
         {
-            transform.position = new Vector3(transform.position.x - _speed, transform.position.y, transform.position.z);
-            if (transform.position.y < -6f) 
-            {
-                transform.position = new Vector3(transform.position.x - _speed, -6f, transform.position.z);
-            }
+            transform.position = new Vector3(transform.position.x - _speed * Time.deltaTime, transform.position.y, transform.position.z);
         }
 
     }
@@ -49,6 +45,7 @@ public class Coin : MonoBehaviour
     public void OnEnable()
     {
         ServiceLocator.ForSceneOf(this).Get(out player);
+        PhysicsCollider.enabled = true;
         Vector2 forceDirection = new Vector2(Random.Range(0, .001f), Random.Range(.001f, .003f)).normalized;
         gameObject.GetComponent<Rigidbody2D>().AddForce(.1f * forceDirection, ForceMode2D.Impulse);
     }

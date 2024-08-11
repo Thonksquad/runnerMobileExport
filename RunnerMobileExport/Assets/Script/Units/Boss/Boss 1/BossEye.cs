@@ -25,7 +25,7 @@ public class BossEye : MonoBehaviour
 
     private Cooldown _cd1; 
     private Cooldown _cd2 = new(0.4f);
-    private Cooldown _cd3 = new(0.35f);
+    private Cooldown _cd3 = new(0.2f);
 
     private Player _player;
     private Vector3 _playerTarget;
@@ -136,8 +136,8 @@ public class BossEye : MonoBehaviour
 
         while (laserLineRenderer.startWidth < 1.5f)
         {
-            laserLineRenderer.startWidth += 0.01f;
-            laserLineRenderer.endWidth += 0.01f;
+            laserLineRenderer.startWidth += 0.02f;
+            laserLineRenderer.endWidth += 0.02f;
             yield return null;
         }
 
@@ -206,10 +206,22 @@ public class BossEye : MonoBehaviour
         }
 
         if (collision.gameObject.GetComponent<Player>() != null)
-        {
-            Debug.Log("laser hit player");
-            collision.gameObject.GetComponent<Player>().BossDamage();
+        { 
+            collision.gameObject.GetComponent<Player>().EnterBossLaser();
         }
 
     }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    { 
+        if (collision.gameObject.GetComponent<Player>() != null)
+        {
+            collision.gameObject.GetComponent<Player>().ExitBossLaser();
+        }
+
+    }
+
+
+
+
 }

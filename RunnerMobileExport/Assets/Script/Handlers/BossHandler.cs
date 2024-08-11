@@ -12,8 +12,9 @@ public class BossHandler : MonoBehaviour
     public static int bossCoins = 0;
     private GameObject currentBoss;
 
-    [SerializeField] private float _bossSpawnWarningPosition = 400f;
-    [SerializeField] private float _bossSpawnPosition = 500f;
+    [SerializeField] private float _stopEnemySpawns = 1300f;
+    [SerializeField] private float _bossSpawnWarningPosition = 1400f;
+    [SerializeField] private float _bossSpawnPosition = 1500f;
     [SerializeField] private GameObject _warningImage;
     [SerializeField] private GameObject _killScreen;
     [SerializeField] private float _killScreenTime = 5f;
@@ -39,7 +40,26 @@ public class BossHandler : MonoBehaviour
     {
         ServiceLocator.ForSceneOf(this).Get(out player);
         bossAlive = false;
-        StartCoroutine(WaitForSpawnWarning());
+        StartCoroutine(WaitForStopEnemySpawn());
+        StartCoroutine(WaitForSpawnWarning()); 
+        StartCoroutine(WaitForSpawn());
+    }
+
+
+    private IEnumerator WaitForStopEnemySpawn()
+    {
+        bool wait = true;
+        while (wait)
+        {
+            if (GameManager.distance > _stopEnemySpawns)
+            {
+                wait = false;
+            }
+            yield return new WaitForSeconds(1f);
+        }
+         
+        SpawnCooldown.Instance.StartBoss(); 
+        
     }
 
 
@@ -52,7 +72,7 @@ public class BossHandler : MonoBehaviour
             {
                 wait = false;
             }
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(1f);
         }
 
 
@@ -60,9 +80,8 @@ public class BossHandler : MonoBehaviour
         {
             UnitManager.Instance.SpawnHound();
         }
-        SpawnCooldown.Instance.StartBoss();
+
         _warningImage.SetActive(true);
-        StartCoroutine(WaitForSpawn());
     }
 
     private IEnumerator WaitForSpawn()
@@ -74,7 +93,7 @@ public class BossHandler : MonoBehaviour
             {
                 wait = false;
             }
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(1f);
         }
         _warningImage.SetActive(false);
 

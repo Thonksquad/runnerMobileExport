@@ -67,7 +67,7 @@ public class UnitManager : MonoBehaviour
 
     public void SpawnHound()
     {
-        xRef = player.transform.position.x + 10;
+        xRef = player.transform.position.x + 50;
         yRef = -6.5f;
 
         if (IsSafeToSpawn(new Vector2(xRef, yRef), 3 * DetectionRadius))

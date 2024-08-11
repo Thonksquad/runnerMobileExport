@@ -111,7 +111,6 @@ public class Boss1MeleeEye : MonoBehaviour
 
         if (collision.gameObject.TryGetComponent(out Player player))
         {
-            Debug.Log("leaper boss damage");
             player.BossDamage();
         }
     }

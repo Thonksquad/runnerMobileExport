@@ -2,6 +2,8 @@ using System.Collections;
 using UnityEngine; 
 using UnityEngine.InputSystem; 
 using UnityServiceLocator;
+using TMPro;
+
 
 public class Player : MonoBehaviour
 {
@@ -56,9 +58,11 @@ public class Player : MonoBehaviour
     public Coroutine fartRoutine;
 
     private bool LandedThisFrame;
-    private PlayerAnimationHandler AnimationHandler;
-    public static Player Instance;
+    private PlayerAnimationHandler AnimationHandler; 
 
+    [SerializeField] private TextMeshProUGUI _bossHitsText;
+    [SerializeField] private Color _normalColor;
+    [SerializeField] private Color _laserColor;
     public static int bossHit;
 
     private void Awake()
@@ -224,7 +228,11 @@ public class Player : MonoBehaviour
 
     public void BossDamage()
     {
-        bossHit++;
+        if (hp >= 1)
+        {
+            onHound = false; 
+        }
+        BossHit();
     }
 
     private IEnumerator Handle_UIReloadBar()
@@ -242,5 +250,23 @@ public class Player : MonoBehaviour
         reloadBar.enabled = false;
     }
 
-  //  private IEnumerator HandleCursor
+
+    public void EnterBossLaser()
+    {
+        BossHit(); 
+        gameObject.GetComponent<SpriteRenderer>().material.color = _laserColor;
+    }
+
+    public void ExitBossLaser() 
+    {
+        gameObject.GetComponent<SpriteRenderer>().material.color = _normalColor; 
+    }
+
+    private void BossHit()
+    {
+        bossHit++;
+        _bossHitsText.text = bossHit.ToString();
+    }
+
+
 }
