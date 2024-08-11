@@ -47,17 +47,10 @@ public class BossEye : MonoBehaviour
 
     private void SetEdgeCollider()
     {
-        List<Vector2> edges = new List<Vector2>();
-        //edges.Add(new Vector2(transform.position.x, transform.position.y));
-        //edges.Add(new Vector2(-_playerTarget.x , _playerTarget.y));
-
-        for (int i = 0; i < laserLineRenderer.positionCount; i++)
-        {
-            Vector3 lineRendererPoint = laserLineRenderer.GetPosition(i);
-            edges.Add(new Vector2(lineRendererPoint.x, lineRendererPoint.y));
-        }
-
-        edgeCollider2D.SetPoints( edges );
+        edgeCollider2D.points = new Vector2[] {
+            transform.position - transform.position,
+            _playerTarget - transform.position
+        };
     }
 
 
