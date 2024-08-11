@@ -2359,7 +2359,7 @@ GameObject:
   - component: {fileID: 600738286}
   - component: {fileID: 600738285}
   m_Layer: 0
-  m_Name: MapManager
+  m_Name: MapManagerOld
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
