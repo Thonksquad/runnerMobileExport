@@ -35,18 +35,16 @@ public class UnitManager : MonoBehaviour
     [HideInInspector] public Vector2 enemySpawnPoint;
     [SerializeField] private float _minSpawnX = 45f;
     [SerializeField] private float _maxSpawnX = 60f;
-    [SerializeField] private float _minSpawnY = -6f;
-    [SerializeField] private float _maxSpawnY = 6f;
+
 
 
     [SerializeField] private List<BaseEnemy> _units;
-    private GameObject enemy;
 
-    private float Respawntimer => 1+(0.01f*CameraManager.Instance.CamSpeed);
-    private float mobSpawnDistance => 50f + (0.1f*CameraManager.Instance.CamSpeed);
-    [SerializeField] private float mobspawnInterval = 7f;
-    [SerializeField] private float coinspawnInterval = 30f;
-    [SerializeField] private float mobAutoDestroy = 10f;
+
+    private float Respawntimer => 1+(0.01f * player.speed);
+    private float mobSpawnDistance => 50f + (0.1f* player.speed);
+
+
 
     [SerializeField] private float xRef;
     [SerializeField] private float yRef;
@@ -62,7 +60,7 @@ public class UnitManager : MonoBehaviour
 
     private void Start()
     {
-        ServiceLocator.ForSceneOf(this).Get(out player); 
+        ServiceLocator.ForSceneOf(this).Get(out player);
     }
 
     public void SpawnHound()

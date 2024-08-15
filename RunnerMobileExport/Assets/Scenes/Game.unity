@@ -914,6 +914,7 @@ MonoBehaviour:
   _WalkingDuration: 2
   _fartSystem: {fileID: 2093918257}
   AnimationHandler: {fileID: 51849616}
+  speed: 8
 --- !u!95 &51849614
 Animator:
   serializedVersion: 5
@@ -1027,7 +1028,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   platformLayer:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 0
   myCol: {fileID: 51849612}
   _player: {fileID: 0}
   footsteps: {fileID: 0}
@@ -3429,10 +3430,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fbb66bb6da94a342b87a87946cef212, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _showAdButton: {fileID: 613754794}
-  _androidAdUnitId: Rewarded_Android
-  _iOSAdUnitId: Rewarded_iOS
-  _testMode: 1
 --- !u!114 &739072117
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3959,12 +3956,7 @@ MonoBehaviour:
   enemySpawnPoint: {x: 0, y: 0}
   _minSpawnX: 45
   _maxSpawnX: 60
-  _minSpawnY: -6
-  _maxSpawnY: 6
   _units: []
-  mobspawnInterval: 3
-  coinspawnInterval: 25
-  mobAutoDestroy: 15
   xRef: 0
   yRef: 0
   groundHeight: -6.5

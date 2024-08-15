@@ -5,7 +5,7 @@ using UnityServiceLocator;
 
 public class Coin : MonoBehaviour
 {
-    [SerializeField] private float _speed = 0.04f;
+    [SerializeField] private float _speed = 8f;
     [SerializeField] private AudioClip _clip;
     private Player player;
     private float step = .2f;
@@ -21,8 +21,7 @@ public class Coin : MonoBehaviour
         if (collision.gameObject.GetComponent<Player>() != null)
         {
             SoundManager.Instance.PlaySound(_clip);
-            GameManager.Instance.IncreaseCoin(1);
-            //Destroy(gameObject);
+            GameManager.Instance.IncreaseCoin(1); 
             gameObject.GetComponent<PoolMember>().ReturnToPool();
         }
     }
@@ -37,7 +36,7 @@ public class Coin : MonoBehaviour
         }
         else
         {
-            transform.position = new Vector3(transform.position.x - _speed, transform.position.y, transform.position.z);
+            transform.position = new Vector3(transform.position.x - _speed * Time.deltaTime, transform.position.y, transform.position.z);
         }
     }
 

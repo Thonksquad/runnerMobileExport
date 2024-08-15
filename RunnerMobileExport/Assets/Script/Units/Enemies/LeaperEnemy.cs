@@ -1,7 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using System.Threading;
+
 
 public class LeaperEnemy : BaseEnemy
 {
@@ -15,16 +13,12 @@ public class LeaperEnemy : BaseEnemy
     private Transform _target;
     private Vector3 _overshoot;
 
-    private void Awake()
-    {
-        _target = FindObjectOfType<Player>().transform;
-    }
-
 
     protected override void Start()
     {
         base.Start();
         rb = GetComponent<Rigidbody2D>();
+        _target = player.transform;
     }
 
     void FixedUpdate()

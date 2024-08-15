@@ -44,13 +44,13 @@ public class bat : BaseEnemy
             if (transform.position.x > player.transform.position.x)
             {
                 chase = true;
-                speed = 4f * (1 + ((CameraManager.Instance.CamSpeed - 5) / 10));
+                speed = 4f * (1 + ((player.speed - 5) / 10));
                 transform.rotation = Quaternion.Euler(0, 0, 0);
             }
             else
             {
                 transform.rotation = Quaternion.Euler(0, 180, 0);
-                speed = 2f * (1 + ((CameraManager.Instance.CamSpeed - 5) / 10));
+                speed = 2f * (1 + ((player.speed - 5) / 10));
             }
         }
     }
