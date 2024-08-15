@@ -5107,9 +5107,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68a4b0718dbfe184fafaef27347372ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _stopEnemySpawns: 50
-  _bossSpawnWarningPosition: 100
-  _bossSpawnPosition: 150
+  _stopEnemySpawns: 1400
+  _bossSpawnWarningPosition: 1500
+  _bossSpawnPosition: 1600
   _warningImage: {fileID: 223331362}
   _killScreen: {fileID: 314756553}
   _killScreenTime: 5
