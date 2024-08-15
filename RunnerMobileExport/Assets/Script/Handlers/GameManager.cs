@@ -5,6 +5,7 @@ using System;
 using TMPro;
 using Newtonsoft.Json;
 using Unity.Services.Leaderboards;
+using UnityServiceLocator;
 
 
 public class GameManager : MonoBehaviour
@@ -29,7 +30,7 @@ public class GameManager : MonoBehaviour
     public static int coins = 0;
     private int hounds = 1;
     private Coroutine coUpdateTimer;
-
+    private Player player;
 
     const string leaderboardId = "leaderboard";
 
@@ -66,6 +67,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        ServiceLocator.ForSceneOf(this).Get(out player);
         ChangeState(GameState.ArcadeMode);
     }
 
@@ -143,13 +145,16 @@ public class GameManager : MonoBehaviour
         var metadata = new Dictionary<string, string>() {
             { "gameLength", GameManager.gameLength.ToString() } ,
             { "enemiesKilled", GameManager.enemiesKilled.ToString() },
-            { "speed", CameraManager.Instance.CamSpeed.ToString() }
+            { "speed", player.speed.ToString() }
         };
+
+        
         var playerEntry = await LeaderboardsService.Instance
             .AddPlayerScoreAsync(leaderboardId, GameManager.distance,
             new AddPlayerScoreOptions { Metadata = metadata }
             );
         Debug.Log(JsonConvert.SerializeObject(playerEntry));
+        
     }
 
 
@@ -158,7 +163,7 @@ public class GameManager : MonoBehaviour
         while (GameState == GameState.ArcadeMode)
         {
             gameLength += Time.deltaTime;
-            distance = Mathf.Round(gameLength * CameraManager.Instance.CamSpeed);
+            distance = Mathf.Round(gameLength * player.speed);
             distanceUI.text = (distance.ToString() + "m");
 
             if (distance/(500 + ((hounds-1)*HoundModifier)) > hounds)

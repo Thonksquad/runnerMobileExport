@@ -30,7 +30,7 @@ public class Bullet : PoolMember
         mousepos = mainCam.ScreenToWorldPoint(Input.mousePosition);
         Vector3 bulletDirection = mousepos - transform.position;
         Vector3 bulletRotation = transform.position - mousepos;
-        rb.velocity = new Vector3(90, 0).normalized * (force + CameraManager.Instance.CamSpeed);
+        rb.velocity = new Vector3(90, 0).normalized * (force + player.speed);
     }
 
 

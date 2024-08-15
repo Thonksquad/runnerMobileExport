@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ArcherAim : MonoBehaviour
@@ -60,7 +59,7 @@ public class ArcherAim : MonoBehaviour
 
     private IEnumerator ArcherActivated()
     {
-        firingCD = 14f * (2 / (CameraManager.Instance.CamSpeed));
+        firingCD = 14f * (2 / (player.speed));
         yield return new WaitForSecondsRealtime(firingCD);
         if (canFire == true)
         {

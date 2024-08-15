@@ -42,7 +42,7 @@ public class ChaseControl : MonoBehaviour
 
     private IEnumerator StartChaseCounter()
     {
-        yield return new WaitForSecondsRealtime(4f * (1/CameraManager.Instance.CamSpeed));
+        yield return new WaitForSecondsRealtime(4f * (1/leaper.player.speed));
         ChasePlayer();
     }
 }
