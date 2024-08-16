@@ -55,7 +55,7 @@ public class BossEye : MonoBehaviour
 
 
 
-
+    #region Open Close Eye
     internal void DoEyeClose(bool doDamage)
     {
         StopAllCoroutines();
@@ -94,7 +94,9 @@ public class BossEye : MonoBehaviour
         shootCoroutineReference = Handle_Shooting();
         StartCoroutine(shootCoroutineReference);
     }
+    #endregion // Open Close Eye
 
+    #region Shoot
     private IEnumerator Handle_Shooting()
     {
         _cd1 = new(thisEyeEntry.reloadTime);
@@ -163,6 +165,7 @@ public class BossEye : MonoBehaviour
         StartCoroutine(shootCoroutineReference);
     }
 
+
     private IEnumerator Handle_LaserLineRenderer()
     {
         laserLineRenderer.enabled = true;
@@ -174,6 +177,7 @@ public class BossEye : MonoBehaviour
             yield return null;
         }
     }
+    #endregion // Shoot
 
     private IEnumerator EyeHit()
     {
@@ -187,6 +191,7 @@ public class BossEye : MonoBehaviour
         }
     }
 
+    #region Trigger
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.GetComponent<Bullet>() != null)
@@ -220,7 +225,7 @@ public class BossEye : MonoBehaviour
         }
 
     }
-
+    #endregion // Trigger
 
 
 

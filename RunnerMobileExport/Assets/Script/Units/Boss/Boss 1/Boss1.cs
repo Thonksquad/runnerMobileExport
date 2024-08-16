@@ -29,6 +29,11 @@ public class Boss1 : MonoBehaviour
     [SerializeField] internal List<EyeEntries> _Eyes;
     [Serializable] public class EyeEntries { public EyeTypesEnum eyeType; public Sprite pupilSprite; public float reloadTime; public Color eyeColor;}
 
+
+    [Header("BossWheelReferences")]
+    [SerializeField] private BossWheelAnimation bossWheelAnimation1;
+    [SerializeField] private BossWheelAnimation bossWheelAnimation2;
+
     private Cooldown _cd1 = new(0.5f);
     private Cooldown _cd2;
     private Cooldown _cd3 = new(1.75f);
@@ -44,6 +49,8 @@ public class Boss1 : MonoBehaviour
         LASER
     }
 
+
+    #region Unity Callbacks
     private void Awake()
     {
         homingPool.CreateObjectPool(bulletHoming, 3);
@@ -78,7 +85,7 @@ public class Boss1 : MonoBehaviour
         _cd6.Completed -= Cd6;
         _cd7.Completed -= Cd7;
     }
-
+    #endregion // Unity Callbacks
 
 
     private IEnumerator Do_Intro()
@@ -90,6 +97,8 @@ public class Boss1 : MonoBehaviour
         }
 
         transform.localPosition = initialLocalPosition;
+        bossWheelAnimation1.BossAlive();
+        bossWheelAnimation2.BossAlive();
 
         yield return new WaitForSeconds(0.25f);
         shakeScript.Do_shake(0.7f, 0.7f);
@@ -104,8 +113,9 @@ public class Boss1 : MonoBehaviour
                 _cd3.Start();
                 break;
         }
-    } 
+    }
 
+    #region Phase1
     private void Phase1_ChooseEyeToOpenHandler()
     {
         StartCoroutine(Phase1_ChooseEyeToOpen()); 
@@ -143,8 +153,9 @@ public class Boss1 : MonoBehaviour
             OpenRandomEye(phase1EyeType);
         }   
     }
+    #endregion //Phase1
 
-
+    #region Phase2
     private void Phase2_ChooseEyeToOpenHandler()
     {
         StartCoroutine(Phase2_ChooseEyeToOpen());
@@ -184,7 +195,9 @@ public class Boss1 : MonoBehaviour
             OpenRandomEye(phase2EyeType);
         }
     }
+    #endregion //Phase2
 
+    #region Phase3
     private void Phase3_ChooseEyeToOpenHandler()
     {
         StartCoroutine(Phase3_ChooseEyeToOpen());
@@ -210,8 +223,7 @@ public class Boss1 : MonoBehaviour
         }
 
         Do_Death();
-    }
-
+    } 
 
     private void Cd6()
     {
@@ -226,6 +238,7 @@ public class Boss1 : MonoBehaviour
             OpenRandomEye(phase2EyeType);
         }
     }
+    #endregion // Phase3
 
     private void Do_Death()
     {
@@ -236,6 +249,8 @@ public class Boss1 : MonoBehaviour
             eye.gameObject.SetActive(false);
         }
 
+        bossWheelAnimation1.BossDead();
+        bossWheelAnimation2.BossDead();
         shakeScript.Do_shake(1.2f, 3.0f);
 
         _cd7.Start();

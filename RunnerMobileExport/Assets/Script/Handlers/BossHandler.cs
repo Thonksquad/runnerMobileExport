@@ -29,6 +29,7 @@ public class BossHandler : MonoBehaviour
     [SerializeField] private TextMeshProUGUI bossHPtext;
     [SerializeField] private Image bossHPBar;
 
+
     private Player player;
 
     private enum BossNames
@@ -46,6 +47,7 @@ public class BossHandler : MonoBehaviour
     }
 
 
+    #region Waitings
     private IEnumerator WaitForStopEnemySpawn()
     {
         bool wait = true;
@@ -102,6 +104,15 @@ public class BossHandler : MonoBehaviour
         SpawnBoss();
     }
 
+    private IEnumerator WaitForBossToDie()
+    {
+        while (currentBoss.activeInHierarchy)
+            yield return null;
+
+        StartCoroutine(BossKillScreen());
+        EndBossEncounter();
+    }
+    #endregion // Waitings
 
     private void SpawnBoss()
     {
@@ -120,14 +131,6 @@ public class BossHandler : MonoBehaviour
         StartCoroutine(WaitForBossToDie());
     }
 
-    private IEnumerator WaitForBossToDie()
-    {
-        while (currentBoss.activeInHierarchy)
-            yield return null;
-
-        StartCoroutine(BossKillScreen());
-        EndBossEncounter();
-    }
 
     private IEnumerator BossKillScreen()
     {

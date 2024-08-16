@@ -253,6 +253,10 @@ public class Player : MonoBehaviour
 
     public void EnterBossLaser()
     {
+        if (hp >= 1)
+        {
+            onHound = false;
+        }
         BossHit(); 
         gameObject.GetComponent<SpriteRenderer>().material.color = _laserColor;
     }
