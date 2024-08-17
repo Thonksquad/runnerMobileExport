@@ -65,6 +65,7 @@ public class Player : MonoBehaviour
     [SerializeField] private Color _laserColor;
     public static int bossHit;
 
+    #region Unity CallBacks
     private void Awake()
     {
         ServiceLocator.ForSceneOf(this).Register<Player>(this); // Scene Scope
@@ -104,7 +105,9 @@ public class Player : MonoBehaviour
         LandedThisFrame = AnimationHandler.IsGrounded(); 
         fartPool.CreateObjectPool(_FartPrefab, 2); 
     }
+    #endregion // Unity CallBacks
 
+    #region Fire & Movements
     private void OnFire(InputAction.CallbackContext ctx)
     {
         if (canFire)
@@ -126,6 +129,7 @@ public class Player : MonoBehaviour
         }
     }
 
+    
     private void HoundFire()
     {
         _houndBulletPool.Spawner(new Vector2(bulletTransform.position.x, bulletTransform.position.y));
@@ -200,12 +204,32 @@ public class Player : MonoBehaviour
         }
 
     }
+    #endregion // Fire & Movements
 
     private void TurnCollisionOn()
     {
         isInvulnerable = false;
         Physics2D.IgnoreLayerCollision(6, 8, false);
     }
+
+
+    
+    private IEnumerator Handle_UIReloadBar()
+    {
+        reloadBar.enabled = true;
+        float tempWidth = reloadBar.transform.localScale.x;
+
+        while (!canFire)
+        {
+            reloadBar.transform.localScale = new Vector2(tempWidth * (fireTimer / fireCD), reloadBar.transform.localScale.y);
+            reloadBar.transform.parent.position = transform.position + new Vector3(((tempWidth * (fireTimer / fireCD)) / 2) - tempWidth/2, 0, 0);
+            yield return null;
+        }
+
+        reloadBar.enabled = false;
+    }
+
+    #region take Damage
 
     public void TakeDamage(int amount)
     {
@@ -225,31 +249,14 @@ public class Player : MonoBehaviour
             gameOver = true;
         }
     }
-
     public void BossDamage()
     {
         if (hp >= 1)
         {
-            onHound = false; 
+            onHound = false;
         }
         BossHit();
     }
-
-    private IEnumerator Handle_UIReloadBar()
-    {
-        reloadBar.enabled = true;
-        float tempWidth = reloadBar.transform.localScale.x;
-
-        while (!canFire)
-        {
-            reloadBar.transform.localScale = new Vector2(tempWidth * (fireTimer / fireCD), reloadBar.transform.localScale.y);
-            reloadBar.transform.parent.position = transform.position + new Vector3(((tempWidth * (fireTimer / fireCD)) / 2) - tempWidth/2, 0, 0);
-            yield return null;
-        }
-
-        reloadBar.enabled = false;
-    }
-
 
     public void EnterBossLaser()
     {
@@ -271,6 +278,6 @@ public class Player : MonoBehaviour
         bossHit++;
         _bossHitsText.text = bossHit.ToString();
     }
-
+    #endregion // Boss
 
 }

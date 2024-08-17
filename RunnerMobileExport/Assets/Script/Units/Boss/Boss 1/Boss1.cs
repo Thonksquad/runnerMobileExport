@@ -90,6 +90,8 @@ public class Boss1 : MonoBehaviour
 
     private IEnumerator Do_Intro()
     {
+        bossWheelAnimation1.StartPhase();
+        bossWheelAnimation2.StartPhase();
         while (Mathf.Abs(initialLocalPosition.x - transform.localPosition.x) > 0.1f)
         {
             transform.localPosition = new Vector3( Mathf.Lerp(transform.localPosition.x, initialLocalPosition.x , 0.0035f) , transform.localPosition.y, transform.localPosition.z);
@@ -97,8 +99,9 @@ public class Boss1 : MonoBehaviour
         }
 
         transform.localPosition = initialLocalPosition;
-        bossWheelAnimation1.BossAlive();
-        bossWheelAnimation2.BossAlive();
+
+        bossWheelAnimation1.FightPhase();
+        bossWheelAnimation2.FightPhase();
 
         yield return new WaitForSeconds(0.25f);
         shakeScript.Do_shake(0.7f, 0.7f);
@@ -249,8 +252,9 @@ public class Boss1 : MonoBehaviour
             eye.gameObject.SetActive(false);
         }
 
-        bossWheelAnimation1.BossDead();
-        bossWheelAnimation2.BossDead();
+        bossWheelAnimation1.Stop();
+        bossWheelAnimation2.Stop();
+
         shakeScript.Do_shake(1.2f, 3.0f);
 
         _cd7.Start();
