@@ -63,7 +63,13 @@ public class Player : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _bossHitsText;
     [SerializeField] private Color _normalColor;
     [SerializeField] private Color _laserColor;
+
+
     public static int bossHit;
+
+
+    [Header("service locator speed")]
+    public float speed = 8f;
 
     #region Unity CallBacks
     private void Awake()
@@ -183,7 +189,7 @@ public class Player : MonoBehaviour
         {
             isFlying = true;
 
-            flyVelocity = (float)(8f + (CameraManager.Instance.CamSpeed * 0.15));
+            flyVelocity = (float)(8f + ( speed * 0.15));
             body.velocity = new Vector3(0, flyVelocity, 0);
             // jump logic
             /**
@@ -199,7 +205,7 @@ public class Player : MonoBehaviour
         else if (fly.WasReleasedThisFrame())
         {
             isFlying = false;
-            fallVelocity = (float)(6f + (CameraManager.Instance.CamSpeed * 0.15));
+            fallVelocity = (float)(6f + (speed * 0.15));
             body.velocity = new Vector3(0, -fallVelocity, 0);
         }
 
