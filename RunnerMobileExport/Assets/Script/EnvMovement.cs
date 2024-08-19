@@ -1,37 +1,33 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityServiceLocator;
 
 public class EnvMovement : MonoBehaviour
 {
-    [SerializeField] public static float _speed = 8.5f;
-    public Camera Camera;
-    public float ParallaxEffect;
+    [Range(0f, 1f)] public float ParallaxEffect; 
 
     private float _startPos, _length;
-    private float nextBgX, passedX;
+
+
+    private Player _player;
 
     private void Start()
     {
-        _startPos = transform.position.x;
-        _length = GetComponent<SpriteRenderer>().bounds.size.x;
+        ServiceLocator.ForSceneOf(this).Get(out _player);
 
-        // Calculate the next background and passed positions
-        nextBgX = _startPos + _length;
-        passedX = _startPos - _length;
+        _startPos = transform.position.x;
+        _length = GetComponent<SpriteRenderer>().bounds.size.x; 
     }
 
     private void Update()
     {
-        float distance = Camera.transform.position.x * ParallaxEffect;
-        float movement = Camera.transform.position.x * (1 - ParallaxEffect);
-
-        transform.position = new Vector3(_startPos + distance - _speed * Time.deltaTime, transform.position.y, transform.position.z);
-
-        if (transform.position.x < passedX)
+        if (transform.position.x < _startPos - _length)
         {
-            transform.position = new Vector3(nextBgX, transform.position.y, transform.position.z);
-            _startPos = nextBgX;
+            transform.position = new Vector3( _startPos , transform.position.y, transform.position.z );
         }
+
+        transform.position = new Vector3(
+            transform.position.x - _player.speed * ParallaxEffect * Time.deltaTime,
+            transform.position.y,
+            transform.position.z); 
     }
 }
