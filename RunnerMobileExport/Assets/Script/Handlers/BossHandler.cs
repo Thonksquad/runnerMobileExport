@@ -40,6 +40,7 @@ public class BossHandler : MonoBehaviour
     private void Start()
     {
         ServiceLocator.ForSceneOf(this).Get(out player);
+        bossUICanvas.gameObject.SetActive(false);
         bossAlive = false;
         StartCoroutine(WaitForStopEnemySpawn());
         StartCoroutine(WaitForSpawnWarning()); 
@@ -84,6 +85,7 @@ public class BossHandler : MonoBehaviour
         }
 
         _warningImage.SetActive(true);
+        bossUICanvas.gameObject.SetActive(true);
     }
 
     private IEnumerator WaitForSpawn()
@@ -182,7 +184,8 @@ public class BossHandler : MonoBehaviour
         float hpCompute = (float)bossCurrentHP / (float)bossMaxHP;
 
         bossHPtext.text = "" + hpCompute * 100 + "%";
-        bossHPBar.transform.localScale = new Vector3(hpCompute, 1, 1);
+        //bossHPBar.transform.localScale = new Vector3(hpCompute, 1, 1);
+        bossHPBar.fillAmount = hpCompute;
         bossHPBar.color = (tempC * hpCompute) + (Color.red * (1.0f - hpCompute));
     }
 
