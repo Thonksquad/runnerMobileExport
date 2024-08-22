@@ -11,6 +11,7 @@ public class BossHandler : MonoBehaviour
     public static int bossMaxHP = 100;
     public static int bossCoins = 0;
     private GameObject currentBoss;
+    [SerializeField] private Color _orangeClr;
 
     [SerializeField] private float _stopEnemySpawns = 1300f;
     [SerializeField] private float _bossSpawnWarningPosition = 1400f;
@@ -186,7 +187,20 @@ public class BossHandler : MonoBehaviour
         bossHPtext.text = "" + hpCompute * 100 + "%";
         //bossHPBar.transform.localScale = new Vector3(hpCompute, 1, 1);
         bossHPBar.fillAmount = hpCompute;
-        bossHPBar.color = (tempC * hpCompute) + (Color.red * (1.0f - hpCompute));
+
+        if( hpCompute > 0.75f)
+        {
+            bossHPBar.color = (tempC * hpCompute) + (Color.green * (1.0f - hpCompute));
+        }
+        else if( hpCompute > 0.33f )
+        {
+            bossHPBar.color = (tempC * hpCompute) + (_orangeClr * (1.0f - hpCompute));
+        }
+        else
+        {
+            bossHPBar.color = (tempC * hpCompute) + (Color.red * (1.0f - hpCompute));
+        }
+        
     }
 
     public static void bossTakeDamage(int amount)
