@@ -12,6 +12,9 @@ public class BossEye : MonoBehaviour
     [SerializeField] private Animator eyeLidAnim;
     [SerializeField] private EyePoint pupilPivotScript;
     [SerializeField] SpriteRenderer eyePupil;
+    [SerializeField] Transform laser1;
+    [SerializeField] Transform laser2;
+    [SerializeField] Transform laser3;
 
     internal int hitHP;
     private EyeEntries thisEyeEntry;
@@ -117,13 +120,14 @@ public class BossEye : MonoBehaviour
     }
     private IEnumerator DoShoot_TRIPPLE()
     {
-        bossScrReference.SpawnHomingBullet(transform.position, 1, 0);
-        bossScrReference.SpawnHomingBullet(transform.position, 1, 30);
-        bossScrReference.SpawnHomingBullet(transform.position, 1, -30);
+        bossScrReference.SpawnHomingBullet(transform.position, 1.5f, 0);
+        bossScrReference.SpawnHomingBullet(transform.position, 1.5f, 30);
+        bossScrReference.SpawnHomingBullet(transform.position, 1.5f, -30);
         yield return null;
     }
     private IEnumerator DoShoot_LASER()
     {
+        laser1.gameObject.SetActive(true);
         StopCoroutine(shootCoroutineReference);
         float origSize = laserLineRenderer.startWidth;
 
@@ -135,27 +139,44 @@ public class BossEye : MonoBehaviour
         while (_cd2.IsActive)
             yield return null;
 
+        laser1.gameObject.SetActive(false);
+        laser2.gameObject.SetActive(true);
+        float laserY = laser2.localScale.y;
+        float laserOriginY = laser2.localScale.y;
 
         while (laserLineRenderer.startWidth < 1.5f)
         {
             laserLineRenderer.startWidth += 0.02f;
             laserLineRenderer.endWidth += 0.02f;
+
+            laserY += 0.02f;
+
+            laser2.localScale = new Vector3(laser2.localScale.x, laserY, laser2.localScale.z);
+
             yield return null;
         }
-
+        laser2.gameObject.SetActive(false);
+        laser3.gameObject.SetActive(true);
         SetEdgeCollider();
         edgeCollider2D.enabled = true;
         _cd3.Start();
         while ( _cd3.IsActive)
             yield return null;
         edgeCollider2D.enabled = false;
-
+        laser3.gameObject.SetActive(false);
+        laser2.gameObject.SetActive(true);
         while (laserLineRenderer.startWidth > origSize)
         {
             laserLineRenderer.startWidth -= 0.005f;
-            laserLineRenderer.endWidth -= 0.005f;
+            laserLineRenderer.endWidth -= 0.005f; 
+
+            laserY -= 0.02f;
+            laser2.localScale = new Vector3(laser2.localScale.x, laserY, laser2.localScale.z);
+
             yield return null;
         }
+        laser2.localScale = new Vector3(laser2.localScale.x, laserOriginY, laser2.localScale.z);
+        laser2.gameObject.SetActive(false);
         laserLineRenderer.startWidth = origSize;
         laserLineRenderer.endWidth = origSize;
         pupilPivotScript.doFollow = true;
