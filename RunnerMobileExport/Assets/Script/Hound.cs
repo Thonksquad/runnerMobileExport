@@ -20,9 +20,14 @@ public class Hound : MonoBehaviour
         Destroy(gameObject, 10);
     }
 
+    private void OnEnable()
+    {
+        _speed = player.speed;
+    }
+
     private void Update()
     {
-        transform.position = new Vector3(transform.position.x - _speed, transform.position.y, transform.position.z);
+        transform.position = new Vector3(transform.position.x - _speed * Time.deltaTime, transform.position.y, transform.position.z);
     }
 
     private void OnBecameVisible()

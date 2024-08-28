@@ -8,7 +8,7 @@ public abstract class BaseEnemy : MonoBehaviour
     public Animator _anim;
     public bool isDead { get; protected set; } = false;
 
-    [SerializeField] private float _speed = 0.04f;
+    [SerializeField] private float _speed;
 
     protected virtual void Start()
     {

@@ -80,10 +80,7 @@ public class SpawnCooldown : MonoBehaviour
     {
         if (UnitManager.Instance != null)
         {
-            for (int i = 0; i < _roundedValue; i++)
-            {
-                UnitManager.Instance.SpawnRandomCoin();
-            }
+            UnitManager.Instance.SpawnRandomCoin();
         }
         _cdCoin.Start();
     }

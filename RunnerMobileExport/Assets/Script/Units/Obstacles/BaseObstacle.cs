@@ -4,7 +4,7 @@ using UnityServiceLocator;
 public class BaseObstacle : MonoBehaviour
 {
 
-    [SerializeField] private float _speed = 8f;
+    [SerializeField] private float _speed;
 
     private Player _player;
 

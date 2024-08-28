@@ -10,6 +10,8 @@ public class EnvMovement : MonoBehaviour
 
     private Player _player;
 
+    //public List<EnvMovement> s;
+
     private void Start()
     {
         ServiceLocator.ForSceneOf(this).Get(out _player);
