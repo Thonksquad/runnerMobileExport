@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityServiceLocator;
 
@@ -45,6 +43,7 @@ public class Coin : MonoBehaviour
         ServiceLocator.ForSceneOf(this).Get(out player);
         Vector2 forceDirection = new Vector2(Random.Range(0, .001f), Random.Range(.001f, .003f)).normalized;
         gameObject.GetComponent<Rigidbody2D>().AddForce(.1f * forceDirection, ForceMode2D.Impulse);
+        _speed = player.speed;
     }
 
 }

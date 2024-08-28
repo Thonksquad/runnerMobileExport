@@ -35,6 +35,7 @@ public abstract class BaseEnemy : MonoBehaviour
         isDead = false;
         int enemyLayer = LayerMask.NameToLayer("Enemy");
         gameObject.layer = enemyLayer;
+        _speed = player.speed;
     }
 
     public virtual void Update()

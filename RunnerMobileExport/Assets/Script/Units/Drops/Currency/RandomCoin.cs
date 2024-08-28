@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityServiceLocator;
 
@@ -45,6 +43,7 @@ public class RandomCoin : PoolMember
     {
         ServiceLocator.ForSceneOf(this).Get(out player);
         base.OnEnable();
+        _speed = player.speed;
     }
 
 }
