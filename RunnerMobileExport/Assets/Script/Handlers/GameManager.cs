@@ -30,7 +30,8 @@ public class GameManager : MonoBehaviour
     public static int coins = 0;
     private int hounds = 1;
     private Coroutine coUpdateTimer;
-    private Player player;
+    private Player player; 
+    private UnitManager _unitManager;
 
     const string leaderboardId = "leaderboard";
 
@@ -68,8 +69,12 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         ServiceLocator.ForSceneOf(this).Get(out player);
+        ServiceLocator.ForSceneOf(this).Get(out _unitManager);
         ChangeState(GameState.ArcadeMode);
     }
+
+
+
 
     public void IncreaseCoin(int amt)
     {
@@ -168,7 +173,7 @@ public class GameManager : MonoBehaviour
 
             if (distance/(500 + ((hounds-1)*HoundModifier)) > hounds)
             {
-                UnitManager.Instance.SpawnHound();
+                _unitManager.SpawnHound();
                 hounds++;
             }
             coinUI.text = (coins.ToString());

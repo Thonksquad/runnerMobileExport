@@ -5,7 +5,7 @@ using UnityServiceLocator;
 
 public class UnitManager : MonoBehaviour
 {
-    public static UnitManager Instance;
+
     public Collider2D[] DetectedEnemies;
     public float DetectionRadius;
 
@@ -55,7 +55,7 @@ public class UnitManager : MonoBehaviour
 
     private void Awake()
     {
-        Instance = this;
+        ServiceLocator.ForSceneOf(this).Register<UnitManager>(this); // Scene Scope
     }
 
     private void Start()

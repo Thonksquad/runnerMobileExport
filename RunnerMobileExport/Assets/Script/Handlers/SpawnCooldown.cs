@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityServiceLocator;
 using Utilities.Cooldown;
 
 public class SpawnCooldown : MonoBehaviour
@@ -14,6 +15,13 @@ public class SpawnCooldown : MonoBehaviour
     private Cooldown _cdObstacle = new(7f);
     private Cooldown _cdEnemy = new(7f);
     private Cooldown _cdCoin = new(30f);
+
+    private UnitManager _unitManager;
+
+    private void Start()
+    {
+        ServiceLocator.ForSceneOf(this).Get(out _unitManager);
+    }
 
     private void OnEnable()
     {
@@ -54,11 +62,11 @@ public class SpawnCooldown : MonoBehaviour
 
     private void ObstacleCooldown()
     {
-        if (UnitManager.Instance != null)
+        if (_unitManager != null)
         {
             for (int i = 0; i < _roundedValue; i++)
             {
-                UnitManager.Instance.SpawnObstacle();
+                _unitManager.SpawnObstacle();
             }
         }
         _cdObstacle.Start();
@@ -66,11 +74,11 @@ public class SpawnCooldown : MonoBehaviour
 
     private void EnemyCooldown()
     {
-        if (UnitManager.Instance != null)
+        if (_unitManager != null)
         {
             for (int i = 0; i < _roundedValue; i++)
             {
-                UnitManager.Instance.SpawnEnemy();
+                _unitManager.SpawnEnemy();
             }
         }
         _cdEnemy.Start();
@@ -78,9 +86,9 @@ public class SpawnCooldown : MonoBehaviour
 
     private void CoinCooldown()
     {
-        if (UnitManager.Instance != null)
+        if (_unitManager != null)
         {
-            UnitManager.Instance.SpawnRandomCoin();
+            _unitManager.SpawnRandomCoin();
         }
         _cdCoin.Start();
     }

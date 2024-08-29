@@ -10,9 +10,13 @@ public abstract class BaseEnemy : MonoBehaviour
 
     [SerializeField] private float _speed;
 
+    private UnitManager _unitManager;
+
+
     protected virtual void Start()
     {
-        ServiceLocator.ForSceneOf(this).Get(out player); 
+        ServiceLocator.ForSceneOf(this).Get(out player);
+        ServiceLocator.ForSceneOf(this).Get(out _unitManager);
         _anim = GetComponent<Animator>();
         _anim.CrossFade("alive", 0, 0);
     }
@@ -64,7 +68,7 @@ public abstract class BaseEnemy : MonoBehaviour
 
             if (coinChance <= 30)
             {
-                UnitManager.Instance.SpawnCoin(transform.position.x, transform.position.y);
+                _unitManager.SpawnCoin(transform.position.x, transform.position.y);
             }
         }
     }
