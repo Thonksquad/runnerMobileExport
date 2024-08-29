@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject gameOverScreen;
     [SerializeField] private GameObject gamePlayScreen;
     [SerializeField] private AudioClip _deathSound;
-    public static GameManager Instance;
+
     public GameState GameState;
     public TextMeshProUGUI BestdistanceUI;
     public TextMeshProUGUI EnddistanceUI;
@@ -30,25 +30,18 @@ public class GameManager : MonoBehaviour
     public static int coins = 0;
     private int hounds = 1;
     private Coroutine coUpdateTimer;
-    private Player player; 
+
+    private Player _player;
     private UnitManager _unitManager;
+    private SoundManager _soundManager;
+    private adsManager _adsManager;
 
     const string leaderboardId = "leaderboard";
 
 
     private void Awake()
     {
-        if(Instance == null)
-        {
-            Instance = this;
-        }
-        else
-        {
-            if(Instance != this)
-            {
-                Destroy(this);
-            }
-        }
+        ServiceLocator.ForSceneOf(this).Register<GameManager>(this); // Scene Scope
     }
 
     private void OnEnable()
@@ -68,8 +61,10 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        ServiceLocator.ForSceneOf(this).Get(out player);
+        ServiceLocator.ForSceneOf(this).Get(out _player);
         ServiceLocator.ForSceneOf(this).Get(out _unitManager);
+        ServiceLocator.ForSceneOf(this).Get(out _soundManager);
+        ServiceLocator.ForSceneOf(this).Get(out _adsManager);
         ChangeState(GameState.ArcadeMode);
     }
 
@@ -116,22 +111,22 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1;
         gameOverScreen.SetActive(false);
         AudioListener.pause = false;
-        SoundManager.Instance.TurnMusicOn();
+        _soundManager.TurnMusicOn();
     }
 
     public void playerHit()
     {
         Time.timeScale = 0;
-        SoundManager.Instance.PlaySound(_deathSound);
-        SoundManager.Instance.ToggleMusic();
+        _soundManager.PlaySound(_deathSound);
+        _soundManager.ToggleMusic();
         EnddistanceUI.text = Mathf.Round(distance).ToString();
         BestdistanceUI.text = DBGrabUser.highScore.ToString();
         EndcoinsUI.text = coins.ToString();
         addScore();
 
-        if ( adsManager.Instance.hasVideoChance)
+        if (_adsManager.hasVideoChance)
         {
-            adsManager.Instance.showVideo();
+            _adsManager.showVideo();
         }
         else
         {
@@ -150,7 +145,7 @@ public class GameManager : MonoBehaviour
         var metadata = new Dictionary<string, string>() {
             { "gameLength", GameManager.gameLength.ToString() } ,
             { "enemiesKilled", GameManager.enemiesKilled.ToString() },
-            { "speed", player.speed.ToString() }
+            { "speed", _player.speed.ToString() }
         };
 
         
@@ -168,7 +163,7 @@ public class GameManager : MonoBehaviour
         while (GameState == GameState.ArcadeMode)
         {
             gameLength += Time.deltaTime;
-            distance = Mathf.Round(gameLength * player.speed);
+            distance = Mathf.Round(gameLength * _player.speed);
             distanceUI.text = (distance.ToString() + "m");
 
             if (distance/(500 + ((hounds-1)*HoundModifier)) > hounds)

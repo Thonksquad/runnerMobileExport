@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityServiceLocator;
 
 public class Fireball : MonoBehaviour
 {
@@ -9,14 +8,17 @@ public class Fireball : MonoBehaviour
     Rigidbody2D myRigidbody;
     public int damage = 1;
 
+    private SoundManager _soundManager;
+
     void Start()
     {
         myRigidbody = GetComponent<Rigidbody2D>();
+        ServiceLocator.ForSceneOf(this).Get(out _soundManager);
     }
 
     private void OnBecameVisible()
     {
-        SoundManager.Instance.PlaySound(fireballSound);
+        _soundManager.PlaySound(fireballSound);
     }
 
     private void Update()
@@ -29,7 +31,6 @@ public class Fireball : MonoBehaviour
         if (collision.gameObject.TryGetComponent(out Player player))
         {
             player.TakeDamage(damage);
-            //Destroy(gameObject);
         }
     }
 

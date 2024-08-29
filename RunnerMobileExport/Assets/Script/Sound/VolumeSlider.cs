@@ -1,16 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Linq;
+using UnityServiceLocator;
+
 
 public class VolumeSlider : MonoBehaviour
 {
+
     [SerializeField] private Slider _slider;
+
+    private SoundManager _soundManager;
+
+
     void Start()
     {
-        SoundManager.Instance.ChangeMasterVolume(_slider.value);
-        _slider.onValueChanged.AddListener(val => SoundManager.Instance.ChangeMasterVolume(val));
+        ServiceLocator.ForSceneOf(this).Get(out _soundManager);
+        _soundManager.ChangeMasterVolume(_slider.value);
+        _slider.onValueChanged.AddListener(val => _soundManager.ChangeMasterVolume(val));
     }
 
 }

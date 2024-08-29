@@ -5,21 +5,28 @@ public class Coin : MonoBehaviour
 {
     [SerializeField] private float _speed = 8f;
     [SerializeField] private AudioClip _clip;
-    private Player player;
     private float step = .2f;
     public Collider2D[] DetectPlayer;
     public float DetectionRadius;
     [SerializeField] private LayerMask PlayerLayer;
     [SerializeField] private Collider2D PhysicsCollider;
+
+    
+    private Player _player;
+    private GameManager _gameManager;
+    private SoundManager _soundManager;
+
+
     private bool IsChaseOn(Vector2 pos, float radius) => Physics2D.OverlapCircleAll(pos, radius, PlayerLayer).Length > 0;
+
 
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.GetComponent<Player>() != null)
         {
-            SoundManager.Instance.PlaySound(_clip);
-            GameManager.Instance.IncreaseCoin(1); 
+            _soundManager.PlaySound(_clip);
+            _gameManager.IncreaseCoin(1); 
             gameObject.GetComponent<PoolMember>().ReturnToPool();
         }
     }
@@ -29,7 +36,7 @@ public class Coin : MonoBehaviour
         if (IsChaseOn(new Vector2(transform.position.x, transform.position.y), DetectionRadius))
         {
             PhysicsCollider.enabled = false;
-            transform.position = Vector3.MoveTowards(transform.position, player.transform.position, step);
+            transform.position = Vector3.MoveTowards(transform.position, _player.transform.position, step);
             step += 5 * Time.deltaTime;
         }
         else
@@ -40,10 +47,12 @@ public class Coin : MonoBehaviour
 
     public void OnEnable()
     {
-        ServiceLocator.ForSceneOf(this).Get(out player);
+        ServiceLocator.ForSceneOf(this).Get(out _player);
+        ServiceLocator.ForSceneOf(this).Get(out _gameManager);
+        ServiceLocator.ForSceneOf(this).Get(out _soundManager);
         Vector2 forceDirection = new Vector2(Random.Range(0, .001f), Random.Range(.001f, .003f)).normalized;
         gameObject.GetComponent<Rigidbody2D>().AddForce(.1f * forceDirection, ForceMode2D.Impulse);
-        _speed = player.speed;
+        _speed = _player.speed;
     }
 
 }

@@ -1,11 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine; 
+using UnityServiceLocator;
 
-public class SoundManager : SingletonPersistent<SoundManager>
+public class SoundManager : MonoBehaviour
 {
     [SerializeField] private AudioSource _musicSource, _effectSource;
+
+
+    private void Awake()
+    {
+        ServiceLocator.ForSceneOf(this).Register<SoundManager>(this); // Scene Scope
+    }
+
     //[SerializeField] private Button _musicButton, _effectsButton;
     //private bool _toggleMusic, _toggleEffects;
 

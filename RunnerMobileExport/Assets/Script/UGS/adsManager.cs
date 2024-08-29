@@ -2,10 +2,11 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityServiceLocator;
 
 public class adsManager : MonoBehaviour
 {
-    public static adsManager Instance;
+
     [SerializeField] private GameObject videoChanceScreen;
     [SerializeField] private GameObject vcCloseBtn;
     [SerializeField] private GameObject vcCloseAndroidPos;
@@ -19,16 +20,26 @@ public class adsManager : MonoBehaviour
     private bool vcTxtOnMainState = true;
     private bool clickedWatchBtn = false;
 
+
+    private GameManager _gameManager;
+    private SoundManager _soundManager;
+    private rewardedAdsButton _rewardedAdsButton;
+
+
     private void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        
+        ServiceLocator.ForSceneOf(this).Register<adsManager>(this); // Scene Scope
+
         clickedWatchBtn = false;
         hasVideoChance = true;
         videoChanceScreen.SetActive(false);
+    }
+
+    private void Start()
+    {
+        ServiceLocator.ForSceneOf(this).Get(out _gameManager);
+        ServiceLocator.ForSceneOf(this).Get(out _soundManager);
+        ServiceLocator.ForSceneOf(this).Get(out _rewardedAdsButton);
     }
 
     public void activateAds()
@@ -39,7 +50,7 @@ public class adsManager : MonoBehaviour
     public void showVideo()
     {
 
-        rewardedAdsButton.Instance.LoadAd();
+        _rewardedAdsButton.LoadAd();
         clickedWatchBtn = false;
         hasVideoChance = false;
 
@@ -67,7 +78,7 @@ public class adsManager : MonoBehaviour
         Time.timeScale = 1;
         videoChanceScreen.SetActive(false);
         AudioListener.pause = false;
-        SoundManager.Instance.TurnMusicOn();
+        _soundManager.TurnMusicOn();
     }
 
     private IEnumerator videoChanceTimer()
@@ -96,7 +107,7 @@ public class adsManager : MonoBehaviour
 
     public void cancelVideoAds()
     {
-        GameManager.Instance.playerHit();
+        _gameManager.playerHit();
         clickedWatchBtn = false;
         videoChanceScreen.SetActive(false);
         vcTxt.color = vcMainColor;

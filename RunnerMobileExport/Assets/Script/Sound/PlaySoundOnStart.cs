@@ -1,18 +1,17 @@
 using UnityEngine;
+using UnityServiceLocator;
 
 public class PlaySoundOnStart : MonoBehaviour
 {
     [SerializeField] private AudioClip _clip;
 
-    /*
-    private void Start()
-    {
-        SoundManager.Instance.PlaySound(_clip);
-    }
-    */
+    private SoundManager _soundManager;
+
+    
 
     public void OnEnable()
     {
-        SoundManager.Instance.PlaySound(_clip);
+        ServiceLocator.ForSceneOf(this).Get(out _soundManager);
+        _soundManager.PlaySound(_clip);
     }
 }

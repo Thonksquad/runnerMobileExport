@@ -5,22 +5,28 @@ public class RandomCoin : PoolMember
 {
     [SerializeField] private float _speed = 0.04f;
     [SerializeField] private AudioClip _clip;
-    private Player player;
     private float step = .2f;
     public Collider2D[] DetectPlayer;
     public float DetectionRadius;
     [SerializeField] private LayerMask PlayerLayer;
     [SerializeField] private Collider2D PhysicsCollider;
+
+
+    private Player _player;
+    private GameManager _gameManager;
+    private SoundManager _soundManager;
+
+
     private bool IsChaseOn(Vector2 pos, float radius) => Physics2D.OverlapCircleAll(pos, radius, PlayerLayer).Length > 0;
+
 
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.GetComponent<Player>() != null)
         {
-            SoundManager.Instance.PlaySound(_clip);
-            GameManager.Instance.IncreaseCoin(1);
-            //Destroy(gameObject);
+            _soundManager.PlaySound(_clip);
+            _gameManager.IncreaseCoin(1); 
             ReturnToPool();
         }
     }
@@ -30,20 +36,22 @@ public class RandomCoin : PoolMember
         if (IsChaseOn(new Vector2(transform.position.x, transform.position.y), DetectionRadius))
         {
             PhysicsCollider.enabled = false;
-            transform.position = Vector3.MoveTowards(transform.position, player.transform.position, step);
+            transform.position = Vector3.MoveTowards(transform.position, _player.transform.position, step);
             step += 5 * Time.deltaTime;
         }
         else
         {
-            transform.position = new Vector3(transform.position.x - _speed, transform.position.y, transform.position.z);
+            transform.position = new Vector3(transform.position.x - _speed * Time.deltaTime, transform.position.y, transform.position.z);
         }
     }
 
     public override void OnEnable()
     {
-        ServiceLocator.ForSceneOf(this).Get(out player);
         base.OnEnable();
-        _speed = player.speed;
+        ServiceLocator.ForSceneOf(this).Get(out _player);
+        ServiceLocator.ForSceneOf(this).Get(out _gameManager);
+        ServiceLocator.ForSceneOf(this).Get(out _soundManager);
+        _speed = _player.speed;
     }
 
 }

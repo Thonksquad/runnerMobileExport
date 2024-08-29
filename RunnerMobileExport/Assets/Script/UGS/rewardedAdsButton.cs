@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Advertisements;
+using UnityServiceLocator;
 
 public class rewardedAdsButton : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowListener
 {
@@ -11,11 +12,13 @@ public class rewardedAdsButton : MonoBehaviour, IUnityAdsLoadListener, IUnityAds
     string _adUnitId = null; // This will remain null for unsupported platforms
     [SerializeField] bool _testMode = true;
 
+    private adsManager _adsManager;
 
-    public static rewardedAdsButton Instance;
+
 
     void Awake()
     {
+        ServiceLocator.ForSceneOf(this).Register<rewardedAdsButton>(this); // Scene Scope
         // Get the Ad Unit ID for the current platform:
 #if UNITY_IOS
         _adUnitId = _iOSAdUnitId;
@@ -27,13 +30,12 @@ public class rewardedAdsButton : MonoBehaviour, IUnityAdsLoadListener, IUnityAds
 
         Debug.Log(" id = " + _adUnitId);
         // Disable the button until the ad is ready to show:
-        _showAdButton.interactable = false;
-        
-        if( Instance == null )
-        {
-            Instance = this;
-        }
+        _showAdButton.interactable = false; 
+    }
 
+    private void Start()
+    {
+        ServiceLocator.ForSceneOf(this).Get(out _adsManager);
     }
 
     // Call this public method when you want to get an ad ready to show.
@@ -65,7 +67,7 @@ public class rewardedAdsButton : MonoBehaviour, IUnityAdsLoadListener, IUnityAds
     {
         // Disable the button:
         _showAdButton.interactable = false;
-        adsManager.Instance.activateAds();
+        _adsManager.activateAds();
         // Then show the ad:
         Advertisement.Show(_adUnitId, this);
     }
@@ -77,7 +79,7 @@ public class rewardedAdsButton : MonoBehaviour, IUnityAdsLoadListener, IUnityAds
         {
             Debug.Log("Unity Ads Rewarded Ad Completed");
             // Grant a reward.
-            adsManager.Instance.playerWatchedAds();
+            _adsManager.playerWatchedAds();
         }
     }
 
@@ -86,14 +88,14 @@ public class rewardedAdsButton : MonoBehaviour, IUnityAdsLoadListener, IUnityAds
     {
         Debug.Log($"Error loading Ad Unit {adUnitId}: {error.ToString()} - {message}");
         // Use the error details to determine whether to try to load another ad.
-        adsManager.Instance.cancelVideoAds();
+        _adsManager.cancelVideoAds();
     }
 
     public void OnUnityAdsShowFailure(string adUnitId, UnityAdsShowError error, string message)
     {
         Debug.Log($"Error showing Ad Unit {adUnitId}: {error.ToString()} - {message}");
         // Use the error details to determine whether to try to load another ad.
-        adsManager.Instance.cancelVideoAds();
+        _adsManager.cancelVideoAds();
     }
 
     public void OnUnityAdsShowStart(string adUnitId) { }
