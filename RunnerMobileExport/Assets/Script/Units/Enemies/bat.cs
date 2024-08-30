@@ -1,19 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class bat : BaseEnemy
 {
     public float speed;
     public bool chase = false;
-    private Rigidbody2D rb;
+    private Rigidbody2D _rigidbody;
 
-    protected override void Start()
+
+
+    public override void OnEnable()
     {
-        base.Start();
-        rb = GetComponent<Rigidbody2D>();
+        base.OnEnable(); 
+        _rigidbody = GetComponent<Rigidbody2D>();
+        _rigidbody.bodyType = RigidbodyType2D.Kinematic;
     }
-
 
     public override void Update()
     {
@@ -21,13 +21,14 @@ public class bat : BaseEnemy
         if (player == null)
             return;
         if (!isDead)
-         {
+        {
             Chase();
             Flip();
-         } else
+        } 
+        else
         {
-            rb.bodyType = RigidbodyType2D.Dynamic;
-            rb.velocity = new Vector3(0, -12, 0);
+            _rigidbody.bodyType = RigidbodyType2D.Dynamic;
+            //rb.velocity = new Vector3(0, -12, 0);
         }
 
     }
