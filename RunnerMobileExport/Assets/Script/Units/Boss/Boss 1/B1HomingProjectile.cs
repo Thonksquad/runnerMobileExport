@@ -4,13 +4,12 @@ using UnityEngine;
 
 public class B1HomingProjectile : MonoBehaviour
 {
-    internal float bulletSpeed;
+    [SerializeField] private float bulletSpeed = 11f;
     internal Transform target;
     private float addedRotation;
 
-    internal void BulletStart(Transform target , float velocity, float addedRotate) // need to be called every spawn
+    internal void BulletStart(Transform target , float addedRotate) // need to be called every spawn
     {
-        bulletSpeed = velocity;
         this.target = target;
         addedRotation = addedRotate;
         GetComponent<TrailRenderer>().Clear();

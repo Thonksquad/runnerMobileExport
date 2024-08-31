@@ -9,8 +9,7 @@ using Utilities.Cooldown;
 public class Boss1 : MonoBehaviour
 {
     public int health;
-    [SerializeField] private int phase;
-    private float homingBulletVelocity = 8;
+    [SerializeField] private int phase; 
     private ObjectPool homingPool = new ObjectPool();
     private Vector3 initialLocalPosition;
     private IEnumerator phaseBehaviorCoroutine;
@@ -326,7 +325,7 @@ public class Boss1 : MonoBehaviour
     internal void SpawnHomingBullet(Vector2 spawnPosition, float scale, float addedRotation)
     {
         GameObject bullet = homingPool.DoSpawn(spawnPosition);
-        bullet.GetComponent<B1HomingProjectile>().BulletStart(playerTransformReference, homingBulletVelocity, addedRotation);
+        bullet.GetComponent<B1HomingProjectile>().BulletStart(playerTransformReference, addedRotation);
         bullet.transform.localScale = new Vector2(scale, scale);
     }
 }
