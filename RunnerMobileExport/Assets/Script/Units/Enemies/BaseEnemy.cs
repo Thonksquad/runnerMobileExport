@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityServiceLocator;
 
 public abstract class BaseEnemy : MonoBehaviour
 {
@@ -9,11 +8,15 @@ public abstract class BaseEnemy : MonoBehaviour
     public Animator _anim;
     public bool isDead { get; protected set; } = false;
 
-    [SerializeField] private float _speed = 0.04f;
+    [SerializeField] private float _speed;
+
+    private UnitManager _unitManager;
+
 
     protected virtual void Start()
     {
-        player = FindObjectOfType<Player>();
+        ServiceLocator.ForSceneOf(this).Get(out player);
+        ServiceLocator.ForSceneOf(this).Get(out _unitManager);
         _anim = GetComponent<Animator>();
         _anim.CrossFade("alive", 0, 0);
     }
@@ -32,14 +35,16 @@ public abstract class BaseEnemy : MonoBehaviour
 
     public virtual void OnEnable()
     {
+        ServiceLocator.ForSceneOf(this).Get(out player);
         isDead = false;
         int enemyLayer = LayerMask.NameToLayer("Enemy");
         gameObject.layer = enemyLayer;
+        _speed = player.speed;
     }
 
     public virtual void Update()
     {
-        transform.position = new Vector3(transform.position.x - _speed, transform.position.y, transform.position.z);
+        transform.position = new Vector3(transform.position.x - _speed * Time.deltaTime, transform.position.y, transform.position.z);
     }
 
     public virtual void OnTriggerEnter2D(Collider2D colider)
@@ -47,25 +52,23 @@ public abstract class BaseEnemy : MonoBehaviour
         int coinChance = Random.Range(1, 101);
         if (colider.gameObject.GetComponent<Bullet>() != null)
         {
-            if (CameraManager.Instance.CamSpeed < 20)
+            if (player.speed < 20)
             {
-                CameraManager.Instance.CamSpeed += .5f;
+                player.speed += .5f;
             } else
             {
-                CameraManager.Instance.CamSpeed += .25f;
+                player.speed += .25f;
             }
-            //Destroy(colider.gameObject);
+
             colider.gameObject.GetComponent<Bullet>().ReturnToPool();
 
             if (gameObject.TryGetComponent(out BaseEnemy enemy)){
                 enemy.HandleDeath();
             }
 
-            //Destroy(this.gameObject,1f);
-
             if (coinChance <= 30)
             {
-                UnitManager.Instance.SpawnCoin(transform.position.x, transform.position.y);
+                _unitManager.SpawnCoin(transform.position.x, transform.position.y);
             }
         }
     }

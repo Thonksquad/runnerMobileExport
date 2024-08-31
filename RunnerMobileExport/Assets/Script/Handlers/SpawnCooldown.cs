@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityServiceLocator;
 using Utilities.Cooldown;
 
 public class SpawnCooldown : MonoBehaviour
@@ -6,7 +7,7 @@ public class SpawnCooldown : MonoBehaviour
     [SerializeField] private float _SpawnDelay = 0.75f;
     [SerializeField] private float _startValue = 1f;
     [SerializeField] private float _endValue = 3f;
-    [SerializeField] private float _modifier = 0.1f; 
+    [SerializeField] private float _modifier = 0.1f;
 
     private float _currentValue;
     private int _roundedValue;
@@ -14,11 +15,21 @@ public class SpawnCooldown : MonoBehaviour
     private Cooldown _cdObstacle = new(7f);
     private Cooldown _cdEnemy = new(7f);
     private Cooldown _cdCoin = new(30f);
-    public static SpawnCooldown Instance;
+
+    private UnitManager _unitManager;
+
+    private void Awake()
+    {
+        ServiceLocator.ForSceneOf(this).Register<SpawnCooldown>(this); // Scene Scope
+    }
+
+    private void Start()
+    {
+        ServiceLocator.ForSceneOf(this).Get(out _unitManager);
+    }
 
     private void OnEnable()
     {
-        Instance = this;
         _cdMain.Completed += MainCooldown;
         _cdObstacle.Completed += ObstacleCooldown;
         _cdEnemy.Completed += EnemyCooldown;
@@ -56,11 +67,11 @@ public class SpawnCooldown : MonoBehaviour
 
     private void ObstacleCooldown()
     {
-        if (UnitManager.Instance != null)
+        if (_unitManager != null)
         {
             for (int i = 0; i < _roundedValue; i++)
             {
-                UnitManager.Instance.SpawnObstacle();
+                _unitManager.SpawnObstacle();
             }
         }
         _cdObstacle.Start();
@@ -68,11 +79,11 @@ public class SpawnCooldown : MonoBehaviour
 
     private void EnemyCooldown()
     {
-        if (UnitManager.Instance != null)
+        if (_unitManager != null)
         {
             for (int i = 0; i < _roundedValue; i++)
             {
-                UnitManager.Instance.SpawnEnemy();
+                _unitManager.SpawnEnemy();
             }
         }
         _cdEnemy.Start();
@@ -80,15 +91,13 @@ public class SpawnCooldown : MonoBehaviour
 
     private void CoinCooldown()
     {
-        if (UnitManager.Instance != null)
+        if (_unitManager != null)
         {
-            for (int i = 0; i < _roundedValue; i++)
-            {
-                UnitManager.Instance.SpawnRandomCoin();
-            }
+            _unitManager.SpawnRandomCoin();
         }
         _cdCoin.Start();
     }
+
 
 
     public void StartBoss()
@@ -111,4 +120,6 @@ public class SpawnCooldown : MonoBehaviour
         Invoke(nameof(CoinCooldown), 1f + _SpawnDelay * 2);
     }
 
+
 }
+

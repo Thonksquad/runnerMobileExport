@@ -92,7 +92,7 @@ public class PlayerAnimationHandler : MonoBehaviour
 
     public bool IsGrounded()
     {
-        float extraHeight = .5f;
+        float extraHeight = .05f;
         RaycastHit2D raycastHit = Physics2D.Raycast(myCol.bounds.center, Vector2.down, myCol.bounds.extents.y + extraHeight, platformLayer);
 
         Color rayColor;

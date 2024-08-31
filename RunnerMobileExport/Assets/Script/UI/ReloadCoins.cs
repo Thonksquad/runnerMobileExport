@@ -11,5 +11,9 @@ public class ReloadCoins : MonoBehaviour
     {
         TryGetComponent(out coinsText);
     }
-     
+
+    public void ChangeCoins()
+    {
+        coinsText.text = DBGrabUser.coinAllColected.ToString();
+    }
 }

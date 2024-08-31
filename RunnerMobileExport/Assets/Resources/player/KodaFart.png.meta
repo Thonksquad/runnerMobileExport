@@ -21,7 +21,7 @@ TextureImporter:
     heightScale: 0.25
     normalMapFilter: 0
     flipGreenChannel: 0
-  isReadable: 0
+  isReadable: 1
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
@@ -45,7 +45,7 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
@@ -132,11 +132,24 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: koda fart_0
+      name: KodaFart_0
       rect:
         serializedVersion: 2
         x: 107
@@ -150,14 +163,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2ba21048fda193545b88a6917d8dd0f2
-      internalID: 86101827
+      spriteID: 823a6267369877449969ab6f04ced89f
+      internalID: -1476964930
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: koda fart_1
+      name: KodaFart_1
       rect:
         serializedVersion: 2
         x: 405
@@ -171,14 +184,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6fd7eedf2c9b5d44b814ea1da24200a4
-      internalID: 327041521
+      spriteID: e4aa7824b0bc44f4c88caef26168e1db
+      internalID: 231920967
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: koda fart_2
+      name: KodaFart_2
       rect:
         serializedVersion: 2
         x: 746
@@ -192,8 +205,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 32983bb54bd1ebe4d86a0f965ad8407b
-      internalID: -838740425
+      spriteID: 4d447cc4b1f3a1045b853cc6aece6714
+      internalID: -1731364156
       vertices: []
       indices: 
       edges: []
@@ -209,9 +222,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      koda fart_0: 86101827
-      koda fart_1: 327041521
-      koda fart_2: -838740425
+      KodaFart_0: -1476964930
+      KodaFart_1: 231920967
+      KodaFart_2: -1731364156
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

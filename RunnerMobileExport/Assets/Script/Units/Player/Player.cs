@@ -1,20 +1,16 @@
-using System.Collections; 
-using UnityEngine; 
-using UnityEngine.InputSystem; 
-using UnityServiceLocator;
 using TMPro;
+using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityServiceLocator;
 
 
 public class Player : MonoBehaviour
 {
     private int LayerPlayer;
     private int LayerEnemy;
-    private Rigidbody2D body;
-    private ObjectPool fartPool = new ObjectPool();
-    private Transform _Koda;
-
     public int hp;
     public int maxHP = 1;
+    public Rigidbody2D body;
     public bool gameOver = false;
     public Animator myAnim;
     public PlayerInputActions playerControls;
@@ -27,11 +23,10 @@ public class Player : MonoBehaviour
     public InputAction fly;
     public InputAction fire;
 
+    public GameObject houndbulletPrefab;
+    public GameObject bulletPrefab;
     [SerializeField] private SpawnPool _bulletPool;
     [SerializeField] private SpawnPool _houndBulletPool;
-
-    public GameObject bulletPrefab;
-    public GameObject houndbulletPrefab;
     public Transform bulletTransform;
     public bool canFire;
     private float fireTimer;
@@ -42,6 +37,7 @@ public class Player : MonoBehaviour
     public bool canFart;
     private float fartTimer;
     public float fartCD;
+    private float FartAngle;
 
     private float _lockedTill;
     private AudioClip _currentState;
@@ -51,43 +47,34 @@ public class Player : MonoBehaviour
 
     [SerializeField] private GameObject gameTrackerScreen;
     [SerializeField] private float _WalkingDuration = 2f;
-
-    [SerializeField] private GameObject _FartPrefab;
-
-    [SerializeField] private SpriteRenderer reloadBar;
-    public Coroutine fartRoutine;
+    [SerializeField] private ParticleSystem _fartSystem;
 
     private bool LandedThisFrame;
-    private PlayerAnimationHandler AnimationHandler; 
+    [SerializeField] private PlayerAnimationHandler AnimationHandler;
+
 
     [SerializeField] private TextMeshProUGUI _bossHitsText;
     [SerializeField] private Color _normalColor;
-    [SerializeField] private Color _laserColor;
-
-
+    [SerializeField] private Color _laserColor; 
     public static int bossHit;
 
 
     [Header("service locator speed")]
     public float speed = 8f;
 
-    #region Unity CallBacks
     private void Awake()
     {
         ServiceLocator.ForSceneOf(this).Register<Player>(this); // Scene Scope
 
-        body = GetComponent<Rigidbody2D>();
-        AnimationHandler = GetComponent<PlayerAnimationHandler>();
-        _Koda = gameObject.transform.Find("koda");
         int LayerPlayer = LayerMask.NameToLayer("Player");
         int LayerEnemy = LayerMask.NameToLayer("Enemy");
         playerControls = new PlayerInputActions();
-        reloadBar.enabled = false;
     }
 
     private void OnEnable()
     {
-        ActionSystem.onPlayerRevive += TurnCollisionOn;
+        ActionSystem.onPlayerRecover += TurnCollisionOn;
+        ActionSystem.onPlayerRevive += Revive;
         fly = playerControls.Player.Fly;
         fly.Enable();
         fire = playerControls.Player.Fire;
@@ -97,7 +84,8 @@ public class Player : MonoBehaviour
 
     private void OnDisable()
     {
-        ActionSystem.onPlayerRevive -= TurnCollisionOn;
+        ActionSystem.onPlayerRecover -= TurnCollisionOn;
+        ActionSystem.onPlayerRevive -= Revive;
         fly.Disable();
         fire.Disable();
         fire.performed -= OnFire;
@@ -105,15 +93,12 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        hp = maxHP;
+        hp = maxHP; 
         body = GetComponent<Rigidbody2D>();
         myAnim = GetComponent<Animator>();
-        LandedThisFrame = AnimationHandler.IsGrounded(); 
-        fartPool.CreateObjectPool(_FartPrefab, 2); 
+        LandedThisFrame = AnimationHandler.IsGrounded();
     }
-    #endregion // Unity CallBacks
 
-    #region Fire & Movements
     private void OnFire(InputAction.CallbackContext ctx)
     {
         if (canFire)
@@ -128,22 +113,20 @@ public class Player : MonoBehaviour
                 Invoke(nameof(HoundFire), .2f);
             } else
             {
+                //Instantiate(bulletPrefab, bulletTransform.position, Quaternion.identity);
                 _bulletPool.Spawner(new Vector2(bulletTransform.position.x, bulletTransform.position.y));
             }
-
-            StartCoroutine(Handle_UIReloadBar());
         }
     }
 
-    
     private void HoundFire()
     {
+        //Instantiate(houndbulletPrefab, bulletTransform.position, Quaternion.identity);
         _houndBulletPool.Spawner(new Vector2(bulletTransform.position.x, bulletTransform.position.y));
     }
 
     void Update()
     {
-     //   HandleCursor();
 
         if (LandedThisFrame != AnimationHandler.IsGrounded())
         {
@@ -159,7 +142,7 @@ public class Player : MonoBehaviour
                 fartTimer += Time.deltaTime;
                 if (fartTimer > fartCD)
                 {
-                    fartPool.DoSpawn(_Koda.position);
+                    _fartSystem.Play();
                     canFart = false;
                     fartTimer = 0;
                 }
@@ -170,7 +153,7 @@ public class Player : MonoBehaviour
         {
             gameOverCounter++;
             gameTrackerScreen.SetActive(false);
-            ActionSystem.onPlayerDeath();
+            ActionSystem.onPlayerHit();
             return;
         }
 
@@ -189,18 +172,8 @@ public class Player : MonoBehaviour
         {
             isFlying = true;
 
-            flyVelocity = (float)(8f + ( speed * 0.15));
+            flyVelocity = (float)(8f + (speed * 0.15));
             body.velocity = new Vector3(0, flyVelocity, 0);
-            // jump logic
-            /**
-            if (AnimationHandler.IsGrounded())
-            {
-                body.velocity = new Vector3(0, 32f, 0);
-            } else
-            {
-                body.velocity = new Vector3(0, 8f, 0);
-            }
-            **/
         }
         else if (fly.WasReleasedThisFrame())
         {
@@ -210,7 +183,6 @@ public class Player : MonoBehaviour
         }
 
     }
-    #endregion // Fire & Movements
 
     private void TurnCollisionOn()
     {
@@ -219,21 +191,15 @@ public class Player : MonoBehaviour
     }
 
 
-    
-    private IEnumerator Handle_UIReloadBar()
+
+    public void Revive()
     {
-        reloadBar.enabled = true;
-        float tempWidth = reloadBar.transform.localScale.x;
-
-        while (!canFire)
-        {
-            reloadBar.transform.localScale = new Vector2(tempWidth * (fireTimer / fireCD), reloadBar.transform.localScale.y);
-            reloadBar.transform.parent.position = transform.position + new Vector3(((tempWidth * (fireTimer / fireCD)) / 2) - tempWidth/2, 0, 0);
-            yield return null;
-        }
-
-        reloadBar.enabled = false;
+        gameTrackerScreen.SetActive(true);
+        TurnCollisionOn();
+        gameOver = false;
+        gameOverCounter = 0;
     }
+
 
     #region take Damage
 
@@ -270,13 +236,13 @@ public class Player : MonoBehaviour
         {
             onHound = false;
         }
-        BossHit(); 
+        BossHit();
         gameObject.GetComponent<SpriteRenderer>().material.color = _laserColor;
     }
 
-    public void ExitBossLaser() 
+    public void ExitBossLaser()
     {
-        gameObject.GetComponent<SpriteRenderer>().material.color = _normalColor; 
+        gameObject.GetComponent<SpriteRenderer>().material.color = _normalColor;
     }
 
     private void BossHit()
@@ -284,6 +250,7 @@ public class Player : MonoBehaviour
         bossHit++;
         _bossHitsText.text = bossHit.ToString();
     }
-    #endregion // Boss
+    #endregion // take Damage
+
 
 }

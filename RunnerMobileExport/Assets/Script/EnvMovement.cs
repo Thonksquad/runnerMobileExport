@@ -1,20 +1,35 @@
 using UnityEngine;
+using UnityServiceLocator;
 
 public class EnvMovement : MonoBehaviour
 {
+    [Range(0f, 1f)] public float ParallaxEffect; 
 
-    [SerializeField] public static float _speed = 8.5f; 
-    [SerializeField] private float _nextBgX = 362f; 
-    [SerializeField] private float _passedX = -140f;
+    private float _startPos, _length;
 
+
+    private Player _player;
+
+
+
+    private void Start()
+    {
+        ServiceLocator.ForSceneOf(this).Get(out _player);
+
+        _startPos = transform.position.x;
+        _length = GetComponent<SpriteRenderer>().bounds.size.x; 
+    }
 
     private void Update()
     {
-        transform.position = new Vector3( transform.position.x - _speed * Time.deltaTime, transform.position.y, transform.position.z);
-        if ( transform.position.x < _passedX)
+        if (transform.position.x < _startPos - _length)
         {
-            transform.position = new Vector3( _nextBgX, transform.position.y, transform.position.z);
+            transform.position = new Vector3( _startPos , transform.position.y, transform.position.z );
         }
-    }
 
+        transform.position = new Vector3(
+            transform.position.x - _player.speed * ParallaxEffect * Time.deltaTime,
+            transform.position.y,
+            transform.position.z); 
+    }
 }

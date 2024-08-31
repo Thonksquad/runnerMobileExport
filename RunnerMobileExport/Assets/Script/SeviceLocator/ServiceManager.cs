@@ -34,15 +34,20 @@ namespace UnityServiceLocator {
 
         public ServiceManager Register<T>(T service) {
             Type type = typeof(T);
-            
             if (!services.TryAdd(type, service)) {
-                Debug.LogError($"ServiceManager.Register: Service of type {type.FullName} already registered");
+                //Debug.Log($"ServiceManager.Register: Service of type {type.FullName} already registered");
+                ServiceListNames.TypeNames.Remove(type.FullName);
+                ServiceListNames.TypeNames.Add(type.FullName);
                 services.Remove(type);
-                Debug.LogError($"ServiceManager.Register: deregister  of type {type.FullName} and registering again... ");
+                Debug.Log($"ServiceManager.Register: deregister  of type {type.FullName} and registering again... ");
                 if (!services.TryAdd(type, service))
                 {
-                    Debug.LogError($"ServiceManager.Register: Service of type {type.FullName} already registered");
+                    Debug.Log($"ServiceManager.Register: Service of type {type.FullName} already registered");
                 }
+            }
+            else
+            {
+                ServiceListNames.TypeNames.Add(type.FullName);
             }
 
             

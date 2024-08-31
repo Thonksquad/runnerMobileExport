@@ -130,7 +130,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rotationSpeed: 10
-  _enemyProjectilePrefab: {fileID: 4248346375733782567, guid: 594a88d756332984b9981cf8e72ac33b, type: 3}
+  enemyProjectilePool: {fileID: 0}
   _spawnSpot: {fileID: 1028058780117064764}
   firingCD: 0
   player: {fileID: 0}
@@ -240,6 +240,7 @@ MonoBehaviour:
   EnemyDifficulty: 0
   player: {fileID: 0}
   _anim: {fileID: -5917382125782401091}
+  _speed: 0
   myArm: {fileID: 4647744720405187691}
   arm: {fileID: 4647744720405187690}
 --- !u!61 &5750011315217494102
@@ -347,11 +348,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12d094331a7452e4cac57387ef554b30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyDestroyTimer: 10
-  _minSpawnX: 45
-  _maxSpawnX: 55
-  _minSpawnY: -6
-  _maxSpawnY: 6
 --- !u!1 &8341968407308050917
 GameObject:
   m_ObjectHideFlags: 0

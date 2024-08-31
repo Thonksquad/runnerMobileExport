@@ -1,11 +1,11 @@
-using UnityServiceLocator;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityServiceLocator; 
 
 public class UnitManager : MonoBehaviour
 {
-    public static UnitManager Instance;
+
     public Collider2D[] DetectedEnemies;
     public float DetectionRadius;
 
@@ -23,6 +23,8 @@ public class UnitManager : MonoBehaviour
     [SerializeField] private SpawnPool _randomCoinPool;
     [SerializeField] private SpawnPool _coinPool;
 
+    [SerializeField] private SpawnPool _enemyArrowPool;
+
     [SerializeField] private LayerMask EnemyDetectionLayer; 
     [SerializeField] private GameObject houndPrefab;
 
@@ -35,18 +37,16 @@ public class UnitManager : MonoBehaviour
     [HideInInspector] public Vector2 enemySpawnPoint;
     [SerializeField] private float _minSpawnX = 45f;
     [SerializeField] private float _maxSpawnX = 60f;
-    [SerializeField] private float _minSpawnY = -6f;
-    [SerializeField] private float _maxSpawnY = 6f;
+
 
 
     [SerializeField] private List<BaseEnemy> _units;
-    private GameObject enemy;
 
-    private float Respawntimer => 1+(0.01f*CameraManager.Instance.CamSpeed);
-    private float mobSpawnDistance => 50f + (0.1f*CameraManager.Instance.CamSpeed);
-    [SerializeField] private float mobspawnInterval = 7f;
-    [SerializeField] private float coinspawnInterval = 30f;
-    [SerializeField] private float mobAutoDestroy = 10f;
+
+    private float Respawntimer => 1+(0.01f * player.speed);
+    private float mobSpawnDistance => 50f + (0.1f* player.speed);
+
+
 
     [SerializeField] private float xRef;
     [SerializeField] private float yRef;
@@ -57,17 +57,17 @@ public class UnitManager : MonoBehaviour
 
     private void Awake()
     {
-        Instance = this;
+        ServiceLocator.ForSceneOf(this).Register<UnitManager>(this); // Scene Scope
     }
 
     private void Start()
-    { 
-        ServiceLocator.ForSceneOf(this).Get(out player); 
+    {
+        ServiceLocator.ForSceneOf(this).Get(out player);
     }
 
     public void SpawnHound()
     {
-        xRef = player.transform.position.x + 50;
+        xRef = player.transform.position.x + mobSpawnDistance;
         yRef = -6.5f;
 
         if (IsSafeToSpawn(new Vector2(xRef, yRef), 3 * DetectionRadius))
@@ -75,7 +75,7 @@ public class UnitManager : MonoBehaviour
             GameObject newHound = Instantiate(houndPrefab, new Vector3(xRef, yRef, 0), Quaternion.identity);
         } else
         {
-            Invoke(nameof(SpawnHound), 0.25f);
+            Invoke(nameof(SpawnHound), 0.5f);
         }
     }
 
@@ -135,6 +135,7 @@ public class UnitManager : MonoBehaviour
         {
             Invoke(nameof(SpawnObstacle), Respawntimer);
         }
+        
     }
 
     public void SpawnEnemy()
@@ -142,6 +143,9 @@ public class UnitManager : MonoBehaviour
         xRef = Random.Range(_minSpawnX, _maxSpawnX);
         yRef = Random.Range(-6f, 6f);
 
+
+
+        
         if (IsSafeToSpawn(new Vector2(xRef, yRef), DetectionRadius))
         {
             enemySpawnPoint = new Vector2(xRef, yRef);
@@ -158,16 +162,18 @@ public class UnitManager : MonoBehaviour
                     _leaperPool.Spawner(enemySpawnPoint);
                     break;
                 case 3:
-                    _archerPool.Spawner(enemySpawnPoint);
+                    GameObject archer = _archerPool.SpawnGameObject(enemySpawnPoint);
+                    archer.GetComponent<ArcherEnemy>().myArm.enemyProjectilePool = _enemyArrowPool;
                     break;
-                default: break;
+                default: 
+                    break;
             }
         }
         else
         {
             Invoke(nameof(SpawnEnemy), Respawntimer);
         }
-
+        
     }
 
 

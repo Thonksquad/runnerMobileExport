@@ -31,7 +31,13 @@ public class BossHandler : MonoBehaviour
     [SerializeField] private Image bossHPBar;
 
 
-    private Player player;
+
+
+    private Player _player;
+    private UnitManager _unitManager;
+    private SpawnCooldown _spawnCooldown;
+    private GameManager _gameManager;
+
 
     private enum BossNames
     {
@@ -40,7 +46,11 @@ public class BossHandler : MonoBehaviour
 
     private void Start()
     {
-        ServiceLocator.ForSceneOf(this).Get(out player);
+        ServiceLocator.ForSceneOf(this).Get(out _player);
+        ServiceLocator.ForSceneOf(this).Get(out _unitManager);
+        ServiceLocator.ForSceneOf(this).Get(out _spawnCooldown);
+        ServiceLocator.ForSceneOf(this).Get(out _gameManager);
+
         bossUICanvas.gameObject.SetActive(false);
         bossAlive = false;
         StartCoroutine(WaitForStopEnemySpawn());
@@ -61,8 +71,8 @@ public class BossHandler : MonoBehaviour
             }
             yield return new WaitForSeconds(1f);
         }
-         
-        SpawnCooldown.Instance.StartBoss(); 
+
+        _spawnCooldown.StartBoss(); 
         
     }
 
@@ -80,9 +90,9 @@ public class BossHandler : MonoBehaviour
         }
 
 
-        if (!player.onHound)
+        if (!_player.onHound)
         {
-            UnitManager.Instance.SpawnHound();
+            _unitManager.SpawnHound();
         }
 
         _warningImage.SetActive(true);
@@ -141,7 +151,7 @@ public class BossHandler : MonoBehaviour
         _killScreen.SetActive(true);
         yield return new WaitForSeconds(_killScreenTime);
         _killScreen.SetActive(false);
-        SpawnCooldown.Instance.EndBoss();
+        _spawnCooldown.EndBoss();
     }
 
     private void BossCoinCalculator()
@@ -159,7 +169,7 @@ public class BossHandler : MonoBehaviour
         {
             bossCoins = 1;
         }
-        GameManager.Instance.bossCoinUI.text = bossCoins.ToString();
+        _gameManager.bossCoinUI.text = bossCoins.ToString();
     }
 
     internal void EndBossEncounter()

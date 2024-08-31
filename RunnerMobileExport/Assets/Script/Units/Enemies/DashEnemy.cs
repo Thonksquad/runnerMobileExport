@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DashEnemy: BaseEnemy
@@ -8,13 +6,16 @@ public class DashEnemy: BaseEnemy
     [SerializeField] float obstacleRayDistance;
     public GameObject obstacleRayObject;
 
-    Rigidbody2D myRigidbody;
+    private Rigidbody2D _rigidbody;
 
-    protected override void Start()
+
+    public override void OnEnable()
     {
-        base.Start();
-        myRigidbody = GetComponent<Rigidbody2D>();
+        base.OnEnable(); 
+        _rigidbody = GetComponent<Rigidbody2D>();
+        _rigidbody.bodyType = RigidbodyType2D.Kinematic;
     }
+
 
     public override void Update()
     {
@@ -30,12 +31,12 @@ public class DashEnemy: BaseEnemy
                 walkSpeed = 15f;
             }
 
-            myRigidbody.velocity = new Vector2(-walkSpeed, 0f);
+            _rigidbody.velocity = new Vector2(-walkSpeed, 0f);
         }
         else
         {
-            myRigidbody.bodyType = RigidbodyType2D.Dynamic;
-            myRigidbody.velocity = new Vector3(0, -10, 0);
+            _rigidbody.bodyType = RigidbodyType2D.Dynamic;
+            //myRigidbody.velocity = new Vector3(0, -10, 0);
             walkSpeed = 0;
         }
 
