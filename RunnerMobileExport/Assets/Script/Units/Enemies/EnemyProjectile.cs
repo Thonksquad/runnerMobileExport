@@ -1,19 +1,29 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityServiceLocator;
 
 public class EnemyProjectile : MonoBehaviour
 {
-    [SerializeField] private Rigidbody2D _rb;
-    [SerializeField] private float _speed;
+
+    [SerializeField] private float _speed = 3f;
     public int damage = 1;
+
+    private Player _player;
+    private float _playerSpeed;
+
+
 
     public void Init(Vector2 dir)
     {
+        ServiceLocator.ForSceneOf(this).Get(out _player);
+        _playerSpeed = _player.speed;
         float rot = Mathf.Atan2(-dir.y, -dir.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0, 0,rot);
-        _rb.velocity = dir * _speed;
-        Destroy(gameObject, 3);
+        Invoke(nameof(Deactivation), 3);
+    }
+
+    public void Update()
+    {
+        transform.Translate( -transform.right * _playerSpeed * _speed * Time.deltaTime, Space.World);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -21,7 +31,15 @@ public class EnemyProjectile : MonoBehaviour
         if (collision.gameObject.TryGetComponent(out Player player))
         {
             player.TakeDamage(damage);
-            Destroy(gameObject);
+            Deactivation();
+        }
+    }
+
+    private void Deactivation()
+    {
+        if(gameObject.activeInHierarchy)
+        { 
+            gameObject.GetComponent<PoolMember>().ReturnToPool();
         }
     }
 

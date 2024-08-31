@@ -1,25 +1,30 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ArcherEnemy : BaseEnemy
 {
-    [SerializeField] private ArcherAim myArm;
+    public ArcherAim myArm;
     [SerializeField] private SpriteRenderer arm;
+
+    public override void OnEnable()
+    {
+        base.OnEnable();
+        myArm.enabled = true;
+        arm.enabled = true;
+    }
 
     public override void Update()
     {
         base.Update();
-        if (!isDead)
-        {
-            Flip();
-        } else
+        if ( isDead)
         {
             myArm.StopShooting();
             myArm.enabled = false;
             arm.enabled = false;
-        }
-
+        } 
+        else
+        {
+            Flip();
+        } 
     }
 
     private void Flip()

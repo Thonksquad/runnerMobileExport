@@ -33,6 +33,13 @@ public class SpawnPool : MonoBehaviour
         poolMember.transform.position = pos;
     }
 
+    public GameObject SpawnGameObject(Vector2 pos)
+    {
+        PoolMember poolMember = _pool.Get();
+        poolMember.transform.position = pos;
+        return poolMember.gameObject;
+    }
+
     private void OnGet(PoolMember poolMember)
     {
         poolMember.gameObject.SetActive(true);

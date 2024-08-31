@@ -23,6 +23,8 @@ public class UnitManager : MonoBehaviour
     [SerializeField] private SpawnPool _randomCoinPool;
     [SerializeField] private SpawnPool _coinPool;
 
+    [SerializeField] private SpawnPool _enemyArrowPool;
+
     [SerializeField] private LayerMask EnemyDetectionLayer; 
     [SerializeField] private GameObject houndPrefab;
 
@@ -133,12 +135,14 @@ public class UnitManager : MonoBehaviour
         {
             Invoke(nameof(SpawnObstacle), Respawntimer);
         }
+        
     }
 
     public void SpawnEnemy()
     {
         xRef = Random.Range(_minSpawnX, _maxSpawnX);
         yRef = Random.Range(-6f, 6f);
+
 
         if (IsSafeToSpawn(new Vector2(xRef, yRef), DetectionRadius))
         {
@@ -156,16 +160,17 @@ public class UnitManager : MonoBehaviour
                     _leaperPool.Spawner(enemySpawnPoint);
                     break;
                 case 3:
-                    _archerPool.Spawner(enemySpawnPoint);
+                    GameObject archer = _archerPool.SpawnGameObject(enemySpawnPoint);
+                    archer.GetComponent<ArcherEnemy>().myArm.enemyProjectilePool = _enemyArrowPool;
                     break;
-                default: break;
+                default: 
+                    break;
             }
         }
         else
         {
             Invoke(nameof(SpawnEnemy), Respawntimer);
         }
-
     }
 
 

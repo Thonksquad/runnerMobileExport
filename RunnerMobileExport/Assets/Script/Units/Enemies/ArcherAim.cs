@@ -1,10 +1,11 @@
 using System.Collections;
 using UnityEngine;
+using UnityServiceLocator;
 
 public class ArcherAim : MonoBehaviour
 {
     [SerializeField, Range(1, 100)] private float _rotationSpeed = 70;
-    [SerializeField] private EnemyProjectile _enemyProjectilePrefab;
+    public SpawnPool enemyProjectilePool;
     [SerializeField] private Transform _spawnSpot;
     [SerializeField] private float firingCD;
     private float PlayerDistance;
@@ -15,8 +16,13 @@ public class ArcherAim : MonoBehaviour
 
     private void Start()
     {
-        player = FindObjectOfType<Player>();
+        ServiceLocator.ForSceneOf(this).Get(out player);
         pivot = transform.parent;
+    }
+
+    private void OnEnable()
+    {
+        canFire = true;
     }
 
     private void Update()
@@ -72,6 +78,8 @@ public class ArcherAim : MonoBehaviour
 
     private void ArcherFire()
     {
-        Instantiate(_enemyProjectilePrefab, _spawnSpot.position, Quaternion.identity).Init(pivot.up);
+        Vector2 dir = player.transform.position - transform.position; 
+        GameObject arrow = enemyProjectilePool.SpawnGameObject(_spawnSpot.position);
+        arrow.GetComponent<EnemyProjectile>().Init(dir);
     }
 }
