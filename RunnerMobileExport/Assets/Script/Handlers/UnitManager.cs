@@ -144,6 +144,7 @@ public class UnitManager : MonoBehaviour
         yRef = Random.Range(-6f, 6f);
 
 
+        
         if (IsSafeToSpawn(new Vector2(xRef, yRef), DetectionRadius))
         {
             enemySpawnPoint = new Vector2(xRef, yRef);
@@ -171,6 +172,7 @@ public class UnitManager : MonoBehaviour
         {
             Invoke(nameof(SpawnEnemy), Respawntimer);
         }
+        
     }
 
 

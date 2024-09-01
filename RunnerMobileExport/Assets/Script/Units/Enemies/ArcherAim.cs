@@ -64,16 +64,22 @@ public class ArcherAim : MonoBehaviour
 
 
     private IEnumerator ArcherActivated()
-    {
-        firingCD = 14f * (2 / (player.speed));
-        yield return new WaitForSecondsRealtime(firingCD);
+    { 
         if (canFire == true)
         {
             ArcherFire();
             canFire = false;
         }
 
+        firingCD = Mathf.Clamp(26f * (2f / player.speed), 2.5f, 6f);
+        yield return new WaitForSecondsRealtime(firingCD);
+
        archerRoutine = StartCoroutine(ArcherActivated());
+    }
+
+    private void OnBecameInvisible()
+    {
+        StopShooting();
     }
 
     private void ArcherFire()

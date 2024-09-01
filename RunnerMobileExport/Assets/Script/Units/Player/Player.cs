@@ -86,7 +86,7 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        hp = maxHP;
+        hp = maxHP; 
         body = GetComponent<Rigidbody2D>();
         myAnim = GetComponent<Animator>();
         LandedThisFrame = AnimationHandler.IsGrounded();
