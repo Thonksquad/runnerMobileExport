@@ -21,6 +21,8 @@ public class Coin : MonoBehaviour
 
 
 
+
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.GetComponent<Player>() != null)
@@ -53,6 +55,7 @@ public class Coin : MonoBehaviour
         Vector2 forceDirection = new Vector2(Random.Range(0, .001f), Random.Range(.001f, .003f)).normalized;
         gameObject.GetComponent<Rigidbody2D>().AddForce(.1f * forceDirection, ForceMode2D.Impulse);
         _speed = _player.speed;
+        PhysicsCollider.enabled = true;
     }
 
 }
