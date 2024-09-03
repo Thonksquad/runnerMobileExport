@@ -16,9 +16,11 @@ public class BossEye : MonoBehaviour
     [SerializeField] Transform laser2;
     [SerializeField] Transform laser3;
 
+    [SerializeField] private float eyeBodyTurnSpeed = 30f;
+
     internal int hitHP;
     private EyeEntries thisEyeEntry;
-    private SpriteRenderer eyeRenderer;
+    [SerializeField] private SpriteRenderer eyeRenderer;
     private LineRenderer laserLineRenderer;
     private EdgeCollider2D edgeCollider2D;
 
@@ -36,7 +38,7 @@ public class BossEye : MonoBehaviour
 
     private void Awake()
     {
-        eyeRenderer = GetComponent<SpriteRenderer>();
+        //eyeRenderer = GetComponent<SpriteRenderer>();
         laserLineRenderer = GetComponent<LineRenderer>();
         edgeCollider2D = GetComponent<EdgeCollider2D>();
     }
@@ -45,6 +47,43 @@ public class BossEye : MonoBehaviour
     {
         ServiceLocator.ForSceneOf(this).Get(out _player);
         DoEyeClose(false);
+    }
+
+
+    private void FixedUpdate()
+    {
+        Vector3 targ = _player.transform.position;
+        targ.z = 0f;
+        targ.x = targ.x - transform.position.x;
+        targ.y = targ.y - transform.position.y;
+        float angle = Mathf.Atan2(targ.y, targ.x) * Mathf.Rad2Deg;
+
+        float clampAngle = Mathf.Clamp(angle, -20f, 20f);
+
+        if (-clampAngle > 0f)
+        {
+            if (eyeRenderer.transform.rotation.eulerAngles.z < 20f || eyeRenderer.transform.rotation.eulerAngles.z > 335f)
+            {
+                eyeRenderer.transform.Rotate(new Vector3(0f, 0f, 1f).normalized * eyeBodyTurnSpeed * Time.deltaTime);
+            }
+        }
+        else
+        {
+            if (eyeRenderer.transform.rotation.eulerAngles.z > -20f)
+            {
+                if (eyeRenderer.transform.rotation.eulerAngles.z > 300f)
+                {
+                    if (eyeRenderer.transform.rotation.eulerAngles.z > 340f)
+                    {
+                        eyeRenderer.transform.Rotate(new Vector3(0f, 0f, -1f).normalized * eyeBodyTurnSpeed * Time.deltaTime);
+                    }
+                }
+                else
+                {
+                    eyeRenderer.transform.Rotate(new Vector3(0f, 0f, -1f).normalized * eyeBodyTurnSpeed * Time.deltaTime);
+                }
+            }
+        }
     }
 
 
