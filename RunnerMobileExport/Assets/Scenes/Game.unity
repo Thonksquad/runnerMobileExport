@@ -5564,7 +5564,7 @@ MonoBehaviour:
   EndcoinsUI: {fileID: 36735913}
   distanceUI: {fileID: 28084434}
   coinUI: {fileID: 1799534025}
-  bossCoinUI: {fileID: 0}
+  bossCoinUI: {fileID: 1192985750}
 --- !u!4 &739072114
 Transform:
   m_ObjectHideFlags: 0
