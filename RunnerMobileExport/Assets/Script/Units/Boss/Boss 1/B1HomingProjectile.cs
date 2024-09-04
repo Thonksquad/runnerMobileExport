@@ -41,7 +41,7 @@ public class B1HomingProjectile : MonoBehaviour
 
         while (gameObject.activeInHierarchy)
         {
-            transform.Translate(-transform.right * bulletSpeed * Time.deltaTime);
+            transform.Translate( transform.right * bulletSpeed * Time.deltaTime, Space.World);
             yield return null;
         }
     }
