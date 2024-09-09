@@ -154,14 +154,14 @@ public class BossEye : MonoBehaviour
 
     private IEnumerator DoShoot_NORMAL()
     {
-        bossScrReference.SpawnHomingBullet(transform.position, 1.5f, 0);
+        bossScrReference.SpawnHomingBullet(transform.position, .2f, 0);
         yield return null;
     }
     private IEnumerator DoShoot_TRIPPLE()
     {
-        bossScrReference.SpawnHomingBullet(transform.position, 1.5f, 0);
-        bossScrReference.SpawnHomingBullet(transform.position, 1.5f, 30);
-        bossScrReference.SpawnHomingBullet(transform.position, 1.5f, -30);
+        bossScrReference.SpawnHomingBullet(transform.position, .2f, 0);
+        bossScrReference.SpawnHomingBullet(transform.position, .2f, 30);
+        bossScrReference.SpawnHomingBullet(transform.position, .2f, -30);
         yield return null;
     }
     private IEnumerator DoShoot_LASER()
@@ -183,7 +183,7 @@ public class BossEye : MonoBehaviour
         float laserY = laser2.localScale.y;
         float laserOriginY = laser2.localScale.y;
 
-        while (laserLineRenderer.startWidth < 1.5f)
+        while (laserLineRenderer.startWidth < .5f)
         {
             laserLineRenderer.startWidth += 0.02f;
             laserLineRenderer.endWidth += 0.02f;

@@ -104,7 +104,7 @@ public class Boss1 : MonoBehaviour
 
         yield return new WaitForSeconds(0.25f);
         shakeScript.Do_shake(0.7f, 0.7f);
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(0.5f);
             
         switch (phase)
         {
@@ -254,7 +254,7 @@ public class Boss1 : MonoBehaviour
         bossWheelAnimation1.Stop();
         bossWheelAnimation2.Stop();
 
-        shakeScript.Do_shake(1.2f, 3.0f);
+        shakeScript.Do_shake(0.8f, 2.0f);
 
         _cd7.Start();
         StartCoroutine(DoExit()); 

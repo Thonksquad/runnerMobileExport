@@ -119,24 +119,24 @@ public class GameManager : MonoBehaviour
         _soundManager.PlaySound(_deathSound);
         _soundManager.ToggleMusic();
         EnddistanceUI.text = Mathf.Round(distance).ToString();
-        BestdistanceUI.text = DBGrabUser.highScore.ToString();
         EndcoinsUI.text = coins.ToString();
         addScore();
 
+        /*
         if (_adsManager.hasVideoChance)
         {
             _adsManager.showVideo();
         }
         else
         {
-            /*
             if (newHighScore())
             {
                 DBGrabUser.highScore = (int)Mathf.Round(distance);
             }
-            */
             gameOverScreen.SetActive(true);
-        }
+        } */
+        gameOverScreen.SetActive(true);
+
     }
 
     public async void addScore()
