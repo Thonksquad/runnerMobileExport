@@ -5,7 +5,6 @@ using UnityServiceLocator;
 
 public class UnitManager : MonoBehaviour
 {
-
     public Collider2D[] DetectedEnemies;
     public float DetectionRadius;
 
@@ -25,7 +24,7 @@ public class UnitManager : MonoBehaviour
 
     [SerializeField] private SpawnPool _enemyArrowPool;
 
-    [SerializeField] private LayerMask EnemyDetectionLayer; 
+    [SerializeField] private LayerMask EnemyDetectionLayer;
     [SerializeField] private GameObject houndPrefab;
 
 
@@ -46,12 +45,9 @@ public class UnitManager : MonoBehaviour
     private float Respawntimer => 1+(0.01f * player.speed);
     private float mobSpawnDistance => 50f + (0.1f* player.speed);
 
-
-
     [SerializeField] private float xRef;
     [SerializeField] private float yRef;
     [SerializeField] private float groundHeight = -6.5f;
-
 
     private bool IsSafeToSpawn(Vector2 pos, float radius) => Physics2D.OverlapCircleAll(pos, radius, EnemyDetectionLayer).Length == 0;
 
@@ -142,9 +138,6 @@ public class UnitManager : MonoBehaviour
     {
         xRef = Random.Range(_minSpawnX, _maxSpawnX);
         yRef = Random.Range(-6f, 6f);
-
-
-
         
         if (IsSafeToSpawn(new Vector2(xRef, yRef), DetectionRadius))
         {
@@ -173,8 +166,5 @@ public class UnitManager : MonoBehaviour
         {
             Invoke(nameof(SpawnEnemy), Respawntimer);
         }
-        
     }
-
-
 }

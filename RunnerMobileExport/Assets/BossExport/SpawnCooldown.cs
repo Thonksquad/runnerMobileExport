@@ -98,8 +98,6 @@ public class SpawnCooldown : MonoBehaviour
         _cdCoin.Start();
     }
 
-
-
     public void StartBoss()
     {
         _cdMain.Completed -= MainCooldown;
@@ -119,7 +117,5 @@ public class SpawnCooldown : MonoBehaviour
         Invoke(nameof(EnemyCooldown), 1f + _SpawnDelay);
         Invoke(nameof(CoinCooldown), 1f + _SpawnDelay * 2);
     }
-
-
 }
 
