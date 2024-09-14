@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjectPool
+public class BossPool
 {
     internal List<GameObject> objectList;
 

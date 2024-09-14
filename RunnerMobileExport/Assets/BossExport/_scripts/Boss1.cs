@@ -10,7 +10,7 @@ public class Boss1 : MonoBehaviour
 {
     public int health;
     [SerializeField] private int phase; 
-    private ObjectPool homingPool = new ObjectPool();
+    private BossPool homingPool = new BossPool();
     private Vector3 initialLocalPosition;
     private IEnumerator phaseBehaviorCoroutine;
     internal BossShake shakeScript;
