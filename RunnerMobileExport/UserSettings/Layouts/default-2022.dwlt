@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 2048
     height: 1068.8
   m_ShowMode: 4
-  m_Title: Inspector
+  m_Title: Project
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -221,8 +221,8 @@ MonoBehaviour:
     y: 773.6
     width: 918.4
     height: 245.20007
-  m_MinSize: {x: 100, y: 100}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 101, y: 121}
+  m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 17}
   m_Panes:
   - {fileID: 17}
@@ -299,8 +299,8 @@ MonoBehaviour:
     y: 0
     width: 441.59998
     height: 1018.80005
-  m_MinSize: {x: 275, y: 50}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 276, y: 71}
+  m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 20}
   m_Panes:
   - {fileID: 20}
@@ -797,7 +797,7 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -426.69095, y: 20.268383, z: -6.687559}
+    m_Target: {x: 13.91, y: 0.5, z: 0}
     speed: 2
     m_Value: {x: -426.69095, y: 20.268383, z: -6.687559}
   m_RenderMode: 0
@@ -849,7 +849,7 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 583.38196
+    m_Target: 10
     speed: 2
     m_Value: 583.38196
   m_Ortho:
@@ -1308,7 +1308,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 7af8ffff88f8ffff6a5600006e570000
+      m_ExpandedIDs: d8f8ffffa6f9ffffd453000022540000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1377,7 +1377,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets
+    - Assets/BossExport/_animations
     m_Globs: []
     m_OriginalText: 
     m_ImportLogFlags: 0
@@ -1385,16 +1385,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets
+  - Assets/BossExport/_animations
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\user\Desktop\Github Desktop\RunnerMobileExport\runnerMobileExport\RunnerMobileExport
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 7c5d0000
-    m_LastClickedID: 23932
-    m_ExpandedIDs: 00000000f85100007a5d00007c5d00007e5d0000805d0000825d0000845d0000865d000000ca9a3b
+    m_SelectedIDs: fe510000
+    m_LastClickedID: 20990
+    m_ExpandedIDs: 00000000e65c0000e85c0000ea5c0000025d000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1422,7 +1422,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000f85100007a5d00007c5d00007e5d0000805d0000825d0000845d0000865d0000
+    m_ExpandedIDs: 00000000e65c0000e85c0000ea5c0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1449,22 +1449,22 @@ MonoBehaviour:
   m_ListAreaState:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 0
+    m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c4260100000000001662000026b90100acb30000ec820000b8130100d0670000849d00009abb0000cc6600005e6600003a66000034660000d8690000dc690000ec6900001c200100f8670000e06600009e6a000096520000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: ObjectPool
-      m_OriginalName: ObjectPool
+      m_Name: 
+      m_OriginalName: 
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 21044
+      m_UserData: 0
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 0
+      m_OriginalEventType: 11
       m_IsRenamingFilename: 1
       m_ClientGUIView: {fileID: 11}
     m_CreateAssetUtility:
