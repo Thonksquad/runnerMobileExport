@@ -1,0 +1,286 @@
+fileFormatVersion: 2
+guid: 2cd89e3244ac7ba44ac7f2db86cc53aa
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 12
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: sprite arrow enemy die_0
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 129
+        width: 1569
+        height: 1569
+      alignment: 9
+      pivot: {x: 0.6512287, y: 0.106009565}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6939c383863e5874d9495657edc97f33
+      internalID: -1171798567
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sprite arrow enemy die_1
+      rect:
+        serializedVersion: 2
+        x: 1712
+        y: 129
+        width: 1523
+        height: 1531
+      alignment: 9
+      pivot: {x: 0.64349663, y: 0.108466014}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ffb1eb5f9c4bee94b9849235826a1246
+      internalID: 260577661
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sprite arrow enemy die_2
+      rect:
+        serializedVersion: 2
+        x: 3322
+        y: 129
+        width: 1210
+        height: 1431
+      alignment: 9
+      pivot: {x: 0.54644424, y: 0.12037662}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b9b9bd0bf7889e04895e1872bea34726
+      internalID: -1849437901
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sprite arrow enemy die_4
+      rect:
+        serializedVersion: 2
+        x: 4832
+        y: 130
+        width: 1084
+        height: 1226
+      alignment: 9
+      pivot: {x: 0.49423972, y: 0.14857554}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cafd82e7b64e3604694589a55730858f
+      internalID: 613692716
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sprite arrow enemy die_5
+      rect:
+        serializedVersion: 2
+        x: 6004
+        y: 129
+        width: 1193
+        height: 1077
+      alignment: 9
+      pivot: {x: 0.53663826, y: 0.15793425}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 295bb611d1bb22d4688f1efde57c6d04
+      internalID: -1649071241
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sprite arrow enemy die_6
+      rect:
+        serializedVersion: 2
+        x: 7301
+        y: 129
+        width: 1172
+        height: 869
+      alignment: 9
+      pivot: {x: 0.531967, y: 0.19821149}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0d8ce828d2683a047ab6007a22d11dac
+      internalID: 1430648196
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      sprite arrow enemy die_23: 1151948491
+      sprite arrow enemy die_20: -930616639
+      sprite arrow enemy die_0: -1171798567
+      sprite arrow enemy die_6: 1430648196
+      sprite arrow enemy die_17: 2065174345
+      sprite arrow enemy die_15: -1559794346
+      sprite arrow enemy die_3: 1237392336
+      sprite arrow enemy die_1: 260577661
+      sprite arrow enemy die_22: 357612390
+      sprite arrow enemy die_11: -1355817348
+      sprite arrow enemy die_13: -384021368
+      sprite arrow enemy die_10: -344407528
+      sprite arrow enemy die_18: -44945919
+      sprite arrow enemy die_14: 1255074270
+      sprite arrow enemy die_12: 1115140010
+      sprite arrow enemy die_5: -1649071241
+      sprite arrow enemy die_16: 907987043
+      sprite arrow enemy die_21: -1761831839
+      sprite arrow enemy die_9: 1547634939
+      sprite arrow enemy die_4: 613692716
+      sprite arrow enemy die_8: -1147114163
+      sprite arrow enemy die_2: -1849437901
+      sprite arrow enemy die_7: 1660308120
+      sprite arrow enemy die_24: 1016361744
+      sprite arrow enemy die_19: -504229712
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

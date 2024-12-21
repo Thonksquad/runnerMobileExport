@@ -1,0 +1,293 @@
+using System.Collections; 
+using UnityEngine;
+using static Boss1;
+using Utilities.Cooldown;
+using System.Collections.Generic;
+using UnityServiceLocator;
+using UnityEditor;
+
+
+public class BossEye : MonoBehaviour
+{
+    [SerializeField] internal bool canBeHit;
+    [SerializeField] private Animator eyeLidAnim;
+    [SerializeField] private EyePoint pupilPivotScript;
+    [SerializeField] SpriteRenderer eyePupil;
+    [SerializeField] Transform laser1;
+    [SerializeField] Transform laser2;
+    [SerializeField] Transform laser3;
+
+    [SerializeField] private float eyeBodyTurnSpeed = 30f;
+
+    internal int hitHP;
+    private EyeEntries thisEyeEntry;
+    [SerializeField] private SpriteRenderer eyeRenderer;
+    private LineRenderer laserLineRenderer;
+    private EdgeCollider2D edgeCollider2D;
+
+    private IEnumerator shootCoroutineReference;
+    private Boss1 bossScrReference => transform.parent.GetComponent<Boss1>();
+
+    private Cooldown _NormalShoot; 
+    private Cooldown _LaserShoot = new(0.7f);
+    private Cooldown _LaserDuration = new(0.1f);
+
+    private Player _player;
+    private Vector3 _playerTarget;
+
+
+    private void Awake()
+    {
+        laserLineRenderer = GetComponent<LineRenderer>();
+        edgeCollider2D = GetComponent<EdgeCollider2D>();
+    }
+
+    private void Start()
+    {
+        ServiceLocator.ForSceneOf(this).Get(out _player);
+        DoEyeClose(false);
+    }
+
+
+    private void FixedUpdate()
+    {
+        Vector3 targ = _player.transform.position;
+        targ.z = 0f;
+        targ.x = targ.x - transform.position.x;
+        targ.y = targ.y - transform.position.y;
+        float angle = Mathf.Atan2(targ.y, targ.x) * Mathf.Rad2Deg;
+
+        float clampAngle = Mathf.Clamp(angle, -20f, 20f);
+
+        if (-clampAngle > 0f)
+        {
+            if (eyeRenderer.transform.rotation.eulerAngles.z < 20f || eyeRenderer.transform.rotation.eulerAngles.z > 335f)
+            {
+                eyeRenderer.transform.Rotate(new Vector3(0f, 0f, 1f).normalized * eyeBodyTurnSpeed * Time.deltaTime);
+            }
+        }
+        else
+        {
+            if (eyeRenderer.transform.rotation.eulerAngles.z > -20f)
+            {
+                if (eyeRenderer.transform.rotation.eulerAngles.z > 300f)
+                {
+                    if (eyeRenderer.transform.rotation.eulerAngles.z > 340f)
+                    {
+                        eyeRenderer.transform.Rotate(new Vector3(0f, 0f, -1f).normalized * eyeBodyTurnSpeed * Time.deltaTime);
+                    }
+                }
+                else
+                {
+                    eyeRenderer.transform.Rotate(new Vector3(0f, 0f, -1f).normalized * eyeBodyTurnSpeed * Time.deltaTime);
+                }
+            }
+        }
+    }
+
+
+    private void SetEdgeCollider()
+    {
+        edgeCollider2D.points = new Vector2[] {
+            transform.position - transform.position,
+            _playerTarget - transform.position
+        };
+    }
+
+
+
+    #region Open Close Eye
+    internal void DoEyeClose(bool doDamage)
+    {
+        StopAllCoroutines();
+        bossScrReference._closedBossEyes.Add(gameObject);
+        bossScrReference.shakeScript.Do_shake(0.3f, 0.5f);
+
+        canBeHit = false;
+        eyeLidAnim.CrossFade("B1EyelidClose", 0, 0);
+        pupilPivotScript.enabled = false;
+        laserLineRenderer.enabled = false;
+
+        if (doDamage)
+            BossHandler.bossTakeDamage(10);
+    }
+    internal void DoEyeOpen(int hpValue, EyeEntries eyeEntry)
+    {
+        StopAllCoroutines();
+        pupilPivotScript.doFollow = true;
+        bossScrReference._closedBossEyes.Remove(gameObject);
+        thisEyeEntry = eyeEntry;
+
+        eyePupil.sprite = eyeEntry.pupilSprite;
+        eyeRenderer.color = eyeEntry.eyeColor;
+        hitHP = hpValue;
+        pupilPivotScript.enabled = true;
+
+        if( gameObject.activeInHierarchy)
+        { 
+            eyeLidAnim.CrossFade("B1EyelidOpen", 0, 0);
+        }
+    }
+
+    internal void OpeningEyeDoneEnableThisEye() // TO BE CALLED BY OPEN EYE ANIMATION
+    {
+        canBeHit = true;
+
+        if (thisEyeEntry.eyeType == EyeTypesEnum.LASER) // IF EYE TYPE IS LASER turn line renderer ON
+            StartCoroutine(Handle_LaserLineRenderer());
+
+        shootCoroutineReference = Handle_Shooting();
+        StartCoroutine(shootCoroutineReference);
+    }
+    #endregion // Open Close Eye
+
+    #region Shoot
+    private IEnumerator Handle_Shooting()
+    {
+        _NormalShoot = new(thisEyeEntry.reloadTime);
+        while (canBeHit)
+        { 
+            _NormalShoot.Start();
+            while (_NormalShoot.IsActive)
+                yield return null;
+            //  yield return new WaitForSeconds(thisEyeEntry.reloadTime);   // RELOAD RATE / basic will reload 1x slower 
+            StartCoroutine("DoShoot_" + thisEyeEntry.eyeType.ToString());      // Determine what type of eye this is and do its shooting pattern
+        }
+    }
+
+    private IEnumerator DoShoot_NORMAL()
+    {
+        bossScrReference.SpawnHomingBullet(transform.position, .2f, 0);
+        yield return null;
+    }
+    private IEnumerator DoShoot_TRIPPLE()
+    {
+        bossScrReference.SpawnHomingBullet(transform.position, .2f, 0);
+        bossScrReference.SpawnHomingBullet(transform.position, .2f, 30);
+        bossScrReference.SpawnHomingBullet(transform.position, .2f, -30);
+        yield return null;
+    }
+    private IEnumerator DoShoot_LASER()
+    {
+        Color OrigStartLineColor = laserLineRenderer.startColor;
+        Color OrigEndLineColor = laserLineRenderer.endColor;
+        laserLineRenderer.startColor = Color.yellow;
+        laserLineRenderer.endColor = Color.yellow;
+        laser1.gameObject.SetActive(true);
+        StopCoroutine(shootCoroutineReference);
+        float origSize = laserLineRenderer.startWidth;
+
+        pupilPivotScript.doFollow = false;
+        canBeHit = false;
+        _playerTarget = _player.transform.position;
+
+        _LaserShoot.Start();
+        while (_LaserShoot.IsActive)
+            yield return null;
+        laserLineRenderer.startColor = Color.yellow;
+        laserLineRenderer.endColor = Color.yellow;
+        laser1.gameObject.SetActive(false);
+        laser2.gameObject.SetActive(true);
+        float laserY = laser2.localScale.y;
+        float laserOriginY = laser2.localScale.y;
+
+        while (laserLineRenderer.startWidth < .4f)
+        {
+            laserLineRenderer.startWidth += 0.06f;
+            laserLineRenderer.endWidth += 0.06f;
+
+            laserY += 0.06f;
+
+            laser2.localScale = new Vector3(laser2.localScale.x, laserY, laser2.localScale.z);
+
+            yield return null;
+        }
+        laser2.gameObject.SetActive(false);
+        laser3.gameObject.SetActive(true);
+        SetEdgeCollider();
+        edgeCollider2D.enabled = true;
+        _LaserDuration.Start();
+        while ( _LaserDuration.IsActive)
+            yield return null;
+        edgeCollider2D.enabled = false;
+        laser3.gameObject.SetActive(false);
+        laser2.gameObject.SetActive(true);
+        while (laserLineRenderer.startWidth > origSize)
+        {
+            laserLineRenderer.startWidth -= 0.01f;
+            laserLineRenderer.endWidth -= 0.01f; 
+
+            laserY -= 0.06f;
+            laser2.localScale = new Vector3(laser2.localScale.x, laserY, laser2.localScale.z);
+
+            yield return null;
+        }
+        laser2.localScale = new Vector3(laser2.localScale.x, laserOriginY, laser2.localScale.z);
+        laser2.gameObject.SetActive(false);
+        laserLineRenderer.startWidth = origSize;
+        laserLineRenderer.endWidth = origSize;
+        pupilPivotScript.doFollow = true;
+        canBeHit = true;
+        laserLineRenderer.startColor = OrigStartLineColor;
+        laserLineRenderer.endColor = OrigEndLineColor;
+
+        shootCoroutineReference = Handle_Shooting();
+        StartCoroutine(shootCoroutineReference);
+    }
+
+
+    private IEnumerator Handle_LaserLineRenderer()
+    {
+        laserLineRenderer.enabled = true;
+
+        while (true)
+        {
+            laserLineRenderer.SetPosition(0, new Vector3(pupilPivotScript.transform.position.x, pupilPivotScript.transform.position.y, -0.1f));
+            laserLineRenderer.SetPosition(1, pupilPivotScript.transform.position -pupilPivotScript.transform.right * 50);
+            yield return null;
+        }
+    }
+    #endregion // Shoot
+
+    private IEnumerator EyeHit()
+    {
+        Color origColor = eyeRenderer.color;
+        eyeRenderer.color = Color.red;
+            
+        while (eyeRenderer.color != origColor)
+        {
+            eyeRenderer.color = Color.Lerp(eyeRenderer.color, origColor, 0.01f);
+            yield return null;
+        }
+    }
+
+    #region Trigger
+    private async void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.TryGetComponent(out Bullet bullet))
+        {
+            bullet.ReturnToPool();
+            if (canBeHit)
+            {
+                hitHP--;
+                if (hitHP <= 0)
+                    DoEyeClose(true);
+                else
+                    BossHandler.bossTakeDamage(1);
+
+                StopCoroutine(EyeHit());
+                StartCoroutine(EyeHit());
+            }
+        }
+
+        if (collision.gameObject.TryGetComponent(out Player player))
+        {
+            await player.TakeFirstInstanceDamage();
+        }
+
+    }
+    #endregion // Trigger
+
+
+
+}
