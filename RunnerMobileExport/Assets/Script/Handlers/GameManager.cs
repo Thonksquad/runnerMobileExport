@@ -125,6 +125,8 @@ public class GameManager : MonoBehaviour
         addScoreDistance(distance);
         addScoreCoins(coins);
 
+        LoginDataSingleton.PlayerCoins += coins;
+
         if (IsBossMode)
         {
             _leaderboard = bossLB;
@@ -159,6 +161,7 @@ public class GameManager : MonoBehaviour
         try
         {
             var metadata = new Dictionary<string, string>() {
+            {"Wallet", LoginDataSingleton.WalletAddress },
             { "gameLength", GameManager.gameLength.ToString() } ,
             { "enemiesKilled", GameManager.enemiesKilled.ToString() },
             { "speed", _player.speed.ToString() }
@@ -185,6 +188,7 @@ public class GameManager : MonoBehaviour
         try
         {
             var metadata = new Dictionary<string, string>() {
+            {"Wallet", LoginDataSingleton.WalletAddress },
             { "gameLength", GameManager.gameLength.ToString() } ,
             { "enemiesKilled", GameManager.enemiesKilled.ToString() },
             { "speed", _player.speed.ToString() }

@@ -15231,9 +15231,21 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1293259035}
     - target: {fileID: 1252388550350844121, guid: 474885d1d11477c4887bf89eca44a7b1, type: 3}
+      propertyPath: ClaimImage
+      value: 
+      objectReference: {fileID: 21300000, guid: aab1c401288bb17428b5d23658516c06, type: 3}
+    - target: {fileID: 1252388550350844121, guid: 474885d1d11477c4887bf89eca44a7b1, type: 3}
+      propertyPath: ClaimBackground
+      value: 
+      objectReference: {fileID: 1531439616271767474}
+    - target: {fileID: 1252388550350844121, guid: 474885d1d11477c4887bf89eca44a7b1, type: 3}
       propertyPath: ClaimNotification
       value: 
       objectReference: {fileID: 998708795}
+    - target: {fileID: 1361077552027409778, guid: 474885d1d11477c4887bf89eca44a7b1, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: aab1c401288bb17428b5d23658516c06, type: 3}
     - target: {fileID: 3821561408191635099, guid: 474885d1d11477c4887bf89eca44a7b1, type: 3}
       propertyPath: m_text
       value: 
@@ -15339,8 +15351,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6379894526914393854, guid: 474885d1d11477c4887bf89eca44a7b1, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6379894526914393854, guid: 474885d1d11477c4887bf89eca44a7b1, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: ClaimBossBadge
+      objectReference: {fileID: 0}
+    - target: {fileID: 6996447083233146493, guid: 474885d1d11477c4887bf89eca44a7b1, type: 3}
+      propertyPath: m_fontSize
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6996447083233146493, guid: 474885d1d11477c4887bf89eca44a7b1, type: 3}
+      propertyPath: m_enableAutoSizing
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7291209959137240326, guid: 474885d1d11477c4887bf89eca44a7b1, type: 3}
       propertyPath: m_Name
@@ -15358,11 +15382,26 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8125611277573923420, guid: 474885d1d11477c4887bf89eca44a7b1, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 1cd6811c0bf3144409992c2b88b5d99b, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 474885d1d11477c4887bf89eca44a7b1, type: 3}
+--- !u!114 &1531439616271767474 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8125611277573923420, guid: 474885d1d11477c4887bf89eca44a7b1, type: 3}
+  m_PrefabInstance: {fileID: 1531439616271767473}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1714267732264428670 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7209018991900842326, guid: 474885d1d11477c4887bf89eca44a7b1, type: 3}
