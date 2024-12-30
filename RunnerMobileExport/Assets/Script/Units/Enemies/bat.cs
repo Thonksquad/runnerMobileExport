@@ -1,23 +1,29 @@
 using UnityEngine;
+using UnityServiceLocator;
 
 public class bat : BaseEnemy
 {
+    public ParallaxLayer _parallaxLayer = ParallaxLayer.BlackBackground;
+    private ParallaxManager _parallaxManager;
+    private ParallaxSetting _parallaxSetting;
+    private Player _player;
     public float speed;
     public bool chase = false;
     private Rigidbody2D _rigidbody;
-
-
 
     public override void OnEnable()
     {
         base.OnEnable(); 
         _rigidbody = GetComponent<Rigidbody2D>();
         _rigidbody.bodyType = RigidbodyType2D.Kinematic;
+        ServiceLocator.ForSceneOf(this).Get(out _player);
+        ServiceLocator.ForSceneOf(this).Get(out _parallaxManager);
+        _parallaxSetting = _parallaxManager.parallaxSettings.Find(setting => setting.ParallaxLayer == _parallaxLayer);
     }
 
     public override void Update()
     {
-        base.Update();
+        transform.position = new Vector3(transform.position.x - speed * Time.deltaTime, transform.position.y, transform.position.z);
         if (player == null)
             return;
         if (!isDead)
@@ -27,8 +33,13 @@ public class bat : BaseEnemy
         } 
         else
         {
+            speed = 0;
             _rigidbody.bodyType = RigidbodyType2D.Dynamic;
             _rigidbody.AddForce(Physics.gravity * _rigidbody.mass);
+            transform.position = new Vector3(
+            transform.position.x - _player.speed * _parallaxSetting.parallaxEffect * Time.deltaTime,
+            transform.position.y,
+            transform.position.z);
         }
     }
 
@@ -54,5 +65,4 @@ public class bat : BaseEnemy
             }
         }
     }
-
 }

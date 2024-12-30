@@ -33,7 +33,7 @@ public class ClaimBadge : MonoBehaviour, IPointerDownHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        Application.OpenURL("https://other.page/badges");
+        Application.OpenURL("https://other.page/badges/1adc1418-858c-400e-b277-69630eebba20");
     }
 
     public void ClaimBossBadge()

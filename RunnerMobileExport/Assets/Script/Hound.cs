@@ -6,8 +6,10 @@ using UnityServiceLocator;
 public class Hound : MonoBehaviour
 {
     [SerializeField] private float _speed = 0.04f;
-
-    private Player player;
+    public ParallaxLayer _parallaxLayer = ParallaxLayer.BlackBackground;
+    private ParallaxManager _parallaxManager;
+    private ParallaxSetting _parallaxSetting;
+    private Player _player;
 
     private void Start()
     {
@@ -16,32 +18,36 @@ public class Hound : MonoBehaviour
 
     private void OnEnable()
     {
-        ServiceLocator.ForSceneOf(this).Get(out player);
-        _speed = player.speed;
+        ServiceLocator.ForSceneOf(this).Get(out _player);
+        ServiceLocator.ForSceneOf(this).Get(out _parallaxManager);
+        _parallaxSetting = _parallaxManager.parallaxSettings.Find(setting => setting.ParallaxLayer == _parallaxLayer);
+        _speed = _player.speed;
     }
 
     private void Update()
     {
-        transform.position = new Vector3(transform.position.x - _speed * Time.deltaTime, transform.position.y, transform.position.z);
+        transform.position = new Vector3(
+        transform.position.x - _player.speed * _parallaxSetting.parallaxEffect * Time.deltaTime,
+        transform.position.y,
+        transform.position.z);
     }
 
     private void OnBecameVisible()
     {
-        if (player.onHound)
+        if (_player.onHound)
         {
             Destroy(gameObject);
         }
     }
 
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.GetComponent<Player>() != null)
         {
-            if (!player.onHound)
+            if (!_player.onHound)
             {
-                player.onHound = true;
-                player.hp += 1;
+                _player.onHound = true;
+                _player.hp += 1;
                 Destroy(gameObject);
             }
         }

@@ -3,20 +3,20 @@ using UnityServiceLocator;
 
 public class BaseObstacle : MonoBehaviour
 {
-
-    [SerializeField] private float _speed;
-
+    public ParallaxLayer _parallaxLayer = ParallaxLayer.BlackBackground;
+    private ParallaxManager _parallaxManager;
+    private ParallaxSetting _parallaxSetting;
     private Player _player;
 
     public virtual void OnEnable()
     {
         ServiceLocator.ForSceneOf(this).Get(out _player);
-        _speed = _player.speed;
+        ServiceLocator.ForSceneOf(this).Get(out _parallaxManager);
+        _parallaxSetting = _parallaxManager.parallaxSettings.Find(setting => setting.ParallaxLayer == _parallaxLayer);
     }
 
     private void Update()
     {
-        transform.position = new Vector3(transform.position.x - _speed * Time.deltaTime, transform.position.y, transform.position.z);
+        transform.position = new Vector3(transform.position.x - _player.speed * _parallaxSetting.parallaxEffect * Time.deltaTime, transform.position.y, transform.position.z);
     }
-
 }

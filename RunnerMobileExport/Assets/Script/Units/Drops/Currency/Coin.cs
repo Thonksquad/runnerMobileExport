@@ -19,10 +19,6 @@ public class Coin : MonoBehaviour
 
     private bool IsChaseOn(Vector2 pos, float radius) => Physics2D.OverlapCircleAll(pos, radius, PlayerLayer).Length > 0;
 
-
-
-
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.GetComponent<Player>() != null)
@@ -49,13 +45,12 @@ public class Coin : MonoBehaviour
 
     public void OnEnable()
     {
+        PhysicsCollider.enabled = true;
         ServiceLocator.ForSceneOf(this).Get(out _player);
         ServiceLocator.ForSceneOf(this).Get(out _gameManager);
         ServiceLocator.ForSceneOf(this).Get(out _soundManager);
         Vector2 forceDirection = new Vector2(Random.Range(0, .001f), Random.Range(.001f, .003f)).normalized;
         gameObject.GetComponent<Rigidbody2D>().AddForce(.1f * forceDirection, ForceMode2D.Impulse);
         _speed = _player.speed;
-        PhysicsCollider.enabled = true;
     }
-
 }
