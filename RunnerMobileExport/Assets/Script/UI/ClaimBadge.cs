@@ -46,7 +46,7 @@ public class ClaimBadge : MonoBehaviour, IPointerDownHandler
 
     private IEnumerator SendPostRequest(string communityID, string badgeId)
     {
-        string apiUrl = $"https://api.other.page/v1/community/{communityID}/badge/{badgeId}/attribution";
+        string apiUrl = $"https://api.other.page/v1/community/{communityID}/badge/{badgeId}/attribution?autoClaim=false";
         RequestData requestData = new RequestData { wallet = LoginDataSingleton.WalletAddress };
         string jsonData = JsonUtility.ToJson(requestData);
 

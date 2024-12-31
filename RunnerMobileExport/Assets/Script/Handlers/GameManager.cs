@@ -236,7 +236,7 @@ public class GameManager : MonoBehaviour
             distance = Mathf.Round(gameLength * _player.speed);
             distanceUI.text = (distance.ToString() + "m");
 
-            if (!IsBossMode & distance / (200 + ((hounds - 1) * HoundModifier)) > hounds) //switch back to 500
+            if (!IsBossMode & distance / (500 + ((hounds - 1) * HoundModifier)) > hounds)
             {
                 _unitManager.SpawnHound();
                 hounds++;
