@@ -83,7 +83,7 @@ public class ClaimBadge : MonoBehaviour, IPointerDownHandler
                 {
                     //Successful API request
                     Debug.Log($"Success: {request.downloadHandler.text}");
-                    ClaimBackground.sprite = ClaimImage;
+                    //ClaimBackground.sprite = ClaimImage;
                 }
                 else
                 {

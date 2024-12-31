@@ -2208,7 +2208,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 274, y: -405}
+  m_AnchoredPosition: {x: 275, y: -405}
   m_SizeDelta: {x: 163.3283, y: 59.699}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &432559570
@@ -2341,7 +2341,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 146.4, y: 196}
+  m_AnchoredPosition: {x: 125, y: 196}
   m_SizeDelta: {x: 158, y: 56}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &465429773
@@ -5023,7 +5023,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 15, y: -430.3}
+  m_AnchoredPosition: {x: -20, y: -430.3}
   m_SizeDelta: {x: 166.0909, y: 39.4339}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1001142216
@@ -5109,7 +5109,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -29.432388, y: 0, z: -44.64412, w: 0}
+  m_margin: {x: -29.432388, y: 0, z: -85.494385, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -5297,7 +5297,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -248, y: -66}
+  m_AnchoredPosition: {x: -259, y: -66}
   m_SizeDelta: {x: 174.7936, y: 20.7501}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1101901580
@@ -5588,7 +5588,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -3, y: -395}
+  m_AnchoredPosition: {x: -20, y: -395}
   m_SizeDelta: {x: 166.0909, y: 39.4339}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1151897378
@@ -5646,7 +5646,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -7392,7 +7392,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1509605280
 RectTransform:
   m_ObjectHideFlags: 0
